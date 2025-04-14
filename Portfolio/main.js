@@ -1,3 +1,6 @@
+// Add this at the top of your JavaScript file
+import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
+
 // Three.js Background Animation
 const bgCanvas = document.getElementById('bgCanvas');
 const renderer = new THREE.WebGLRenderer({
@@ -221,3 +224,111 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 });
+
+// Add this after your particle background code but before the animate function
+
+// 3D Model for Header
+const headerModelContainer = document.getElementById('header-model');
+const headerRenderer = new THREE.WebGLRenderer({
+    antialias: true,
+    alpha: true
+});
+headerRenderer.setPixelRatio(window.devicePixelRatio);
+headerRenderer.setSize(headerModelContainer.offsetWidth, headerModelContainer.offsetHeight);
+headerModelContainer.appendChild(headerRenderer.domElement);
+
+const headerScene = new THREE.Scene();
+const headerCamera = new THREE.PerspectiveCamera(75, headerModelContainer.offsetWidth / headerModelContainer.offsetHeight, 0.1, 1000);
+headerCamera.position.z = 5;
+
+// Add lights
+const ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
+headerScene.add(ambientLight);
+
+const directionalLight = new THREE.DirectionalLight(0xffffff, 0.8);
+directionalLight.position.set(1, 1, 1);
+headerScene.add(directionalLight);
+
+// Create a placeholder geometry (replace this with your actual 3D model)
+const geometry = new THREE.BoxGeometry(2, 2, 2);
+const material = new THREE.MeshStandardMaterial({
+    color: 0xff4d4d,
+    metalness: 0.7,
+    roughness: 0.2
+});
+const cube = new THREE.Mesh(geometry, material);
+headerScene.add(cube);
+
+// Animation for the header model
+function animateHeaderModel() {
+    requestAnimationFrame(animateHeaderModel);
+    
+    cube.rotation.x += 0.005;
+    cube.rotation.y += 0.01;
+    
+    headerRenderer.render(headerScene, headerCamera);
+}
+animateHeaderModel();
+
+// Resize handler for header model
+window.addEventListener('resize', () => {
+    headerRenderer.setSize(headerModelContainer.offsetWidth, headerModelContainer.offsetHeight);
+    headerCamera.aspect = headerModelContainer.offsetWidth / headerModelContainer.offsetHeight;
+    headerCamera.updateProjectionMatrix();
+});
+
+
+const loader = new GLTFLoader();
+let model;
+
+loader.load(
+    // URL of your 3D model
+    'path/to/your/model.glb',
+    
+    // onLoad callback
+    function (gltf) {
+        model = gltf.scene;
+        
+        // Scale and position the model
+        model.scale.set(0.5, 0.5, 0.5);
+        model.position.y = -1;
+        
+        // Add the model to the scene
+        headerScene.add(model);
+        
+        // Start animation
+        animateHeaderModel();
+    },
+    
+    // onProgress callback
+    function (xhr) {
+        console.log((xhr.loaded / xhr.total * 100) + '% loaded');
+    },
+    
+    // onError callback
+    function (error) {
+        console.error('Error loading model', error);
+        
+        // Fallback to the cube if model fails to load
+        const geometry = new THREE.BoxGeometry(2, 2, 2);
+        const material = new THREE.MeshStandardMaterial({
+            color: 0xff4d4d,
+            metalness: 0.7,
+            roughness: 0.2
+        });
+        model = new THREE.Mesh(geometry, material);
+        headerScene.add(model);
+        animateHeaderModel();
+    }
+);
+
+// Update the animateHeaderModel function
+function animateHeaderModel() {
+    requestAnimationFrame(animateHeaderModel);
+    
+    if (model) {
+        model.rotation.y += 0.01;
+    }
+    
+    headerRenderer.render(headerScene, headerCamera);
+}
