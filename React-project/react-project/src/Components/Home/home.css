@@ -38,7 +38,7 @@
   
   .nav-links li:hover {
     color: #4a6fa5;
-    transform: translateY(5px);
+    transform: translateY(-5px);
   }
   
   .hamburger {
