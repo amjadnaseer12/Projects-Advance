@@ -4,9 +4,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Adrian's Portfolio</title>
+    <title>Amjad Naseer's Portfolio</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <link rel="stylesheet" href="style.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/ScrollTrigger.min.js"></script>
+    <script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
+    <link rel="stylesheet" href="./style.css">
 </head>
 
 <body>
@@ -16,7 +19,7 @@
         <!-- Header Section -->
         <header class="header">
             <div class="header-content">
-                <h1 class="title">Hi, I'm <span class="name">Adrian</span></h1>
+                <h1 class="title">Hi, I'm <span class="name">Amjad Naseer</span></h1>
                 <p class="tagline">I develop <span class="tagline-highlight">3D visuals</span>, <span
                         class="tagline-highlight">user interfaces</span> and <span class="tagline-highlight">web
                         applications</span></p>
@@ -78,38 +81,32 @@
             </div>
             <div class="projects-grid">
                 <div class="project-card">
-                    <div class="model-viewer-container">
-                        <model-viewer src="models/your-model.glb" alt="3D Model" ar
-                            ar-modes="webxr scene-viewer quick-look" camera-controls auto-rotate
-                            style="width:100%; height:100%;">
-                        </model-viewer>
-                    </div>
+                    <model-viewer src="https://modelviewer.dev/shared-assets/models/Astronaut.glb" alt="3D Astronaut" ar
+                        ar-modes="webxr scene-viewer quick-look" camera-controls auto-rotate
+                        camera-orbit="45deg 55deg 2.5m">
+                    </model-viewer>
                     <div class="project-overlay">
-                        <h3>Interactive 3D Model</h3>
+                        <h3>Space Explorer</h3>
                         <a href="#" class="project-link">View Project</a>
                     </div>
                 </div>
                 <div class="project-card">
-                    <div class="model-viewer-container">
-                        <model-viewer src="models/your-model.glb" alt="3D Model" ar
-                            ar-modes="webxr scene-viewer quick-look" camera-controls auto-rotate
-                            style="width:100%; height:100%;">
-                        </model-viewer>
-                    </div>
+                    <model-viewer src="https://modelviewer.dev/shared-assets/models/NeilArmstrong.glb"
+                        alt="3D Character" ar ar-modes="webxr scene-viewer quick-look" camera-controls auto-rotate
+                        camera-orbit="45deg 55deg 2.5m">
+                    </model-viewer>
                     <div class="project-overlay">
-                        <h3>Interactive 3D Model</h3>
+                        <h3>Character Design</h3>
                         <a href="#" class="project-link">View Project</a>
                     </div>
                 </div>
                 <div class="project-card">
-                    <div class="model-viewer-container">
-                        <model-viewer src="models/your-model.glb" alt="3D Model" ar
-                            ar-modes="webxr scene-viewer quick-look" camera-controls auto-rotate
-                            style="width:100%; height:100%;">
-                        </model-viewer>
-                    </div>
+                    <model-viewer src="https://modelviewer.dev/shared-assets/models/RobotExpressive.glb" alt="3D Robot"
+                        ar ar-modes="webxr scene-viewer quick-look" camera-controls auto-rotate
+                        camera-orbit="45deg 55deg 2.5m">
+                    </model-viewer>
                     <div class="project-overlay">
-                        <h3>Interactive 3D Model</h3>
+                        <h3>Robot Animation</h3>
                         <a href="#" class="project-link">View Project</a>
                     </div>
                 </div>
@@ -207,11 +204,11 @@
             <div class="testimonials-container">
                 <div class="testimonial-card">
                     <div class="testimonial-content">
-                        <p>"Adrian's 3D visuals transformed our product presentations. The attention to detail and
+                        <p>"Amjad's 3D visuals transformed our product presentations. The attention to detail and
                             creativity exceeded our expectations."</p>
                     </div>
                     <div class="testimonial-author">
-                        <img src="https://via.placeholder.com/80" alt="Client 1" class="author-img">
+                        <img src="https://randomuser.me/api/portraits/women/44.jpg" alt="Client 1" class="author-img">
                         <div class="author-info">
                             <h4>Sarah Johnson</h4>
                             <p>Marketing Director, TechCorp</p>
@@ -220,11 +217,11 @@
                 </div>
                 <div class="testimonial-card">
                     <div class="testimonial-content">
-                        <p>"The web application Adrian developed for us is not only beautiful but incredibly functional.
+                        <p>"The web application Amjad developed for us is not only beautiful but incredibly functional.
                             Our users love the intuitive interface."</p>
                     </div>
                     <div class="testimonial-author">
-                        <img src="https://via.placeholder.com/80" alt="Client 2" class="author-img">
+                        <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Client 2" class="author-img">
                         <div class="author-info">
                             <h4>Michael Chen</h4>
                             <p>CEO, StartupXYZ</p>
@@ -233,11 +230,11 @@
                 </div>
                 <div class="testimonial-card">
                     <div class="testimonial-content">
-                        <p>"Working with Adrian was a pleasure. He understood our vision and delivered a UI design that
+                        <p>"Working with Amjad was a pleasure. He understood our vision and delivered a UI design that
                             perfectly represents our brand."</p>
                     </div>
                     <div class="testimonial-author">
-                        <img src="https://via.placeholder.com/80" alt="Client 3" class="author-img">
+                        <img src="https://randomuser.me/api/portraits/women/68.jpg" alt="Client 3" class="author-img">
                         <div class="author-info">
                             <h4>Emma Rodriguez</h4>
                             <p>Creative Director, DesignStudio</p>
@@ -297,7 +294,7 @@
                 <div class="contact-info">
                     <div class="info-item">
                         <i class="fas fa-envelope"></i>
-                        <p>hello@adrian.dev</p>
+                        <p>hello@amjad.dev</p>
                     </div>
                     <div class="info-item">
                         <i class="fas fa-phone"></i>
@@ -337,7 +334,7 @@
     <footer class="footer">
         <div class="footer-content">
             <div class="footer-logo">
-                <h2>Adrian</h2>
+                <h2>Amjad</h2>
                 <p>3D Artist & Web Developer</p>
             </div>
             <div class="footer-links">
@@ -359,16 +356,17 @@
             </div>
         </div>
         <div class="footer-bottom">
-            <p>&copy; 2023 Adrian. All rights reserved.</p>
+            <p>&copy; 2025 Amjad Naseer. All rights reserved.</p>
         </div>
     </footer>
-    <!-- <div class="loader">
+
+    <div class="loader">
         <div class="loader-spinner"></div>
-    </div> -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.7.1/gsap.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.7.1/ScrollTrigger.min.js"></script>
+    </div>
     <script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/build/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/GLTFLoader.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
     <script src="./main.js"></script>
 </body>
 
