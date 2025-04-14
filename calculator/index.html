@@ -235,12 +235,15 @@
         let previousOperand = '';
         let operation = undefined;
         let resetScreen = false;
-
+        let isScientificShown = false;
+    
         // DOM elements
         const currentOperandElement = document.getElementById('current-operand');
         const previousOperandElement = document.getElementById('previous-operand');
         const buttons = document.querySelectorAll('button');
-
+        const calculator = document.querySelector('.calculator');
+        const toggleBtn = document.querySelector('.toggle-scientific');
+    
         // Add ripple effect to buttons
         buttons.forEach(button => {
             button.addEventListener('click', function(e) {
@@ -260,7 +263,7 @@
                 }, 600);
             });
         });
-
+    
         // Update the display
         function updateDisplay() {
             currentOperandElement.innerText = currentOperand;
@@ -270,7 +273,7 @@
                 previousOperandElement.innerText = previousOperand;
             }
         }
-
+    
         // Append a number to the current operand
         function appendNumber(number) {
             if (currentOperand === '0' || resetScreen) {
@@ -281,7 +284,7 @@
             currentOperand += number;
             updateDisplay();
         }
-
+    
         // Append an operator
         function appendOperator(op) {
             if (currentOperand === '') return;
@@ -293,7 +296,7 @@
             currentOperand = '';
             updateDisplay();
         }
-
+    
         // Clear all
         function clearAll() {
             currentOperand = '0';
@@ -301,7 +304,7 @@
             operation = undefined;
             updateDisplay();
         }
-
+    
         // Delete the last character
         function deleteLastChar() {
             if (currentOperand.length === 1 || (currentOperand.length === 2 && currentOperand.startsWith('-'))) {
@@ -311,14 +314,14 @@
             }
             updateDisplay();
         }
-
+    
         // Perform the calculation
         function calculate() {
             let computation;
             const prev = parseFloat(previousOperand);
             const current = parseFloat(currentOperand);
             
-            if (isNaN(prev) return;
+            if (isNaN(prev) || isNaN(current)) return;
             
             switch (operation) {
                 case '+':
@@ -343,112 +346,144 @@
                     return;
             }
             
-            currentOperand = computation.toString();
+            // Handle decimal precision
+            currentOperand = Number.isInteger(computation) ? computation.toString() : computation.toFixed(8).replace(/\.?0+$/, '');
             operation = undefined;
             previousOperand = '';
             resetScreen = true;
             updateDisplay();
         }
-
+    
         // Scientific functions
         function calculateSquareRoot() {
-            currentOperand = Math.sqrt(parseFloat(currentOperand)).toString();
+            const num = parseFloat(currentOperand);
+            if (num < 0) {
+                currentOperand = 'Error';
+            } else {
+                const result = Math.sqrt(num);
+                currentOperand = Number.isInteger(result) ? result.toString() : result.toFixed(8).replace(/\.?0+$/, '');
+            }
             updateDisplay();
         }
-
+    
         function calculatePower() {
             operation = '^';
             previousOperand = currentOperand;
             currentOperand = '';
             updateDisplay();
         }
-
+    
         function calculateSin() {
-            currentOperand = Math.sin(parseFloat(currentOperand)).toString();
+            const result = Math.sin(parseFloat(currentOperand));
+            currentOperand = result.toFixed(8).replace(/\.?0+$/, '');
             updateDisplay();
         }
-
+    
         function calculateCos() {
-            currentOperand = Math.cos(parseFloat(currentOperand)).toString();
+            const result = Math.cos(parseFloat(currentOperand));
+            currentOperand = result.toFixed(8).replace(/\.?0+$/, '');
             updateDisplay();
         }
-
+    
         function calculateTan() {
-            currentOperand = Math.tan(parseFloat(currentOperand)).toString();
+            const result = Math.tan(parseFloat(currentOperand));
+            currentOperand = result.toFixed(8).replace(/\.?0+$/, '');
             updateDisplay();
         }
-
+    
         function calculatePi() {
             currentOperand = Math.PI.toString();
             updateDisplay();
         }
-
+    
         function calculateFactorial() {
             let num = parseInt(currentOperand);
             if (num < 0) {
                 currentOperand = 'Error';
-                updateDisplay();
-                return;
+            } else if (num > 170) { // Maximum accurate factorial in JavaScript
+                currentOperand = 'Infinity';
+            } else {
+                let result = 1;
+                for (let i = 2; i <= num; i++) {
+                    result *= i;
+                }
+                currentOperand = result.toString();
             }
-            let result = 1;
-            for (let i = 2; i <= num; i++) {
-                result *= i;
-            }
-            currentOperand = result.toString();
             updateDisplay();
         }
-
+    
         function calculateLog() {
-            currentOperand = Math.log10(parseFloat(currentOperand)).toString();
+            const num = parseFloat(currentOperand);
+            if (num <= 0) {
+                currentOperand = 'Error';
+            } else {
+                const result = Math.log10(num);
+                currentOperand = result.toFixed(8).replace(/\.?0+$/, '');
+            }
             updateDisplay();
         }
-
+    
         function calculateLn() {
-            currentOperand = Math.log(parseFloat(currentOperand)).toString();
+            const num = parseFloat(currentOperand);
+            if (num <= 0) {
+                currentOperand = 'Error';
+            } else {
+                const result = Math.log(num);
+                currentOperand = result.toFixed(8).replace(/\.?0+$/, '');
+            }
             updateDisplay();
         }
-
+    
         function calculateExp() {
-            currentOperand = Math.exp(parseFloat(currentOperand)).toString();
+            const result = Math.exp(parseFloat(currentOperand));
+            currentOperand = result > 1e15 ? result.toExponential(6) : result.toFixed(8).replace(/\.?0+$/, '');
             updateDisplay();
         }
-
+    
         function calculateAbs() {
             currentOperand = Math.abs(parseFloat(currentOperand)).toString();
             updateDisplay();
         }
-
+    
         function calculateReciprocal() {
-            currentOperand = (1 / parseFloat(currentOperand)).toString();
+            const num = parseFloat(currentOperand);
+            if (num === 0) {
+                currentOperand = 'Error';
+            } else {
+                const result = 1 / num;
+                currentOperand = result.toFixed(8).replace(/\.?0+$/, '');
+            }
             updateDisplay();
         }
-
+    
         // Toggle scientific functions
         function toggleScientific() {
-            document.querySelector('.calculator').classList.toggle('show-scientific');
-            const btn = document.querySelector('.toggle-scientific');
-            if (btn.innerText === 'Show Scientific Functions') {
-                btn.innerText = 'Hide Scientific Functions';
-            } else {
-                btn.innerText = 'Show Scientific Functions';
-            }
+            isScientificShown = !isScientificShown;
+            calculator.classList.toggle('show-scientific', isScientificShown);
+            toggleBtn.innerText = isScientificShown ? 
+                'Hide Scientific Functions' : 
+                'Show Scientific Functions';
         }
-
+    
         // Keyboard support
         document.addEventListener('keydown', function(e) {
             if (e.key >= '0' && e.key <= '9') appendNumber(e.key);
             else if (e.key === '.') appendNumber('.');
             else if (e.key === '+') appendOperator('+');
             else if (e.key === '-') appendOperator('-');
-            else if (e.key === '*') appendOperator('*');
+            else if (e.key === '*' || e.key === 'x') appendOperator('*');
             else if (e.key === '/') appendOperator('/');
             else if (e.key === '%') appendOperator('%');
-            else if (e.key === 'Enter' || e.key === '=') calculate();
+            else if (e.key === 'Enter' || e.key === '=') {
+                e.preventDefault();
+                calculate();
+            }
             else if (e.key === 'Escape') clearAll();
             else if (e.key === 'Backspace') deleteLastChar();
             else if (e.key === '^') calculatePower();
+            else if (e.key === 'p' || e.key === 'P') calculatePi();
         });
-
+    
         // Initialize display
         updateDisplay();
     </script>
