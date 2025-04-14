@@ -90,18 +90,11 @@
         }
 
         /* Navigation */
-        
         .navigation {
-            position: fixed;
-            top: 0;
-            left: 0;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 1rem;
-            background: #000;
-            z-index: 9999;
-            width: 100%;
+            padding: 1rem 0;
         }
 
         .navigation ul {
