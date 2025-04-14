@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Scientific Calculator</title>
+    <style>
+        :root {
+            --primary-color: #3498db;
+            --secondary-color: #2c3e50;
+            --accent-color: #e74c3c;
+            --text-color: #ecf0f1;
+            --button-bg: #34495e;
+            --button-hover: #2c3e50;
+            --display-bg: #1a252f;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background: linear-gradient(135deg, #2c3e50, #4ca1af);
+            color: var(--text-color);
+        }
+
+        .calculator {
+            width: 350px;
+            background-color: var(--secondary-color);
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+            overflow: hidden;
+            transition: transform 0.3s ease;
+        }
+
+        .calculator:hover {
+            transform: translateY(-5px);
+        }
+
+        .display {
+            padding: 20px;
+            text-align: right;
+            background-color: var(--display-bg);
+            position: relative;
+        }
+
+        .previous-operand {
+            font-size: 1.2rem;
+            color: rgba(236, 240, 241, 0.7);
+            height: 24px;
+            overflow: hidden;
+        }
+
+        .current-operand {
+            font-size: 2.5rem;
+            margin-top: 10px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .buttons {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 1px;
+            background-color: rgba(0, 0, 0, 0.1);
+        }
+
+        button {
+            border: none;
+            outline: none;
+            padding: 20px;
+            font-size: 1.2rem;
+            cursor: pointer;
+            background-color: var(--button-bg);
+            color: var(--text-color);
+            transition: all 0.2s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        button:hover {
+            background-color: var(--button-hover);
+        }
+
+        button:active {
+            transform: scale(0.95);
+        }
+
+        button.operator {
+            background-color: var(--primary-color);
+        }
+
+        button.operator:hover {
+            background-color: #2980b9;
+        }
+
+        button.function {
+            background-color: #7f8c8d;
+        }
+
+        button.function:hover {
+            background-color: #6c7a7d;
+        }
+
+        button.equals {
+            background-color: var(--accent-color);
+            grid-column: span 2;
+        }
+
+        button.equals:hover {
+            background-color: #c0392b;
+        }
+
+        button.clear {
+            background-color: #e67e22;
+        }
+
+        button.clear:hover {
+            background-color: #d35400;
+        }
+
+        button.delete {
+            background-color: #9b59b6;
+        }
+
+        button.delete:hover {
+            background-color: #8e44ad;
+        }
+
+        .scientific {
+            display: none;
+        }
+
+        .toggle-scientific {
+            grid-column: span 5;
+            background-color: #16a085;
+            padding: 15px;
+            font-size: 1rem;
+        }
+
+        .toggle-scientific:hover {
+            background-color: #1abc9c;
+        }
+
+        .show-scientific .scientific {
+            display: block;
+        }
+
+        /* Ripple effect */
+        .ripple {
+            position: absolute;
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            transform: scale(0);
+            animation: ripple 0.6s linear;
+            pointer-events: none;
+        }
+
+        @keyframes ripple {
+            to {
+                transform: scale(4);
+                opacity: 0;
+            }
+        }
+
+        /* Responsive design */
+        @media (max-width: 400px) {
+            .calculator {
+                width: 100%;
+                border-radius: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="calculator">
+        <div class="display">
+            <div class="previous-operand" id="previous-operand"></div>
+            <div class="current-operand" id="current-operand">0</div>
+        </div>
+        <div class="buttons">
+            <button class="clear" onclick="clearAll()">AC</button>
+            <button class="delete" onclick="deleteLastChar()">DEL</button>
+            <button class="function" onclick="appendOperator('%')">%</button>
+            <button class="operator" onclick="appendOperator('/')">/</button>
+            <button class="function" onclick="calculateSquareRoot()">√</button>
+            
+            <button onclick="appendNumber('7')">7</button>
+            <button onclick="appendNumber('8')">8</button>
+            <button onclick="appendNumber('9')">9</button>
+            <button class="operator" onclick="appendOperator('*')">×</button>
+            <button class="function" onclick="calculatePower()">x^y</button>
+            
+            <button onclick="appendNumber('4')">4</button>
+            <button onclick="appendNumber('5')">5</button>
+            <button onclick="appendNumber('6')">6</button>
+            <button class="operator" onclick="appendOperator('-')">-</button>
+            <button class="function" onclick="calculateSin()">sin</button>
+            
+            <button onclick="appendNumber('1')">1</button>
+            <button onclick="appendNumber('2')">2</button>
+            <button onclick="appendNumber('3')">3</button>
+            <button class="operator" onclick="appendOperator('+')">+</button>
+            <button class="function" onclick="calculateCos()">cos</button>
+            
+            <button onclick="appendNumber('0')">0</button>
+            <button onclick="appendNumber('.')">.</button>
+            <button class="function" onclick="calculatePi()">π</button>
+            <button class="function" onclick="calculateFactorial()">x!</button>
+            <button class="function" onclick="calculateTan()">tan</button>
+            
+            <button class="equals" onclick="calculate()">=</button>
+            <button class="toggle-scientific" onclick="toggleScientific()">Show Scientific Functions</button>
+            
+            <div class="scientific">
+                <button class="function" onclick="calculateLog()">log</button>
+                <button class="function" onclick="calculateLn()">ln</button>
+                <button class="function" onclick="calculateExp()">e^x</button>
+                <button class="function" onclick="calculateAbs()">|x|</button>
+                <button class="function" onclick="calculateReciprocal()">1/x</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Calculator state
+        let currentOperand = '0';
+        let previousOperand = '';
+        let operation = undefined;
+        let resetScreen = false;
+
+        // DOM elements
+        const currentOperandElement = document.getElementById('current-operand');
+        const previousOperandElement = document.getElementById('previous-operand');
+        const buttons = document.querySelectorAll('button');
+
+        // Add ripple effect to buttons
+        buttons.forEach(button => {
+            button.addEventListener('click', function(e) {
+                const rect = this.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                
+                const ripple = document.createElement('span');
+                ripple.classList.add('ripple');
+                ripple.style.left = `${x}px`;
+                ripple.style.top = `${y}px`;
+                
+                this.appendChild(ripple);
+                
+                setTimeout(() => {
+                    ripple.remove();
+                }, 600);
+            });
+        });
+
+        // Update the display
+        function updateDisplay() {
+            currentOperandElement.innerText = currentOperand;
+            if (operation != null) {
+                previousOperandElement.innerText = `${previousOperand} ${operation}`;
+            } else {
+                previousOperandElement.innerText = previousOperand;
+            }
+        }
+
+        // Append a number to the current operand
+        function appendNumber(number) {
+            if (currentOperand === '0' || resetScreen) {
+                currentOperand = '';
+                resetScreen = false;
+            }
+            if (number === '.' && currentOperand.includes('.')) return;
+            currentOperand += number;
+            updateDisplay();
+        }
+
+        // Append an operator
+        function appendOperator(op) {
+            if (currentOperand === '') return;
+            if (previousOperand !== '') {
+                calculate();
+            }
+            operation = op;
+            previousOperand = currentOperand;
+            currentOperand = '';
+            updateDisplay();
+        }
+
+        // Clear all
+        function clearAll() {
+            currentOperand = '0';
+            previousOperand = '';
+            operation = undefined;
+            updateDisplay();
+        }
+
+        // Delete the last character
+        function deleteLastChar() {
+            if (currentOperand.length === 1 || (currentOperand.length === 2 && currentOperand.startsWith('-'))) {
+                currentOperand = '0';
+            } else {
+                currentOperand = currentOperand.slice(0, -1);
+            }
+            updateDisplay();
+        }
+
+        // Perform the calculation
+        function calculate() {
+            let computation;
+            const prev = parseFloat(previousOperand);
+            const current = parseFloat(currentOperand);
+            
+            if (isNaN(prev) return;
+            
+            switch (operation) {
+                case '+':
+                    computation = prev + current;
+                    break;
+                case '-':
+                    computation = prev - current;
+                    break;
+                case '*':
+                    computation = prev * current;
+                    break;
+                case '/':
+                    computation = prev / current;
+                    break;
+                case '%':
+                    computation = prev % current;
+                    break;
+                case '^':
+                    computation = Math.pow(prev, current);
+                    break;
+                default:
+                    return;
+            }
+            
+            currentOperand = computation.toString();
+            operation = undefined;
+            previousOperand = '';
+            resetScreen = true;
+            updateDisplay();
+        }
+
+        // Scientific functions
+        function calculateSquareRoot() {
+            currentOperand = Math.sqrt(parseFloat(currentOperand)).toString();
+            updateDisplay();
+        }
+
+        function calculatePower() {
+            operation = '^';
+            previousOperand = currentOperand;
+            currentOperand = '';
+            updateDisplay();
+        }
+
+        function calculateSin() {
+            currentOperand = Math.sin(parseFloat(currentOperand)).toString();
+            updateDisplay();
+        }
+
+        function calculateCos() {
+            currentOperand = Math.cos(parseFloat(currentOperand)).toString();
+            updateDisplay();
+        }
+
+        function calculateTan() {
+            currentOperand = Math.tan(parseFloat(currentOperand)).toString();
+            updateDisplay();
+        }
+
+        function calculatePi() {
+            currentOperand = Math.PI.toString();
+            updateDisplay();
+        }
+
+        function calculateFactorial() {
+            let num = parseInt(currentOperand);
+            if (num < 0) {
+                currentOperand = 'Error';
+                updateDisplay();
+                return;
+            }
+            let result = 1;
+            for (let i = 2; i <= num; i++) {
+                result *= i;
+            }
+            currentOperand = result.toString();
+            updateDisplay();
+        }
+
+        function calculateLog() {
+            currentOperand = Math.log10(parseFloat(currentOperand)).toString();
+            updateDisplay();
+        }
+
+        function calculateLn() {
+            currentOperand = Math.log(parseFloat(currentOperand)).toString();
+            updateDisplay();
+        }
+
+        function calculateExp() {
+            currentOperand = Math.exp(parseFloat(currentOperand)).toString();
+            updateDisplay();
+        }
+
+        function calculateAbs() {
+            currentOperand = Math.abs(parseFloat(currentOperand)).toString();
+            updateDisplay();
+        }
+
+        function calculateReciprocal() {
+            currentOperand = (1 / parseFloat(currentOperand)).toString();
+            updateDisplay();
+        }
+
+        // Toggle scientific functions
+        function toggleScientific() {
+            document.querySelector('.calculator').classList.toggle('show-scientific');
+            const btn = document.querySelector('.toggle-scientific');
+            if (btn.innerText === 'Show Scientific Functions') {
+                btn.innerText = 'Hide Scientific Functions';
+            } else {
+                btn.innerText = 'Show Scientific Functions';
+            }
+        }
+
+        // Keyboard support
+        document.addEventListener('keydown', function(e) {
+            if (e.key >= '0' && e.key <= '9') appendNumber(e.key);
+            else if (e.key === '.') appendNumber('.');
+            else if (e.key === '+') appendOperator('+');
+            else if (e.key === '-') appendOperator('-');
+            else if (e.key === '*') appendOperator('*');
+            else if (e.key === '/') appendOperator('/');
+            else if (e.key === '%') appendOperator('%');
+            else if (e.key === 'Enter' || e.key === '=') calculate();
+            else if (e.key === 'Escape') clearAll();
+            else if (e.key === 'Backspace') deleteLastChar();
+            else if (e.key === '^') calculatePower();
+        });
+
+        // Initialize display
+        updateDisplay();
+    </script>
+</body>
+</html>
