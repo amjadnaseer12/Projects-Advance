@@ -1,4 +1,4 @@
-// Add this at the top of your JavaScript file
+// Import GLTFLoader from three.js
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
 
 // Three.js Background Animation
@@ -225,8 +225,6 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 });
 
-// Add this after your particle background code but before the animate function
-
 // 3D Model for Header
 const headerModelContainer = document.getElementById('header-model');
 const headerRenderer = new THREE.WebGLRenderer({
@@ -277,7 +275,7 @@ window.addEventListener('resize', () => {
     headerCamera.updateProjectionMatrix();
 });
 
-
+// Load 3D model for header
 const loader = new GLTFLoader();
 let model;
 
