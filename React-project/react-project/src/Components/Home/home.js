@@ -10,7 +10,6 @@ const Home = () => {
 
   return (
     <div className="home-container">
-      {/* Navbar */}
       <nav className="navbar">
         <div className="logo">
           <span>LOGO</span>
@@ -34,7 +33,6 @@ const Home = () => {
         </ul>
       </nav>
 
-      {/* Hero Section */}
       <section className="hero">
         <h1>Welcome to Our Website</h1>
         <p>Discover amazing experiences with our services</p>
