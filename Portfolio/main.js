@@ -1,404 +1,204 @@
-// Main initialization function that runs when DOM is loaded
-document.addEventListener('DOMContentLoaded', function() {
-    // Initialize Three.js background
-    initThreeJSBackground();
+// Background Animation
+const canvas = document.getElementById('bgCanvas');
+const ctx = canvas.getContext('2d');
+
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
+
+const particles = [];
+const particleCount = Math.floor(window.innerWidth / 10);
+
+// Particle constructor
+function Particle() {
+    this.x = Math.random() * canvas.width;
+    this.y = Math.random() * canvas.height;
+    this.size = Math.random() * 3 + 1;
+    this.speedX = Math.random() * 1 - 0.5;
+    this.speedY = Math.random() * 1 - 0.5;
+    this.color = `rgba(255, 77, 77, ${Math.random() * 0.5 + 0.1})`;
+}
+
+Particle.prototype.update = function() {
+    this.x += this.speedX;
+    this.y += this.speedY;
     
-    // Initialize header 3D model
-    initHeaderModel();
+    if (this.x < 0 || this.x > canvas.width) {
+        this.speedX = -this.speedX;
+    }
+    if (this.y < 0 || this.y > canvas.height) {
+        this.speedY = -this.speedY;
+    }
+};
+
+Particle.prototype.draw = function() {
+    ctx.fillStyle = this.color;
+    ctx.beginPath();
+    ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+    ctx.fill();
+};
+
+// Create particles
+for (let i = 0; i < particleCount; i++) {
+    particles.push(new Particle());
+}
+
+// Animation loop
+function animate() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
     
-    // Initialize animations
-    initAnimations();
+    for (let i = 0; i < particles.length; i++) {
+        particles[i].update();
+        particles[i].draw();
+        
+        // Connect particles
+        for (let j = i + 1; j < particles.length; j++) {
+            const dx = particles[i].x - particles[j].x;
+            const dy = particles[i].y - particles[j].y;
+            const distance = Math.sqrt(dx * dx + dy * dy);
+            
+            if (distance < 100) {
+                ctx.strokeStyle = `rgba(255, 77, 77, ${1 - distance / 100})`;
+                ctx.lineWidth = 0.5;
+                ctx.beginPath();
+                ctx.moveTo(particles[i].x, particles[i].y);
+                ctx.lineTo(particles[j].x, particles[j].y);
+                ctx.stroke();
+            }
+        }
+    }
     
-    // Initialize event listeners
-    initEventListeners();
-    
-    // Initialize skill bars
-    initSkillBars();
+    requestAnimationFrame(animate);
+}
+
+animate();
+
+// Handle window resize
+window.addEventListener('resize', function() {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
 });
 
-// Three.js Background Animation
-function initThreeJSBackground() {
-    const bgCanvas = document.getElementById('bgCanvas');
-    if (!bgCanvas) return;
+// GSAP Animations
+gsap.registerPlugin(ScrollTrigger);
 
-    // Create renderer
-    const renderer = new THREE.WebGLRenderer({
-        canvas: bgCanvas,
-        antialias: true,
-        alpha: true
-    });
-    renderer.setPixelRatio(window.devicePixelRatio);
-    renderer.setSize(window.innerWidth, window.innerHeight);
+// Header animation
+gsap.from(".header-content h1", {
+    duration: 1,
+    y: 50,
+    opacity: 0,
+    ease: "power3.out"
+});
 
-    // Create scene and camera
-    const scene = new THREE.Scene();
-    const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-    camera.position.z = 5;
+gsap.from(".header-content p", {
+    duration: 1,
+    y: 50,
+    opacity: 0,
+    ease: "power3.out",
+    delay: 0.3
+});
 
-    // Create particles
-    const particlesGeometry = new THREE.BufferGeometry();
-    const particleCount = 1500;
+// Section animations
+const sections = document.querySelectorAll('.section');
 
-    const posArray = new Float32Array(particleCount * 3);
-    const colorArray = new Float32Array(particleCount * 3);
-
-    for(let i = 0; i < particleCount * 3; i++) {
-        posArray[i] = (Math.random() - 0.5) * 10;
-        colorArray[i] = Math.random();
-    }
-
-    particlesGeometry.setAttribute('position', new THREE.BufferAttribute(posArray, 3));
-    particlesGeometry.setAttribute('color', new THREE.BufferAttribute(colorArray, 3));
-
-    const particlesMaterial = new THREE.PointsMaterial({
-        size: 0.02,
-        vertexColors: true,
-        transparent: true,
-        opacity: 0.8,
-        blending: THREE.AdditiveBlending
-    });
-
-    const particlesMesh = new THREE.Points(particlesGeometry, particlesMaterial);
-    scene.add(particlesMesh);
-
-    // Animation loop
-    function animate() {
-        requestAnimationFrame(animate);
-        
-        particlesMesh.rotation.x += 0.0005 * Math.sin(Date.now() * 0.001);
-        particlesMesh.rotation.y += 0.0007 * Math.cos(Date.now() * 0.0007);
-        particlesMesh.material.size = 0.02 + 0.005 * Math.sin(Date.now() * 0.002);
-        
-        renderer.render(scene, camera);
-    }
-    animate();
-
-    // Handle window resize
-    window.addEventListener('resize', function() {
-        camera.aspect = window.innerWidth / window.innerHeight;
-        camera.updateProjectionMatrix();
-        renderer.setSize(window.innerWidth, window.innerHeight);
-    });
-}
-
-// Header 3D Model Initialization
-function initHeaderModel() {
-    const headerModelContainer = document.getElementById('header-model');
-    if (!headerModelContainer) return;
-
-    // Create renderer
-    const headerRenderer = new THREE.WebGLRenderer({
-        antialias: true,
-        alpha: true
-    });
-    headerRenderer.setPixelRatio(window.devicePixelRatio);
-    headerRenderer.setSize(headerModelContainer.offsetWidth, headerModelContainer.offsetHeight);
-    headerModelContainer.appendChild(headerRenderer.domElement);
-
-    // Create scene and camera
-    const headerScene = new THREE.Scene();
-    const headerCamera = new THREE.PerspectiveCamera(75, headerModelContainer.offsetWidth / headerModelContainer.offsetHeight, 0.1, 1000);
-    headerCamera.position.z = 5;
-
-    // Add lights
-    const ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
-    headerScene.add(ambientLight);
-
-    const directionalLight = new THREE.DirectionalLight(0xffffff, 0.8);
-    directionalLight.position.set(1, 1, 1);
-    headerScene.add(directionalLight);
-
-    // Create a placeholder geometry (fallback if model fails to load)
-    const geometry = new THREE.BoxGeometry(2, 2, 2);
-    const material = new THREE.MeshStandardMaterial({
-        color: 0xff4d4d,
-        metalness: 0.7,
-        roughness: 0.2
-    });
-    const cube = new THREE.Mesh(geometry, material);
-    headerScene.add(cube);
-
-    // Try to load GLTF model
-    try {
-        const loader = new GLTFLoader();
-        loader.load(
-            'models/your-model.glb',
-            function(gltf) {
-                // Remove placeholder cube
-                headerScene.remove(cube);
-                
-                // Add loaded model
-                const model = gltf.scene;
-                model.scale.set(0.5, 0.5, 0.5);
-                model.position.y = -1;
-                headerScene.add(model);
-                
-                // Animate model
-                function animate() {
-                    requestAnimationFrame(animate);
-                    model.rotation.y += 0.01;
-                    headerRenderer.render(headerScene, headerCamera);
-                }
-                animate();
-            },
-            undefined,
-            function(error) {
-                console.error('Error loading 3D model:', error);
-                // Fallback to cube animation
-                function animate() {
-                    requestAnimationFrame(animate);
-                    cube.rotation.x += 0.005;
-                    cube.rotation.y += 0.01;
-                    headerRenderer.render(headerScene, headerCamera);
-                }
-                animate();
-            }
-        );
-    } catch (error) {
-        console.error('GLTFLoader not available:', error);
-        // Simple cube animation as fallback
-        function animate() {
-            requestAnimationFrame(animate);
-            cube.rotation.x += 0.005;
-            cube.rotation.y += 0.01;
-            headerRenderer.render(headerScene, headerCamera);
-        }
-        animate();
-    }
-
-    // Handle window resize
-    window.addEventListener('resize', function() {
-        headerRenderer.setSize(headerModelContainer.offsetWidth, headerModelContainer.offsetHeight);
-        headerCamera.aspect = headerModelContainer.offsetWidth / headerModelContainer.offsetHeight;
-        headerCamera.updateProjectionMatrix();
-    });
-}
-
-// Initialize GSAP Animations
-function initAnimations() {
-    // Register ScrollTrigger plugin
-    gsap.registerPlugin(ScrollTrigger);
-
-    // Initial load animations
-    gsap.from('.title', {
-        duration: 1.5,
+sections.forEach(section => {
+    gsap.from(section, {
+        scrollTrigger: {
+            trigger: section,
+            start: "top 80%",
+            toggleActions: "play none none none"
+        },
         y: 50,
         opacity: 0,
-        ease: 'power3.out'
-    });
-
-    gsap.from('.tagline', {
-        duration: 1.5,
-        y: 50,
-        opacity: 0,
-        ease: 'power3.out',
-        delay: 0.3
-    });
-
-    gsap.from('.navigation li', {
         duration: 1,
-        y: 30,
-        opacity: 0,
-        stagger: 0.1,
-        ease: 'power3.out',
-        delay: 0.6
+        ease: "power3.out"
     });
+});
 
-    // Section animations
-    gsap.utils.toArray('section').forEach(section => {
-        gsap.from(section, {
-            scrollTrigger: {
-                trigger: section,
-                start: 'top 80%',
-                toggleActions: 'play none none none',
-                once: true
-            },
-            y: 50,
-            opacity: 0,
-            duration: 1,
-            ease: 'power3.out'
-        });
+// Service cards animation
+gsap.from(".service-card", {
+    scrollTrigger: {
+        trigger: ".services-section",
+        start: "top 80%",
+        toggleActions: "play none none none"
+    },
+    y: 50,
+    opacity: 0,
+    duration: 0.8,
+    stagger: 0.2,
+    ease: "power3.out"
+});
+
+// Project cards animation
+gsap.from(".project-card", {
+    scrollTrigger: {
+        trigger: ".projects-section",
+        start: "top 80%",
+        toggleActions: "play none none none"
+    },
+    y: 50,
+    opacity: 0,
+    duration: 0.8,
+    stagger: 0.2,
+    ease: "power3.out"
+});
+
+// Skill bars animation
+document.querySelectorAll('.skill-level').forEach(bar => {
+    const level = bar.getAttribute('data-level');
+    gsap.to(bar, {
+        scrollTrigger: {
+            trigger: bar.parentElement.parentElement,
+            start: "top 80%",
+            toggleActions: "play none none none"
+        },
+        width: level,
+        duration: 1.5,
+        ease: "power3.out"
     });
+});
 
-    // Service cards animation
-    gsap.utils.toArray('.service-card').forEach((card, i) => {
-        gsap.from(card, {
-            scrollTrigger: {
-                trigger: '.services-section',
-                start: 'top 80%',
-                toggleActions: 'play none none none',
-                once: true
-            },
-            y: 50,
-            opacity: 0,
-            duration: 0.8,
-            delay: i * 0.1,
-            ease: 'power3.out'
-        });
+// Mobile menu toggle
+const menuToggle = document.querySelector('.menu-toggle');
+const navMenu = document.querySelector('.navigation ul');
+
+menuToggle.addEventListener('click', function() {
+    navMenu.classList.toggle('active');
+    document.body.classList.toggle('menu-open');
+});
+
+// Close menu when clicking a link
+document.querySelectorAll('.navigation a').forEach(link => {
+    link.addEventListener('click', function() {
+        navMenu.classList.remove('active');
+        document.body.classList.remove('menu-open');
     });
+});
 
-    // Project cards animation
-    gsap.utils.toArray('.project-card').forEach((card, i) => {
-        gsap.from(card, {
-            scrollTrigger: {
-                trigger: '.projects-section',
-                start: 'top 80%',
-                toggleActions: 'play none none none',
-                once: true
-            },
-            y: 50,
-            opacity: 0,
-            duration: 0.8,
-            delay: i * 0.1,
-            ease: 'power3.out'
-        });
-    });
-
-    // Refresh ScrollTrigger after all animations are set up
-    ScrollTrigger.refresh();
-}
-
-// Initialize Event Listeners
-function initEventListeners() {
-    // Mobile menu toggle
-    const menuToggle = document.querySelector('.menu-toggle');
-    const navMenu = document.querySelector('.navigation ul');
-    
-    if (menuToggle && navMenu) {
-        menuToggle.addEventListener('click', function() {
-            this.classList.toggle('active');
-            navMenu.classList.toggle('active');
-            document.body.style.overflow = navMenu.classList.contains('active') ? 'hidden' : '';
-        });
-        
-        // Close menu when clicking on links
-        document.querySelectorAll('.navigation a').forEach(link => {
-            link.addEventListener('click', function() {
-                menuToggle.classList.remove('active');
-                navMenu.classList.remove('active');
-                document.body.style.overflow = '';
-            });
-        });
-    }
-
-    // Form submission handler
-    const contactForm = document.querySelector('.contact-form');
-    if (contactForm) {
-        contactForm.addEventListener('submit', function(e) {
-            e.preventDefault();
-            
-            // Show success message
-            const successMsg = document.createElement('div');
-            successMsg.className = 'form-success';
-            successMsg.textContent = 'Message sent successfully!';
-            this.parentNode.insertBefore(successMsg, this);
-            
-            // Remove message after 3 seconds and reset form
-            setTimeout(() => {
-                successMsg.remove();
-                this.reset();
-            }, 3000);
-        });
-    }
-
-    // Loader animation
+// Page loader
+window.addEventListener('load', function() {
     const loader = document.querySelector('.loader');
-    if (loader) {
-        window.addEventListener('load', function() {
-            gsap.to(loader, {
-                opacity: 0,
-                duration: 0.5,
-                onComplete: function() {
-                    loader.style.display = 'none';
-                    ScrollTrigger.refresh();
-                }
-            });
-        });
-    }
-}
-
-// Initialize Skill Bars
-function initSkillBars() {
-    document.querySelectorAll('.skill-level').forEach(bar => {
-        const level = bar.getAttribute('data-level');
-        if (level) {
-            // Set initial width to 0
-            bar.style.width = '0';
-            
-            // Animate to specified width when in view
-            gsap.to(bar, {
-                scrollTrigger: {
-                    trigger: bar.closest('.skill-item'),
-                    start: 'top 80%',
-                    toggleActions: 'play none none none',
-                    once: true
-                },
-                width: level,
-                duration: 1.5,
-                ease: 'power3.out'
-            });
+    gsap.to(loader, {
+        opacity: 0,
+        duration: 0.5,
+        onComplete: function() {
+            loader.style.display = 'none';
         }
     });
-}
+});
 
-
-function setupInteractiveModel(model) {
-    // Make model interactive
-    model.traverse(child => {
-        if (child.isMesh) {
-            child.userData.originalColor = child.material.color.clone();
-            
-            // Make it clickable
-            child.cursor = 'pointer';
-            
-            // Add hover effect
-            child.on('pointerover', () => {
-                child.material.color.set(0xff4d4d);
-            });
-            
-            child.on('pointerout', () => {
-                child.material.color.copy(child.userData.originalColor);
-            });
-            
-            // Add click event
-            child.on('click', () => {
-                // Example: Rotate the model on click
-                gsap.to(model.rotation, {
-                    y: model.rotation.y + Math.PI / 2,
-                    duration: 1,
-                    ease: 'power2.inOut'
-                });
-            });
-        }
-    });
-    
-    // Enable raycasting for interactivity
-    const raycaster = new THREE.Raycaster();
-    const pointer = new THREE.Vector2();
-    
-    function onPointerMove(event) {
-        pointer.x = (event.clientX / window.innerWidth) * 2 - 1;
-        pointer.y = -(event.clientY / window.innerHeight) * 2 + 1;
-    }
-    
-    function checkIntersection() {
-        raycaster.setFromCamera(pointer, camera);
-        const intersects = raycaster.intersectObjects(scene.children, true);
+// Smooth scrolling for anchor links
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function(e) {
+        e.preventDefault();
         
-        if (intersects.length > 0) {
-            document.body.style.cursor = 'pointer';
-        } else {
-            document.body.style.cursor = 'auto';
+        const targetId = this.getAttribute('href');
+        const targetElement = document.querySelector(targetId);
+        
+        if (targetElement) {
+            window.scrollTo({
+                top: targetElement.offsetTop - 80,
+                behavior: 'smooth'
+            });
         }
-    }
-    
-    window.addEventListener('pointermove', onPointerMove);
-    
-    // Run in animation loop
-    function animate() {
-        requestAnimationFrame(animate);
-        checkIntersection();
-        renderer.render(scene, camera);
-    }
-    animate();
-}
+    });
+});
