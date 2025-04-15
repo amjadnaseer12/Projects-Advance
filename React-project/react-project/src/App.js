@@ -3,27 +3,30 @@ import Board from './Components/Board';
 import './App.css';
 
 function App() {
-  const [currentPlayer, setCurrentPlayer] = useState(0);
-  const [diceValue, setDiceValue] = useState(0);
   const [gameStarted, setGameStarted] = useState(false);
+  const [players, setPlayers] = useState(4); // Default to 4 players
 
-  const startGame = () => {
+  const startGame = (numPlayers) => {
+    setPlayers(numPlayers);
     setGameStarted(true);
-    setCurrentPlayer(0);
   };
 
   return (
     <div className="app">
       <h1>Ludo Game</h1>
       {!gameStarted ? (
-        <button onClick={startGame}>Start Game</button>
+        <div className="start-menu">
+          <h2>Select Number of Players</h2>
+          <div className="player-options">
+            {[2, 3, 4].map(num => (
+              <button key={num} onClick={() => startGame(num)}>
+                {num} Players
+              </button>
+            ))}
+          </div>
+        </div>
       ) : (
-        <Board 
-          currentPlayer={currentPlayer}
-          setCurrentPlayer={setCurrentPlayer}
-          diceValue={diceValue}
-          setDiceValue={setDiceValue}
-        />
+        <Board players={players} />
       )}
     </div>
   );

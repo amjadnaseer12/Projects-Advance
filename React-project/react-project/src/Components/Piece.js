@@ -1,14 +1,12 @@
-import React, { useState } from 'react';
+import React from 'react';
 import './Piece.css';
 
-const Piece = ({ color, player, currentPlayer }) => {
-  const [position, setPosition] = useState(0);
-  const [isActive, setIsActive] = useState(false);
-
+const Piece = ({ color, player, isActive, onClick, onMouseEnter, position }) => {
   return (
     <div 
       className={`piece piece-${color} ${isActive ? 'active' : ''}`}
-      onClick={() => currentPlayer === player && setIsActive(!isActive)}
+      onClick={onClick}
+      onMouseEnter={onMouseEnter}
     >
       {player + 1}
     </div>

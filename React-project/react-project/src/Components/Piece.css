@@ -1,48 +1,41 @@
 .piece {
-    width: 20px;
-    height: 20px;
-    border-radius: 50%;
-    margin: 2px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 10px;
-    font-weight: bold;
-    color: white;
-    cursor: pointer;
-    transition: transform 0.2s;
-  }
-  
-  .piece:hover {
-    transform: scale(1.1);
-  }
-  
-  .piece.active {
-    border: 2px solid black;
-    box-shadow: 0 0 5px 2px rgba(255, 255, 255, 0.8);
-  }
-  
-  .piece-red {
-    background-color: red;
-  }
-  
-  .piece-blue {
-    background-color: blue;
-  }
-  
-  .piece-green {
-    background-color: green;
-  }
-  
-  .piece-yellow {
-    background-color: yellow;
-    color: black;
-  }
-  
-  .piece-marker {
-    width: 15px;
-    height: 15px;
-    border-radius: 50%;
-    margin: 2px;
-    display: inline-block;
-  }
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  margin: 2px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 12px;
+  font-weight: bold;
+  color: white;
+  cursor: pointer;
+  transition: transform 0.2s;
+  z-index: 10;
+}
+
+.piece:hover {
+  transform: scale(1.1);
+}
+
+.piece.active {
+  border: 2px solid black;
+  box-shadow: 0 0 5px 2px rgba(255, 255, 255, 0.8);
+}
+
+.piece-red {
+  background-color: red;
+}
+
+.piece-blue {
+  background-color: blue;
+}
+
+.piece-green {
+  background-color: green;
+}
+
+.piece-yellow {
+  background-color: yellow;
+  color: black;
+}

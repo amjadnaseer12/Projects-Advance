@@ -1,23 +1,49 @@
 .dice-container {
-    margin: 20px 0;
-    text-align: center;
-  }
-  
-  .dice {
-    width: 60px;
-    height: 60px;
-    background-color: white;
-    border: 2px solid #333;
-    border-radius: 10px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 24px;
-    font-weight: bold;
-    cursor: pointer;
-    margin: 0 auto;
-  }
-  
-  .dice:hover {
-    background-color: #f0f0f0;
-  }
+  margin: 20px 0;
+  text-align: center;
+}
+
+.dice {
+  width: 60px;
+  height: 60px;
+  background-color: white;
+  border: 2px solid #333;
+  border-radius: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 24px;
+  font-weight: bold;
+  cursor: pointer;
+  margin: 0 auto;
+}
+
+.dice:hover {
+  background-color: #f0f0f0;
+}
+
+.dice-red {
+  border-color: red;
+  color: red;
+}
+
+.dice-blue {
+  border-color: blue;
+  color: blue;
+}
+
+.dice-green {
+  border-color: green;
+  color: green;
+}
+
+.dice-yellow {
+  border-color: #cc0;
+  color: #cc0;
+}
+
+.turn-indicator {
+  font-weight: bold;
+  font-size: 18px;
+  margin-top: 10px;
+}

@@ -1,21 +1,24 @@
 .player-area {
-    padding: 10px;
-    border: 2px solid #ccc;
-    border-radius: 5px;
-    text-align: center;
-    min-width: 100px;
-  }
-  
-  .player-area.active {
-    border-color: #333;
-    background-color: #f0f0f0;
-  }
-  
-  .player-area h3 {
-    margin: 0 0 5px 0;
-  }
-  
-  .pieces {
-    display: flex;
-    justify-content: center;
-  }
+  padding: 10px;
+  border: 2px solid #ccc;
+  border-radius: 5px;
+  text-align: center;
+  min-width: 120px;
+  margin: 10px;
+}
+
+.player-area.active {
+  border-color: #333;
+  background-color: #f0f0f0;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.player-area h3 {
+  margin: 0 0 5px 0;
+}
+
+.piece-count {
+  display: flex;
+  justify-content: space-between;
+  font-size: 14px;
+}
