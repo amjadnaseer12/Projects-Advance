@@ -1,210 +1,66 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mobile Parts 3D Showcase</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="./style.css">
 </head>
-<body data-barba="wrapper">
-    <!-- Preloader -->
-    <div class="preloader">
-        <div class="preloader-circle"></div>
-        <div class="preloader-text">Loading</div>
+
+<body data-scroll-container>
+    <div class="loader">
+        <div class="loader-progress">Loading 3D models...</div>
     </div>
 
-    <!-- Main content wrapper -->
-    <div class="barba-container" data-barba="container" data-barba-namespace="home">
-        <!-- Navigation -->
-        <nav class="navigation">
-            <div class="logo">Mobile<span>Parts</span></div>
-            <div class="nav-links">
-                <a href="index.html" class="active">Home</a>
-                <a href="about.html">Components</a>
-                <a href="contact.html">Contact</a>
-            </div>
-            <div class="menu-toggle">
-                <i class="fas fa-bars"></i>
-            </div>
-        </nav>
-
-        <!-- Hero Section with 3D Scene -->
-        <section class="hero">
+    <main class="smooth-scroll">
+        <section class="hero" data-scroll-section>
             <div class="hero-content">
-                <h1 class="hero-title">Explore <span>Mobile Components</span></h1>
-                <p class="hero-subtitle">Interactive 3D showcase of smartphone parts</p>
-                <a href="#content" class="scroll-down">
-                    <i class="fas fa-chevron-down"></i>
-                </a>
+                <h1 data-scroll data-scroll-speed="1">Mobile Parts Explorer</h1>
+                <p data-scroll data-scroll-speed="0.8">Interactive 3D visualization of smartphone components</p>
             </div>
-            <canvas id="hero-canvas"></canvas>
+            <div id="phone-model" class="hero-model" data-scroll data-scroll-speed="-2"></div>
         </section>
 
-        <!-- Content Sections -->
-        <main class="content" id="content">
-            <!-- Section 1 - Carousel -->
-            <section class="section carousel-section" data-scroll-section>
-                <div class="section-header">
-                    <h2 class="section-title" data-scroll data-scroll-speed="0.5">Featured <span>Components</span></h2>
-                    <p class="section-subtitle" data-scroll data-scroll-speed="0.3">Explore our 3D mobile part collection</p>
-                </div>
-                
-                <div class="carousel-container" data-scroll data-scroll-speed="0.2">
-                    <div class="carousel">
-                        <div class="carousel-item">
-                            <img src="https://source.unsplash.com/random/800x600/?smartphone,processor" alt="Mobile Processor" class="carousel-img">
-                            <div class="carousel-caption">
-                                <h3>Mobile Processor</h3>
-                                <p>The brain of your smartphone</p>
-                            </div>
-                        </div>
-                        <div class="carousel-item">
-                            <img src="https://source.unsplash.com/random/800x600/?smartphone,battery" alt="Phone Battery" class="carousel-img">
-                            <div class="carousel-caption">
-                                <h3>Lithium Battery</h3>
-                                <p>Power source for your device</p>
-                            </div>
-                        </div>
-                        <div class="carousel-item">
-                            <img src="https://source.unsplash.com/random/800x600/?smartphone,camera" alt="Phone Camera" class="carousel-img">
-                            <div class="carousel-caption">
-                                <h3>Camera Module</h3>
-                                <p>Capture your moments</p>
-                            </div>
-                        </div>
-                    </div>
-                    <button class="carousel-prev"><i class="fas fa-chevron-left"></i></button>
-                    <button class="carousel-next"><i class="fas fa-chevron-right"></i></button>
-                </div>
-            </section>
-
-            <!-- Section 2 - 3D Gallery -->
-            <section class="section gallery-section" data-scroll-section>
-                <div class="section-header">
-                    <h2 class="section-title" data-scroll data-scroll-speed="0.5">3D <span>Showcase</span></h2>
-                    <p class="section-subtitle" data-scroll data-scroll-speed="0.3">Interact with mobile components</p>
-                </div>
-                
-                <div class="gallery-grid">
-                    <div class="gallery-item" data-scroll data-scroll-speed="0.1">
-                        <canvas class="gallery-canvas" data-model="motherboard"></canvas>
-                        <h3>Motherboard</h3>
-                        <p class="gallery-description">The main circuit board connecting all components</p>
-                    </div>
-                    <div class="gallery-item" data-scroll data-scroll-speed="0.2">
-                        <canvas class="gallery-canvas" data-model="battery"></canvas>
-                        <h3>Battery</h3>
-                        <p class="gallery-description">Lithium-ion power source (3000mAh)</p>
-                    </div>
-                    <div class="gallery-item" data-scroll data-scroll-speed="0.3">
-                        <canvas class="gallery-canvas" data-model="camera"></canvas>
-                        <h3>Camera Module</h3>
-                        <p class="gallery-description">12MP dual lens with OIS</p>
-                    </div>
-                </div>
-            </section>
-
-            <!-- Section 3 - Technical Specs -->
-            <section class="section specs-section" data-scroll-section>
-                <div class="section-header">
-                    <h2 class="section-title" data-scroll data-scroll-speed="0.5">Technical <span>Specifications</span></h2>
-                    <p class="section-subtitle" data-scroll data-scroll-speed="0.3">Detailed component information</p>
-                </div>
-                
-                <div class="specs-grid">
-                    <div class="specs-item" data-scroll data-scroll-speed="0.1">
-                        <div class="specs-icon">
-                            <i class="fas fa-microchip"></i>
-                        </div>
-                        <h3>Processor</h3>
-                        <ul>
-                            <li>Octa-core 2.8GHz</li>
-                            <li>7nm fabrication</li>
-                            <li>Adreno 650 GPU</li>
-                        </ul>
-                    </div>
-                    <div class="specs-item" data-scroll data-scroll-speed="0.2">
-                        <div class="specs-icon">
-                            <i class="fas fa-memory"></i>
-                        </div>
-                        <h3>Memory</h3>
-                        <ul>
-                            <li>8GB LPDDR5 RAM</li>
-                            <li>256GB UFS 3.1 Storage</li>
-                            <li>Expandable via microSD</li>
-                        </ul>
-                    </div>
-                    <div class="specs-item" data-scroll data-scroll-speed="0.3">
-                        <div class="specs-icon">
-                            <i class="fas fa-camera"></i>
-                        </div>
-                        <h3>Camera</h3>
-                        <ul>
-                            <li>12MP Main (f/1.8)</li>
-                            <li>8MP Ultra-wide</li>
-                            <li>4K Video @ 60fps</li>
-                        </ul>
-                    </div>
-                </div>
-            </section>
-
-            <!-- Section 4 - Parallax -->
-            <section class="section parallax-section" data-scroll-section>
-                <div class="parallax-content" data-scroll data-scroll-speed="-2" data-scroll-target=".parallax-section">
-                    <h2 class="parallax-title">Precision Engineering</h2>
-                    <p class="parallax-text">Discover the technology inside your device</p>
-                </div>
-                <div class="parallax-image" data-scroll data-scroll-speed="1" data-scroll-target=".parallax-section"></div>
-            </section>
-
-            <!-- Section 5 - Assembly Demo -->
-            <section class="section assembly-section" data-scroll-section>
-                <div class="section-header">
-                    <h2 class="section-title" data-scroll data-scroll-speed="0.5">Assembly <span>Demo</span></h2>
-                    <p class="section-subtitle" data-scroll data-scroll-speed="0.3">See how components fit together</p>
-                </div>
-                
-                <div class="assembly-container">
-                    <canvas id="assembly-canvas"></canvas>
-                    <div class="assembly-controls">
-                        <button id="rotate-assembly"><i class="fas fa-sync-alt"></i> Rotate</button>
-                        <button id="explode-view"><i class="fas fa-expand"></i> Explode View</button>
-                        <button id="reset-view"><i class="fas fa-undo"></i> Reset</button>
-                    </div>
-                </div>
-            </section>
-        </main>
-
-        <!-- Footer -->
-        <footer class="footer" data-scroll-section>
-            <div class="footer-content">
-                <div class="footer-logo">Mobile<span>Parts</span></div>
-                <div class="footer-links">
-                    <a href="#">Privacy Policy</a>
-                    <a href="#">Terms of Service</a>
-                    <a href="#">Contact Us</a>
-                </div>
-                <div class="footer-social">
-                    <a href="#"><i class="fab fa-twitter"></i></a>
-                    <a href="#"><i class="fab fa-instagram"></i></a>
-                    <a href="#"><i class="fab fa-github"></i></a>
-                </div>
+        <section class="part-section" data-scroll-section>
+            <div class="part-info" data-scroll data-scroll-speed="0.5">
+                <h2>Display Assembly</h2>
+                <p>The OLED display is the most advanced screen technology available, offering perfect blacks and
+                    vibrant colors.</p>
             </div>
-            <div class="footer-copyright">
-                &copy; 2023 MobileParts 3D. All rights reserved.
+            <div id="screen-model" class="part-model" data-scroll data-scroll-speed="-1"></div>
+        </section>
+
+        <section class="part-section" data-scroll-section>
+            <div class="part-info" data-scroll data-scroll-speed="0.5">
+                <h2>Camera Module</h2>
+                <p>Our triple-lens camera system features advanced computational photography for stunning images in any
+                    light.</p>
             </div>
+            <div id="camera-model" class="part-model" data-scroll data-scroll-speed="-1"></div>
+        </section>
+
+        <section class="part-section" data-scroll-section>
+            <div class="part-info" data-scroll data-scroll-speed="0.5">
+                <h2>Battery System</h2>
+                <p>The high-density lithium-ion battery provides all-day power with fast charging capabilities.</p>
+            </div>
+            <div id="battery-model" class="part-model" data-scroll data-scroll-speed="-1"></div>
+        </section>
+
+        <footer data-scroll-section>
+            <p>© 2023 Mobile Parts Explorer</p>
         </footer>
-    </div>
+    </main>
 
-    <!-- Scripts -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/gsap.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/ScrollTrigger.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@barba/core"></script>
-    <script src="https://cdn.jsdelivr.net/npm/lenis@1.0.0/dist/lenis.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/loaders/GLTFLoader.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.min.js"></script>
+    <!-- JavaScript Libraries -->
+    <script src="https://cdn.jsdelivr.net/npm/three@0.132.2/build/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.132.2/examples/js/loaders/GLTFLoader.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <script src="https://unpkg.com/@studio-freight/lenis@1.0.42/dist/lenis.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/locomotive-scroll@4.1.4/dist/locomotive-scroll.min.js"></script>
     <script src="./style.js"></script>
 </body>
+
 </html>
