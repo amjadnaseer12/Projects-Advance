@@ -27,6 +27,7 @@
             height: 100%;
             background: #fff;
             display: flex;
+            flex-direction: column;
             justify-content: center;
             align-items: center;
             z-index: 9999;
@@ -36,6 +37,23 @@
         .loader-progress {
             font-size: 1.2rem;
             color: #333;
+            margin-top: 20px;
+        }
+
+        .progress-bar {
+            width: 300px;
+            height: 10px;
+            background: #eee;
+            border-radius: 5px;
+            margin-top: 10px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            width: 0%;
+            background: linear-gradient(90deg, #0066cc, #00ccff);
+            transition: width 0.3s ease;
         }
 
         .hero-model, .part-model {
@@ -132,14 +150,21 @@
             .part-info h2 {
                 font-size: 2rem;
             }
+
+            .progress-bar {
+                width: 200px;
+            }
         }
     </style>
 </head>
 
 <body>
-    <div class="loader">
+    <!-- <div class="loader">
         <div class="loader-progress">Loading 3D models...</div>
-    </div>
+        <div class="progress-bar">
+            <div class="progress-fill"></div>
+        </div>
+    </div> -->
 
     <main class="smooth-scroll" data-scroll-container>
         <section class="hero" data-scroll-section>
@@ -190,70 +215,415 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
     <script src="https://unpkg.com/@studio-freight/lenis@1.0.42/dist/lenis.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/locomotive-scroll@4.1.4/dist/locomotive-scroll.min.js"></script>
     
     <script>
-        // Use only Lenis (remove Locomotive Scroll)
-        document.addEventListener('DOMContentLoaded', () => {
-            const lenis = new Lenis({
-                lerp: 0.1,
-                smooth: true,
-                direction: 'vertical',
-            });
-    
-            function raf(time) {
-                lenis.raf(time);
-                requestAnimationFrame(raf);
-            }
+        // Global variables
+        let modelsLoaded = 0;
+        const totalModels = 4;
+        const scenes = {};
+        const models = {};
+        const cameras = {};
+        const renderers = {};
+
+        // Initialize Lenis smooth scroll
+        const lenis = new Lenis({
+            lerp: 0.1,
+            smooth: true,
+            direction: 'vertical',
+        });
+
+        function raf(time) {
+            lenis.raf(time);
             requestAnimationFrame(raf);
-    
-            lenis.on('scroll', ScrollTrigger.update);
-            gsap.ticker.add((time) => lenis.raf(time * 1000));
-            gsap.ticker.lagSmoothing(0);
-    
-            ScrollTrigger.scrollerProxy('[data-scroll-container]', {
-                scrollTop(value) {
-                    return arguments.length ? lenis.scrollTo(value) : window.scrollY;
-                },
-                getBoundingClientRect() {
-                    return {
-                        top: 0,
-                        left: 0,
-                        width: window.innerWidth,
-                        height: window.innerHeight,
-                    };
-                },
-                pinType: 'transform'
+        }
+        requestAnimationFrame(raf);
+
+        // Setup GSAP ScrollTrigger with Lenis
+        lenis.on('scroll', ScrollTrigger.update);
+        gsap.ticker.add((time) => lenis.raf(time * 1000));
+        gsap.ticker.lagSmoothing(0);
+
+        ScrollTrigger.scrollerProxy('[data-scroll-container]', {
+            scrollTop(value) {
+                return arguments.length ? lenis.scrollTo(value) : window.scrollY;
+            },
+            getBoundingClientRect() {
+                return {
+                    top: 0,
+                    left: 0,
+                    width: window.innerWidth,
+                    height: window.innerHeight,
+                };
+            },
+            pinType: 'transform'
+        });
+
+        ScrollTrigger.addEventListener('refresh', () => lenis.update());
+        ScrollTrigger.refresh();
+
+        // Check WebGL support
+        function checkWebGL() {
+            try {
+                const canvas = document.createElement('canvas');
+                return !!window.WebGLRenderingContext && 
+                    (canvas.getContext('webgl') || canvas.getContext('experimental-webgl'));
+            } catch (e) {
+                return false;
+            }
+        }
+
+        // Update loader progress
+        function updateLoaderProgress(progress) {
+            const progressFill = document.querySelector('.progress-fill');
+            const progressText = document.querySelector('.loader-progress');
+            
+            const percent = Math.round(progress * 100);
+            progressFill.style.width = `${percent}%`;
+            progressText.textContent = `Loading 3D models... ${percent}%`;
+        }
+
+        // Initialize all 3D scenes
+        function initAllScenes() {
+            if (!checkWebGL()) {
+                const warning = document.createElement('div');
+                warning.style.color = 'red';
+                warning.style.padding = '20px';
+                warning.style.textAlign = 'center';
+                warning.innerHTML = 'Your browser does not support WebGL. 3D content will not be displayed.';
+                document.body.appendChild(warning);
+                hideLoader();
+                return;
+            }
+
+            initScene('phone-model', 6);
+            initScene('screen-model', 3);
+            initScene('camera-model', 4);
+            initScene('battery-model', 4);
+            animate();
+        }
+
+        // Initialize a single scene
+        function initScene(containerId, cameraZ = 5) {
+            const container = document.getElementById(containerId);
+            if (!container) {
+                console.error(`Container ${containerId} not found`);
+                return;
+            }
+
+            // Create scene
+            const scene = new THREE.Scene();
+            scene.background = null;
+
+            // Create camera
+            const camera = new THREE.PerspectiveCamera(
+                75, 
+                container.clientWidth / container.clientHeight, 
+                0.1, 
+                1000
+            );
+            camera.position.z = cameraZ;
+
+            // Create renderer
+            const renderer = new THREE.WebGLRenderer({ 
+                alpha: true, 
+                antialias: true,
+                powerPreference: "high-performance"
             });
-    
-            ScrollTrigger.addEventListener('refresh', () => lenis.update());
-            ScrollTrigger.refresh();
-    
+            renderer.setSize(container.clientWidth, container.clientHeight);
+            renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+            container.appendChild(renderer.domElement);
+
+            // Lighting setup
+            const ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
+            const directionalLight = new THREE.DirectionalLight(0xffffff, 0.8);
+            directionalLight.position.set(1, 1, 1);
+            
+            const hemisphereLight = new THREE.HemisphereLight(0xffffff, 0x444444, 0.6);
+            hemisphereLight.position.set(0, 1, 0);
+            
+            const pointLight = new THREE.PointLight(0xffffff, 0.5);
+            pointLight.position.set(0, 0, 5);
+            
+            scene.add(ambientLight, directionalLight, hemisphereLight, pointLight);
+
+            // Create model based on container ID
+            let model;
+            switch(containerId) {
+                case 'phone-model':
+                    model = createPhoneModel(scene);
+                    break;
+                case 'screen-model':
+                    model = createScreenModel(scene);
+                    break;
+                case 'camera-model':
+                    model = createCameraModel(scene);
+                    break;
+                case 'battery-model':
+                    model = createBatteryModel(scene);
+                    break;
+            }
+
+            // Store references
+            scenes[containerId] = scene;
+            cameras[containerId] = camera;
+            renderers[containerId] = renderer;
+            models[containerId] = model;
+
+            // Handle window resize
+            window.addEventListener('resize', () => {
+                camera.aspect = container.clientWidth / container.clientHeight;
+                camera.updateProjectionMatrix();
+                renderer.setSize(container.clientWidth, container.clientHeight);
+            });
+
+            // Update loader
+            modelsLoaded++;
+            updateLoaderProgress(modelsLoaded / totalModels);
+            
+            if (modelsLoaded === totalModels) {
+                hideLoader();
+            }
+        }
+
+        // Create phone model
+        function createPhoneModel(scene) {
+            // Phone body
+            const phoneGeometry = new THREE.BoxGeometry(1.8, 3.6, 0.3);
+            const phoneMaterial = new THREE.MeshStandardMaterial({ 
+                color: 0x333333,
+                metalness: 0.3,
+                roughness: 0.4
+            });
+            const phone = new THREE.Mesh(phoneGeometry, phoneMaterial);
+            scene.add(phone);
+
+            // Screen
+            const screenGeometry = new THREE.PlaneGeometry(1.7, 3.5);
+            const screenMaterial = new THREE.MeshStandardMaterial({
+                color: 0x000000,
+                emissive: 0x111111,
+                emissiveIntensity: 0.2,
+                side: THREE.DoubleSide
+            });
+            const screen = new THREE.Mesh(screenGeometry, screenMaterial);
+            screen.position.z = 0.16;
+            scene.add(screen);
+
+            // Buttons
+            const buttonGeometry = new THREE.CylinderGeometry(0.05, 0.05, 0.1, 32);
+            const buttonMaterial = new THREE.MeshStandardMaterial({ color: 0x555555 });
+            
+            const powerButton = new THREE.Mesh(buttonGeometry, buttonMaterial);
+            powerButton.rotation.x = Math.PI / 2;
+            powerButton.position.set(0.9, 1.2, 0);
+            scene.add(powerButton);
+
+            const volumeButton1 = new THREE.Mesh(buttonGeometry, buttonMaterial);
+            volumeButton1.rotation.x = Math.PI / 2;
+            volumeButton1.position.set(0.9, 1.5, 0);
+            scene.add(volumeButton1);
+
+            const volumeButton2 = new THREE.Mesh(buttonGeometry, buttonMaterial);
+            volumeButton2.rotation.x = Math.PI / 2;
+            volumeButton2.position.set(0.9, 0.9, 0);
+            scene.add(volumeButton2);
+
+            // Animation
+            gsap.to(phone.rotation, {
+                y: Math.PI * 2,
+                duration: 30,
+                repeat: -1,
+                ease: "none"
+            });
+
+            return phone;
+        }
+
+        // Create screen model
+        function createScreenModel(scene) {
+            // Screen body
+            const screenGeometry = new THREE.BoxGeometry(1.7, 3.5, 0.1);
+            const screenMaterial = new THREE.MeshStandardMaterial({ 
+                color: 0x111111,
+                metalness: 0.2,
+                roughness: 0.1
+            });
+            const screen = new THREE.Mesh(screenGeometry, screenMaterial);
+            scene.add(screen);
+
+            // Display surface
+            const displayGeometry = new THREE.PlaneGeometry(1.6, 3.4);
+            const displayMaterial = new THREE.MeshStandardMaterial({
+                color: 0x000000,
+                emissive: 0x0000ff,
+                emissiveIntensity: 0.3,
+                side: THREE.DoubleSide
+            });
+            const display = new THREE.Mesh(displayGeometry, displayMaterial);
+            display.position.z = 0.06;
+            scene.add(display);
+
+            // Animation
+            gsap.to(screen.rotation, {
+                x: Math.PI / 6,
+                y: Math.PI * 2,
+                duration: 20,
+                repeat: -1,
+                ease: "none"
+            });
+
+            return screen;
+        }
+
+        // Create camera model
+        function createCameraModel(scene) {
+            // Camera base
+            const baseGeometry = new THREE.BoxGeometry(1.2, 0.8, 0.3);
+            const baseMaterial = new THREE.MeshStandardMaterial({ 
+                color: 0x222222,
+                metalness: 0.7,
+                roughness: 0.2
+            });
+            const base = new THREE.Mesh(baseGeometry, baseMaterial);
+            scene.add(base);
+
+            // Camera lenses
+            const lensMaterial = new THREE.MeshStandardMaterial({ 
+                color: 0x111111,
+                metalness: 0.9,
+                roughness: 0.05
+            });
+
+            // Main lens
+            const lensGeometry1 = new THREE.CylinderGeometry(0.2, 0.2, 0.2, 32);
+            const lens1 = new THREE.Mesh(lensGeometry1, lensMaterial);
+            lens1.rotation.x = Math.PI / 2;
+            lens1.position.set(0, 0, 0.25);
+            scene.add(lens1);
+
+            // Secondary lenses
+            const lensGeometry2 = new THREE.CylinderGeometry(0.15, 0.15, 0.2, 32);
+            const lens2 = new THREE.Mesh(lensGeometry2, lensMaterial);
+            lens2.rotation.x = Math.PI / 2;
+            lens2.position.set(-0.3, 0.2, 0.25);
+            scene.add(lens2);
+
+            const lens3 = new THREE.Mesh(lensGeometry2, lensMaterial);
+            lens3.rotation.x = Math.PI / 2;
+            lens3.position.set(0.3, 0.2, 0.25);
+            scene.add(lens3);
+
+            // Flash
+            const flashGeometry = new THREE.BoxGeometry(0.1, 0.1, 0.1);
+            const flashMaterial = new THREE.MeshStandardMaterial({ 
+                color: 0xffffff,
+                emissive: 0xffffff,
+                emissiveIntensity: 0.5
+            });
+            const flash = new THREE.Mesh(flashGeometry, flashMaterial);
+            flash.position.set(0.4, -0.2, 0.25);
+            scene.add(flash);
+
+            // Animation
+            gsap.to(base.rotation, {
+                x: Math.PI / 4,
+                y: Math.PI * 2,
+                duration: 25,
+                repeat: -1,
+                ease: "none"
+            });
+
+            return base;
+        }
+
+        // Create battery model
+        function createBatteryModel(scene) {
+            // Battery body
+            const batteryGeometry = new THREE.BoxGeometry(1.5, 0.8, 2.5);
+            const batteryMaterial = new THREE.MeshStandardMaterial({ 
+                color: 0x0066cc,
+                metalness: 0.1,
+                roughness: 0.5
+            });
+            const battery = new THREE.Mesh(batteryGeometry, batteryMaterial);
+            scene.add(battery);
+
+            // Battery details
+            const detailGeometry = new THREE.BoxGeometry(1.4, 0.7, 0.05);
+            const detailMaterial = new THREE.MeshStandardMaterial({ color: 0x003366 });
+            
+            const detail1 = new THREE.Mesh(detailGeometry, detailMaterial);
+            detail1.position.set(0, 0, 1.25);
+            scene.add(detail1);
+
+            const detail2 = new THREE.Mesh(detailGeometry, detailMaterial);
+            detail2.position.set(0, 0, -1.25);
+            scene.add(detail2);
+
+            // Connector
+            const connectorGeometry = new THREE.BoxGeometry(0.8, 0.1, 0.3);
+            const connectorMaterial = new THREE.MeshStandardMaterial({ color: 0x333333 });
+            const connector = new THREE.Mesh(connectorGeometry, connectorMaterial);
+            connector.position.set(0, -0.4, -1.1);
+            scene.add(connector);
+
+            // Battery info text
+            const textGeometry = new THREE.PlaneGeometry(1.2, 0.5);
+            const textMaterial = new THREE.MeshStandardMaterial({ 
+                color: 0xffffff,
+                transparent: true,
+                opacity: 0.8
+            });
+            const text = new THREE.Mesh(textGeometry, textMaterial);
+            text.position.set(0, 0, 1.3);
+            scene.add(text);
+
+            // Animation
+            gsap.to(battery.rotation, {
+                x: Math.PI / 6,
+                y: Math.PI * 2,
+                duration: 30,
+                repeat: -1,
+                ease: "none"
+            });
+
+            return battery;
+        }
+
+        // Hide loader
+        function hideLoader() {
+            const loader = document.querySelector('.loader');
+            gsap.to(loader, {
+                opacity: 0,
+                duration: 0.5,
+                onComplete: () => {
+                    loader.style.display = 'none';
+                    ScrollTrigger.refresh();
+                }
+            });
+        }
+
+        // Animation loop
+        function animate() {
+            requestAnimationFrame(animate);
+
+            // Render all scenes
+            for (const id in renderers) {
+                if (renderers[id] && scenes[id] && cameras[id]) {
+                    renderers[id].render(scenes[id], cameras[id]);
+                }
+            }
+        }
+
+        // Initialize when DOM is ready
+        document.addEventListener('DOMContentLoaded', () => {
             initAllScenes();
-    
+            
             window.addEventListener('resize', () => {
                 ScrollTrigger.refresh();
             });
         });
-    
-        function handleModelLoad() {
-            modelsLoaded++;
-            const progress = Math.round((modelsLoaded / totalModels) * 100);
-            document.querySelector('.loader-progress').textContent = `Loading 3D models... ${progress}%`;
-    
-            if (modelsLoaded === totalModels) {
-                const loader = document.querySelector('.loader');
-                gsap.to(loader, {
-                    opacity: 0,
-                    duration: 0.5,
-                    onComplete: () => {
-                        loader.style.display = 'none';
-                    }
-                });
-            }
-        }
     </script>
-    
 </body>
 
 </html>
