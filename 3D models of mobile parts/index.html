@@ -5,15 +5,143 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mobile Parts 3D Showcase</title>
-    <link rel="stylesheet" href="./style.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            overflow-x: hidden;
+            background: #f5f5f5;
+            color: #333;
+        }
+
+        .loader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #fff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            transition: opacity 0.5s ease;
+        }
+
+        .loader-progress {
+            font-size: 1.2rem;
+            color: #333;
+        }
+
+        .hero-model, .part-model {
+            width: 100%;
+            height: 100vh;
+            position: relative;
+        }
+
+        .part-section {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            padding: 2rem;
+            position: relative;
+        }
+
+        .part-info {
+            flex: 1;
+            padding: 2rem;
+            max-width: 600px;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            z-index: 2;
+        }
+
+        .part-info h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            color: #222;
+        }
+
+        .part-info p {
+            font-size: 1.1rem;
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
+        }
+
+        .hero {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-content {
+            z-index: 2;
+            max-width: 800px;
+            padding: 2rem;
+        }
+
+        .hero-content h1 {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            color: #222;
+        }
+
+        .hero-content p {
+            font-size: 1.5rem;
+            margin-bottom: 2rem;
+            color: #444;
+        }
+
+        footer {
+            padding: 2rem;
+            text-align: center;
+            background: #222;
+            color: #fff;
+        }
+
+        @media (max-width: 768px) {
+            .part-section {
+                flex-direction: column;
+                padding: 1rem;
+            }
+
+            .part-info {
+                max-width: 100%;
+                margin-bottom: 2rem;
+            }
+
+            .hero-content h1 {
+                font-size: 2.5rem;
+            }
+
+            .hero-content p {
+                font-size: 1.2rem;
+            }
+
+            .part-info h2 {
+                font-size: 2rem;
+            }
+        }
+    </style>
 </head>
 
-<body data-scroll-container>
+<body>
     <div class="loader">
         <div class="loader-progress">Loading 3D models...</div>
     </div>
 
-    <main class="smooth-scroll">
+    <main class="smooth-scroll" data-scroll-container>
         <section class="hero" data-scroll-section>
             <div class="hero-content">
                 <h1 data-scroll data-scroll-speed="1">Mobile Parts Explorer</h1>
@@ -26,7 +154,8 @@
             <div class="part-info" data-scroll data-scroll-speed="0.5">
                 <h2>Display Assembly</h2>
                 <p>The OLED display is the most advanced screen technology available, offering perfect blacks and
-                    vibrant colors.</p>
+                    vibrant colors with a 120Hz refresh rate for smooth scrolling and animations.</p>
+                <p>Features HDR10+ support and 1000 nits peak brightness for excellent outdoor visibility.</p>
             </div>
             <div id="screen-model" class="part-model" data-scroll data-scroll-speed="-1"></div>
         </section>
@@ -35,7 +164,8 @@
             <div class="part-info" data-scroll data-scroll-speed="0.5">
                 <h2>Camera Module</h2>
                 <p>Our triple-lens camera system features advanced computational photography for stunning images in any
-                    light.</p>
+                    light. Includes a 108MP main sensor, 12MP ultra-wide, and 8MP telephoto lens with 3x optical zoom.</p>
+                <p>Powered by AI-enhanced image processing for professional-quality photos and 8K video recording.</p>
             </div>
             <div id="camera-model" class="part-model" data-scroll data-scroll-speed="-1"></div>
         </section>
@@ -44,12 +174,13 @@
             <div class="part-info" data-scroll data-scroll-speed="0.5">
                 <h2>Battery System</h2>
                 <p>The high-density lithium-ion battery provides all-day power with fast charging capabilities.</p>
+                <p>5000mAh capacity with 65W wired and 30W wireless charging support. Advanced thermal management ensures safe, efficient charging.</p>
             </div>
             <div id="battery-model" class="part-model" data-scroll data-scroll-speed="-1"></div>
         </section>
 
         <footer data-scroll-section>
-            <p>© 2023 Mobile Parts Explorer</p>
+            <p>© 2023 Mobile Parts Explorer | All Rights Reserved</p>
         </footer>
     </main>
 
@@ -60,7 +191,69 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
     <script src="https://unpkg.com/@studio-freight/lenis@1.0.42/dist/lenis.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/locomotive-scroll@4.1.4/dist/locomotive-scroll.min.js"></script>
-    <script src="./style.js"></script>
+    
+    <script>
+        // Use only Lenis (remove Locomotive Scroll)
+        document.addEventListener('DOMContentLoaded', () => {
+            const lenis = new Lenis({
+                lerp: 0.1,
+                smooth: true,
+                direction: 'vertical',
+            });
+    
+            function raf(time) {
+                lenis.raf(time);
+                requestAnimationFrame(raf);
+            }
+            requestAnimationFrame(raf);
+    
+            lenis.on('scroll', ScrollTrigger.update);
+            gsap.ticker.add((time) => lenis.raf(time * 1000));
+            gsap.ticker.lagSmoothing(0);
+    
+            ScrollTrigger.scrollerProxy('[data-scroll-container]', {
+                scrollTop(value) {
+                    return arguments.length ? lenis.scrollTo(value) : window.scrollY;
+                },
+                getBoundingClientRect() {
+                    return {
+                        top: 0,
+                        left: 0,
+                        width: window.innerWidth,
+                        height: window.innerHeight,
+                    };
+                },
+                pinType: 'transform'
+            });
+    
+            ScrollTrigger.addEventListener('refresh', () => lenis.update());
+            ScrollTrigger.refresh();
+    
+            initAllScenes();
+    
+            window.addEventListener('resize', () => {
+                ScrollTrigger.refresh();
+            });
+        });
+    
+        function handleModelLoad() {
+            modelsLoaded++;
+            const progress = Math.round((modelsLoaded / totalModels) * 100);
+            document.querySelector('.loader-progress').textContent = `Loading 3D models... ${progress}%`;
+    
+            if (modelsLoaded === totalModels) {
+                const loader = document.querySelector('.loader');
+                gsap.to(loader, {
+                    opacity: 0,
+                    duration: 0.5,
+                    onComplete: () => {
+                        loader.style.display = 'none';
+                    }
+                });
+            }
+        }
+    </script>
+    
 </body>
 
 </html>
