@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>3D Scroll Experience</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/main.css">
+</head>
+<body data-barba="wrapper">
+    <!-- Preloader -->
+    <div class="preloader">
+        <div class="preloader-circle"></div>
+        <div class="preloader-text">Loading</div>
+    </div>
+
+    <!-- Main content wrapper -->
+    <div class="barba-container" data-barba="container" data-barba-namespace="home">
+        <!-- Navigation -->
+        <nav class="navigation">
+            <div class="logo">3D<span>World</span></div>
+            <div class="nav-links">
+                <a href="index.html" class="active">Home</a>
+                <a href="about.html">Gallery</a>
+                <a href="contact.html">Contact</a>
+            </div>
+            <div class="menu-toggle">
+                <i class="fas fa-bars"></i>
+            </div>
+        </nav>
+
+        <!-- Hero Section with 3D Scene -->
+        <section class="hero">
+            <div class="hero-content">
+                <h1 class="hero-title">Explore the <span>3D Universe</span></h1>
+                <p class="hero-subtitle">Scroll to discover amazing 3D experiences</p>
+                <a href="#content" class="scroll-down">
+                    <i class="fas fa-chevron-down"></i>
+                </a>
+            </div>
+            <canvas id="hero-canvas"></canvas>
+        </section>
+
+        <!-- Content Sections -->
+        <main class="content" id="content">
+            <!-- Section 1 - Carousel -->
+            <section class="section carousel-section" data-scroll-section>
+                <div class="section-header">
+                    <h2 class="section-title" data-scroll data-scroll-speed="0.5">Featured <span>Works</span></h2>
+                    <p class="section-subtitle" data-scroll data-scroll-speed="0.3">Discover our 3D creations</p>
+                </div>
+                
+                <div class="carousel-container" data-scroll data-scroll-speed="0.2">
+                    <div class="carousel">
+                        <div class="carousel-item">
+                            <img src="https://source.unsplash.com/random/800x600/?3d,art" alt="3D Art 1" class="carousel-img">
+                            <div class="carousel-caption">
+                                <h3>Digital Sculpture</h3>
+                                <p>Explore the depths of digital art</p>
+                            </div>
+                        </div>
+                        <div class="carousel-item">
+                            <img src="https://source.unsplash.com/random/800x600/?3d,design" alt="3D Art 2" class="carousel-img">
+                            <div class="carousel-caption">
+                                <h3>Architectural Vision</h3>
+                                <p>Future of urban design</p>
+                            </div>
+                        </div>
+                        <div class="carousel-item">
+                            <img src="https://source.unsplash.com/random/800x600/?3d,animation" alt="3D Art 3" class="carousel-img">
+                            <div class="carousel-caption">
+                                <h3>Animated World</h3>
+                                <p>Characters come to life</p>
+                            </div>
+                        </div>
+                    </div>
+                    <button class="carousel-prev"><i class="fas fa-chevron-left"></i></button>
+                    <button class="carousel-next"><i class="fas fa-chevron-right"></i></button>
+                </div>
+            </section>
+
+            <!-- Section 2 - 3D Gallery -->
+            <section class="section gallery-section" data-scroll-section>
+                <div class="section-header">
+                    <h2 class="section-title" data-scroll data-scroll-speed="0.5">3D <span>Gallery</span></h2>
+                    <p class="section-subtitle" data-scroll data-scroll-speed="0.3">Interactive 3D models</p>
+                </div>
+                
+                <div class="gallery-grid">
+                    <div class="gallery-item" data-scroll data-scroll-speed="0.1">
+                        <canvas class="gallery-canvas" data-model="model1"></canvas>
+                        <h3>Futuristic City</h3>
+                    </div>
+                    <div class="gallery-item" data-scroll data-scroll-speed="0.2">
+                        <canvas class="gallery-canvas" data-model="model2"></canvas>
+                        <h3>Organic Forms</h3>
+                    </div>
+                    <div class="gallery-item" data-scroll data-scroll-speed="0.3">
+                        <canvas class="gallery-canvas" data-model="model3"></canvas>
+                        <h3>Abstract Composition</h3>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Section 3 - Parallax -->
+            <section class="section parallax-section" data-scroll-section>
+                <div class="parallax-content" data-scroll data-scroll-speed="-2" data-scroll-target=".parallax-section">
+                    <h2 class="parallax-title">Immerse Yourself</h2>
+                    <p class="parallax-text">In a world where dimensions blend</p>
+                </div>
+                <div class="parallax-image" data-scroll data-scroll-speed="1" data-scroll-target=".parallax-section"></div>
+            </section>
+
+            <!-- Section 4 - Text Reveal -->
+            <section class="section text-section" data-scroll-section>
+                <div class="text-content">
+                    <p class="text-reveal" data-scroll data-scroll-class="reveal">Three.js is a cross-browser JavaScript library and application programming interface used to create and display animated 3D computer graphics in a web browser.</p>
+                    <p class="text-reveal" data-scroll data-scroll-class="reveal">GSAP (GreenSock Animation Platform) is a JavaScript library for creating high-performance animations that work in all major browsers.</p>
+                    <p class="text-reveal" data-scroll data-scroll-class="reveal">Barba.js allows you to create fluid and smooth transitions between your website's pages.</p>
+                </div>
+            </section>
+        </main>
+
+        <!-- Footer -->
+        <footer class="footer" data-scroll-section>
+            <div class="footer-content">
+                <div class="footer-logo">3D<span>World</span></div>
+                <div class="footer-links">
+                    <a href="#">Privacy Policy</a>
+                    <a href="#">Terms of Service</a>
+                    <a href="#">Contact Us</a>
+                </div>
+                <div class="footer-social">
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-dribbble"></i></a>
+                </div>
+            </div>
+            <div class="footer-copyright">
+                &copy; 2023 3DWorld. All rights reserved.
+            </div>
+        </footer>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/ScrollTrigger.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@barba/core"></script>
+    <script src="https://cdn.jsdelivr.net/npm/lenis@1.0.0/dist/lenis.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/loaders/GLTFLoader.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html>
