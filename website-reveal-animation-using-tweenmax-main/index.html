@@ -1,96 +1,1037 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>CG IMAGE STACK PRE-LOADER ANIMATION</title>
-    <link rel="stylesheet" href="styles.css" />
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/2.0.2/TweenMax.min.js"></script>
-  </head>
-  <body>
-    <div class="navbar">
-      <div class="site-info">elevated</div>
-      <div class="site-menu">
-        <div class="menu-item">projects</div>
-        <div class="menu-item">about</div>
-        <div class="menu-item">contact</div>
-      </div>
-    </div>
-    <div class="container">
-      <div class="block b-1"></div>
-      <div class="block b-2"></div>
-      <div class="block b-3"></div>
-      <div class="block b-4"></div>
-      <div class="block b-5"></div>
-      <div class="block b-6"></div>
-      <div class="block b-7"></div>
-    </div>
-    <div class="overlay"></div>
-    <p class="title">Reach The Fullest</p>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/2.0.2/anime.min.js"></script>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@200..800&family=Plus+Jakarta+Sans:wght@200..800&display=swap"
+        rel="stylesheet">
+</head>
+
+<body>
+    <!-- Navbar -->
+    <nav id="navbar" class="bg-white shadow-lg fixed top-0 w-full z-50 transition duration-300">
+        <div class="container mx-auto px-4">
+            <div class="flex justify-between items-center py-4">
+                <!-- BMW Logo -->
+                <div class="logo">
+                    <model-viewer src="./bmw_emblem.glb" alt="BMW Logo" class="h-3 sm:h-10 md:h-12 w-auto"
+                        camera-controls></model-viewer>
+                </div>
+
+                <!-- Desktop Menu -->
+                <div class="hidden md:flex space-x-6">
+                    <a href="#" class="nav-link text-black hover:text-[#208177] font-bold">Home</a>
+                    <a href="#" class="nav-link text-black hover:text-[#208177]">Models</a>
+                    <a href="#" class="nav-link text-black hover:text-[#208177]">Build & Price</a>
+                    <a href="#" class="nav-link text-black hover:text-[#208177]">Offers</a>
+                    <a href="#" class="nav-link text-black hover:text-[#208177]">Services</a>
+                    <a href="#" class="nav-link text-black hover:text-[#208177]">Contact</a>
+                </div>
+
+                <!-- Buttons -->
+                <div class="hidden md:flex items-center gap-2">
+                    <button
+                        class="bg-black text-white px-6 py-2 rounded-full hover:bg-gray-700 transition duration-300">
+                        Book a Test Drive
+                    </button>
+                    <button
+                        class="rounded-full border border-black bg-black text-white text-xl h-10 w-10 flex items-center justify-center hover:bg-gray-700 transition duration-300">
+                        <i class="fa-solid fa-car"></i>
+                    </button>
+                    <button
+                        class="rounded-full border border-black bg-black text-white text-xl h-10 w-10 flex items-center justify-center hover:bg-gray-700 transition duration-300">
+                        <i class="fa-regular fa-user"></i>
+                    </button>
+                </div>
+
+                <!-- Mobile Menu Button -->
+                <div class="md:hidden">
+                    <button id="menu-toggle" class="text-gray-700 focus:outline-none">
+                        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M4 6h16M4 12h16m-7 6h7"></path>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Mobile Menu -->
+            <div id="mobile-menu" class="hidden absolute top-16 left-0 w-full bg-white shadow-md md:hidden">
+                <div class="flex flex-col space-y-4 p-6">
+                    <a href="#" class="nav-link text-black hover:text-[#208177]">Home</a>
+                    <a href="#" class="nav-link text-black hover:text-[#208177]">Models</a>
+                    <a href="#" class="nav-link text-black hover:text-[#208177]">Build & Price</a>
+                    <a href="#" class="nav-link text-black hover:text-[#208177]">Offers</a>
+                    <a href="#" class="nav-link text-black hover:text-[#208177]">Services</a>
+                    <a href="#" class="nav-link text-black hover:text-[#208177]">Contact</a>
+                    <button
+                        class="bg-black text-white px-6 py-2 rounded-full hover:bg-gray-700 transition duration-300">
+                        Book a Test Drive
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <main>
+        <section class="min-h-screen flex items-center bg-white">
+            <div class="container mx-auto px-4 sm:px-6 md:px-8">
+                <div class="flex flex-col lg:flex-row items-center justify-around gap-8">
+                    <!-- Left: Text Content -->
+                    <div class="max-w-xl text-center lg:text-left">
+                        <h1
+                            class="font-bold text-gray-900 mb-6 leading-tight text-4xl sm:text-5xl md:text-6xl lg:text-7xl">
+                            Experience the Ultimate Drive
+                        </h1>
+                        <p class="mb-8 text-xl sm:text-2xl md:text-3xl text-gray-600 font-light">
+                            Discover the 2024 BMW lineup – where luxury meets performance.
+                        </p>
+                        <div class="flex flex-col sm:flex-row gap-4 mb-8 justify-center lg:justify-start">
+                            <button
+                                class="bg-[#208177] text-white px-8 py-4 rounded-full font-semibold flex items-center gap-3 hover:bg-black transition duration-300 text-lg">
+                                Explore Models
+                                <i class="fa-solid fa-arrow-right text-white"></i>
+                            </button>
+                            <button
+                                class="bg-black text-white px-8 py-4 rounded-full font-semibold flex items-center gap-3 hover:bg-gray-800 transition duration-300 text-lg">
+                                Book a Test Drive
+                                <i class="fa-solid fa-arrow-right"></i>
+                            </button>
+                        </div>
+                        <div class="flex items-center gap-6 justify-center lg:justify-start">
+                            <div class="flex items-center text-gray-700">
+                                <model-viewer src="./bmw_warranty_icon.glb" alt="Warranty icon" class="w-6 h-6 mr-2"
+                                    camera-controls></model-viewer>
+                                <span class="text-sm sm:text-base">5-Year Warranty</span>
+                            </div>
+                            <div class="flex items-center text-gray-700">
+                                <model-viewer src="./bmw_performance_icon.glb" alt="Performance icon"
+                                    class="w-6 h-6 mr-2" camera-controls></model-viewer>
+                                <span class="text-sm sm:text-base">Precision Performance</span>
+                            </div>
+                            <div class="flex items-center text-gray-700">
+                                <model-viewer src="./bmw_dealer_icon.glb" alt="Dealer network icon" class="w-6 h-6 mr-2"
+                                    camera-controls></model-viewer>
+                                <span class="text-sm sm:text-base">Global Dealer Network</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Right: 3D Model -->
+                    <div class="w-full max-w-md">
+                        <model-viewer src="./2018_bmw_m5.glb" alt="BMW Car 3D Model" auto-rotate camera-controls ar
+                            shadow-intensity="1" style="width: 700px; height: 600px;"></model-viewer>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- BMW Categories Section -->
+        <section class="py-16 bg-gray-50">
+            <div class="container mx-auto px-4 sm:px-6">
+                <h2 class="text-3xl md:text-4xl font-bold text-center mb-12">Explore by Series</h2>
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
+
+                    <!-- Sedans -->
+                    <a href="#" class="group">
+                        <div
+                            class="bg-white p-6 rounded-xl shadow-sm hover:shadow-md transition duration-300 text-center">
+                            <div
+                                class="bg-gray-100 rounded-full w-24 h-24 mx-auto mb-4 flex items-center justify-center group-hover:bg-[#208177] group-hover:text-white transition duration-300">
+                                <model-viewer src="./bmw_sedan_icon.glb" alt="BMW Sedan Icon" class="w-12 h-12"
+                                    camera-controls></model-viewer>
+                            </div>
+                            <h3 class="font-semibold text-lg group-hover:text-[#208177] transition duration-300">Sedans
+                            </h3>
+                        </div>
+                    </a>
+
+                    <!-- SUVs -->
+                    <a href="#" class="group">
+                        <div
+                            class="bg-white p-6 rounded-xl shadow-sm hover:shadow-md transition duration-300 text-center">
+                            <div
+                                class="bg-gray-100 rounded-full w-24 h-24 mx-auto mb-4 flex items-center justify-center group-hover:bg-[#208177] group-hover:text-white transition duration-300">
+                                <model-viewer src="./bmw_suv_icon.glb" alt="BMW SUV Icon" class="w-12 h-12"
+                                    camera-controls></model-viewer>
+                            </div>
+                            <h3 class="font-semibold text-lg group-hover:text-[#208177] transition duration-300">SUVs
+                            </h3>
+                        </div>
+                    </a>
+
+                    <!-- Electric -->
+                    <a href="#" class="group">
+                        <div
+                            class="bg-white p-6 rounded-xl shadow-sm hover:shadow-md transition duration-300 text-center">
+                            <div
+                                class="bg-gray-100 rounded-full w-24 h-24 mx-auto mb-4 flex items-center justify-center group-hover:bg-[#208177] group-hover:text-white transition duration-300">
+                                <model-viewer src="./bmw_electric_icon.glb" alt="BMW Electric Icon" class="w-12 h-12"
+                                    camera-controls></model-viewer>
+                            </div>
+                            <h3 class="font-semibold text-lg group-hover:text-[#208177] transition duration-300">
+                                Electric</h3>
+                        </div>
+                    </a>
+
+                    <!-- M Performance -->
+                    <a href="#" class="group">
+                        <div
+                            class="bg-white p-6 rounded-xl shadow-sm hover:shadow-md transition duration-300 text-center">
+                            <div
+                                class="bg-gray-100 rounded-full w-24 h-24 mx-auto mb-4 flex items-center justify-center group-hover:bg-[#208177] group-hover:text-white transition duration-300">
+                                <model-viewer src="./bmw_mseries_icon.glb" alt="BMW M Series Icon" class="w-12 h-12"
+                                    camera-controls></model-viewer>
+                            </div>
+                            <h3 class="font-semibold text-lg group-hover:text-[#208177] transition duration-300">M
+                                Performance</h3>
+                        </div>
+                    </a>
+
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <div class="container mx-auto px-4 py-8">
+                <div class="p-8">
+                    <div class="text-center">
+                        <h1 class="font-bold text-gray-800 mb-4 text-xl sm:text-2xl md:text-2xl lg:text-2xl">
+                            The Ultimate Driving Experience Starts Here
+                            <br class="hidden md:block">
+                            Discover What Sets BMW Apart
+                        </h1>
+                        <p class="text-gray-600 mb-6 text-base sm:text-base md:text-lg lg:text-lg">
+                            From cutting-edge engineering to exceptional service, BMW redefines what it means to drive.
+                            Explore our commitment to performance, technology, and sustainability.
+                        </p>
+                    </div>
+
+                    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+
+                        <!-- Performance -->
+                        <div
+                            class="bg-[#F2FBF9] p-4 sm:p-6 rounded-lg transition duration-400 hover:bg-white group hover:shadow-lg">
+                            <model-viewer src="./bmw_performance_icon.glb" alt="Performance icon"
+                                class="h-[50px] w-[50px] sm:h-[60px] sm:w-[60px] pb-2 bg-white rounded-full p-3 transition duration-400 group-hover:bg-[#F2FBF9]"
+                                camera-controls></model-viewer>
+                            <h2 class="font-semibold text-gray-700 mb-2 text-lg sm:text-xl md:text-xl">
+                                Precision <br><span>Performance</span>
+                            </h2>
+                            <p class="text-gray-600 text-sm sm:text-base md:text-base">
+                                Engineered for thrill and built with precision, every BMW delivers a dynamic and
+                                responsive drive.
+                            </p>
+                        </div>
+
+                        <!-- Innovation -->
+                        <div
+                            class="bg-[#F2FBF9] p-4 sm:p-6 rounded-lg transition duration-400 hover:bg-white group hover:shadow-lg">
+                            <model-viewer src="./bmw_tech_icon.glb" alt="Innovation icon"
+                                class="h-[50px] w-[50px] sm:h-[60px] sm:w-[60px] pb-2 bg-white rounded-full p-3 transition duration-400 group-hover:bg-[#F2FBF9]"
+                                camera-controls></model-viewer>
+                            <h2 class="font-semibold text-gray-700 mb-2 text-lg sm:text-xl md:text-xl">
+                                Cutting-Edge <br><span>Technology</span>
+                            </h2>
+                            <p class="text-gray-600 text-sm sm:text-base md:text-base">
+                                Stay connected and in control with BMW’s intelligent driver systems and iDrive
+                                experience.
+                            </p>
+                        </div>
+
+                        <!-- Sustainability -->
+                        <div
+                            class="bg-[#F2FBF9] p-4 sm:p-6 rounded-lg transition duration-400 hover:bg-white group hover:shadow-lg">
+                            <model-viewer src="./bmw_ev_icon.glb" alt="Sustainability icon"
+                                class="h-[50px] w-[50px] sm:h-[60px] sm:w-[60px] pb-2 bg-white rounded-full p-3 transition duration-400 group-hover:bg-[#F2FBF9]"
+                                camera-controls></model-viewer>
+                            <h2 class="font-semibold text-gray-700 mb-2 text-lg sm:text-xl md:text-xl">
+                                Electric <br><span>Mobility</span>
+                            </h2>
+                            <p class="text-gray-600 text-sm sm:text-base md:text-base">
+                                Join the future with BMW’s electric and hybrid lineup — engineered for sustainability
+                                and power.
+                            </p>
+                        </div>
+
+                        <!-- Service -->
+                        <div
+                            class="bg-[#F2FBF9] p-4 sm:p-6 rounded-lg transition duration-400 hover:bg-white group hover:shadow-lg">
+                            <model-viewer src="./bmw_service_icon.glb" alt="Support icon"
+                                class="h-[50px] w-[50px] sm:h-[60px] sm:w-[60px] pb-2 bg-white rounded-full p-3 transition duration-400 group-hover:bg-[#F2FBF9]"
+                                camera-controls></model-viewer>
+                            <h2 class="font-semibold text-gray-700 mb-2 text-lg sm:text-xl md:text-xl">
+                                Premium <br><span>Ownership Support</span>
+                            </h2>
+                            <p class="text-gray-600 text-sm sm:text-base md:text-base">
+                                Enjoy peace of mind with exceptional service, warranty coverage, and roadside
+                                assistance.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="text-center mt-8 flex items-center justify-center">
+                        <button
+                            class="bg-[#208177] text-white pl-4 pr-2 py-1 rounded-full font-semibold flex items-center gap-3 sm:gap-4 md:gap-5 border-2 border-white hover:bg-black transition duration-300">
+                            Explore Ownership Benefits
+                            <span
+                                class="flex items-center justify-center w-7 h-7 sm:w-10 sm:h-10 md:w-12 md:h-12 rounded-full border-2 border-white bg-black hover:bg-[#208177] transition duration-300">
+                                <i class="fa-solid fa-arrow-right text-white text-lg"></i>
+                            </span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+        <section>
+            <div class="container mx-auto py-8 px-4">
+                <div class="p-8 text-center">
+                    <h1 class="font-bold text-gray-800 mb-4 text-xl sm:text-2xl md:text-2xl lg:text-3xl">
+                        Your BMW Journey in 3 Simple Steps
+                    </h1>
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+
+                        <!-- Step 1: Explore Models -->
+                        <div
+                            class="bg-gray-50 p-6 rounded-lg flex flex-col items-center hover:shadow-lg transition duration-300">
+                            <model-viewer src="./bmw_model_select_icon.glb" alt="Choose BMW icon"
+                                class="h-[60px] sm:h-[70px] md:h-[80px] w-[60px] sm:w-[70px] md:w-[80px] pb-2"
+                                camera-controls></model-viewer>
+                            <h2 class="text-base sm:text-lg md:text-xl font-semibold text-[#1D6861] mb-2">
+                                Discover & <br> Choose Your BMW
+                            </h2>
+                            <p class="text-gray-600 text-sm sm:text-base md:text-lg">
+                                Browse our latest models, from the iconic 3 Series to the electric iX. Find the perfect
+                                BMW that fits your lifestyle.
+                            </p>
+                        </div>
+
+                        <!-- Step 2: Book Test Drive -->
+                        <div
+                            class="bg-gray-50 p-6 rounded-lg flex flex-col items-center hover:shadow-lg transition duration-300">
+                            <model-viewer src="./bmw_test_drive_icon.glb" alt="Test Drive icon"
+                                class="h-[60px] sm:h-[70px] md:h-[80px] w-[60px] sm:w-[70px] md:w-[80px] pb-2"
+                                camera-controls></model-viewer>
+                            <h2 class="text-base sm:text-lg md:text-xl font-semibold text-[#1D6861] mb-2">
+                                Book a <br> Test Drive
+                            </h2>
+                            <p class="text-gray-600 text-sm sm:text-base md:text-lg">
+                                Experience the thrill of The Ultimate Driving Machine with a test drive at your nearest
+                                BMW Center.
+                            </p>
+                        </div>
+
+                        <!-- Step 3: Customize & Own -->
+                        <div
+                            class="bg-gray-50 p-6 rounded-lg flex flex-col items-center hover:shadow-lg transition duration-300">
+                            <model-viewer src="./bmw_checkout_icon.glb" alt="BMW delivery icon"
+                                class="h-[60px] sm:h-[70px] md:h-[80px] w-[60px] sm:w-[70px] md:w-[80px] pb-2"
+                                camera-controls></model-viewer>
+                            <h2 class="text-base sm:text-lg md:text-xl font-semibold text-[#1D6861] mb-2">
+                                Customize & <br> Drive Away
+                            </h2>
+                            <p class="text-gray-600 text-sm sm:text-base md:text-lg">
+                                Select your features, color, and packages. Then relax — your BMW is on the way to your
+                                driveway.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="text-center mt-8 flex flex-col sm:flex-row gap-4 items-center justify-center">
+                        <button
+                            class="bg-[#208177] text-white px-6 py-3 rounded-full font-semibold flex items-center gap-3 border-2 border-white hover:bg-black transition duration-300">
+                            Start Your Journey
+                            <span
+                                class="flex items-center justify-center w-8 h-8 rounded-full border-2 border-white bg-black hover:bg-[#208177] transition duration-300">
+                                <i class="fa-solid fa-arrow-right text-white text-lg"></i>
+                            </span>
+                        </button>
+                        <button
+                            class="bg-white text-[#208177] px-6 py-3 rounded-full font-semibold flex items-center gap-3 border-2 border-[#208177] hover:bg-gray-50 transition duration-300">
+                            Learn More
+                            <span
+                                class="flex items-center justify-center w-8 h-8 rounded-full border-2 border-[#208177] bg-white hover:bg-gray-50 transition duration-300">
+                                <i class="fa-solid fa-book text-[#208177] text-lg"></i>
+                            </span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+        <section>
+            <div class="container mx-auto py-8 px-4">
+                <div class="p-8 text-center">
+                    <h1 class="font-bold text-gray-800 mb-4 text-xl sm:text-2xl md:text-2xl lg:text-3xl">
+                        Experience BMW in 3 Simple Steps
+                    </h1>
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+
+                        <!-- Step 1: Explore BMW Models -->
+                        <div
+                            class="bg-gray-50 p-6 rounded-lg flex flex-col items-center hover:shadow-lg transition duration-300">
+                            <img src="./assets/icon/explore-models.webp" alt="Explore BMW models"
+                                class="h-[60px] sm:h-[70px] md:h-[80px] w-[60px] sm:w-[70px] md:w-[80px] pb-2">
+                            <h2 class="text-base sm:text-lg md:text-xl font-semibold text-[#1D6861] mb-2">
+                                Explore the BMW Lineup
+                            </h2>
+                            <p class="text-gray-600 text-sm sm:text-base md:text-lg">
+                                From the iconic 3 Series to the all-electric iX, discover the full range of BMW vehicles
+                                tailored for performance and luxury.
+                            </p>
+                        </div>
+
+                        <!-- Step 2: Schedule a Test Drive -->
+                        <div
+                            class="bg-gray-50 p-6 rounded-lg flex flex-col items-center hover:shadow-lg transition duration-300">
+                            <img src="./assets/icon/test-drive.webp" alt="BMW Test Drive"
+                                class="h-[60px] sm:h-[70px] md:h-[80px] w-[60px] sm:w-[70px] md:w-[80px] pb-2">
+                            <h2 class="text-base sm:text-lg md:text-xl font-semibold text-[#1D6861] mb-2">
+                                Book Your Test Drive
+                            </h2>
+                            <p class="text-gray-600 text-sm sm:text-base md:text-lg">
+                                Feel the thrill of BMW engineering firsthand by scheduling a test drive at your nearest
+                                BMW center.
+                            </p>
+                        </div>
+
+                        <!-- Step 3: Customize & Drive -->
+                        <div
+                            class="bg-gray-50 p-6 rounded-lg flex flex-col items-center hover:shadow-lg transition duration-300">
+                            <img src="./assets/icon/customize.webp" alt="Customize BMW"
+                                class="h-[60px] sm:h-[70px] md:h-[80px] w-[60px] sm:w-[70px] md:w-[80px] pb-2">
+                            <h2 class="text-base sm:text-lg md:text-xl font-semibold text-[#1D6861] mb-2">
+                                Customize & Drive Away
+                            </h2>
+                            <p class="text-gray-600 text-sm sm:text-base md:text-lg">
+                                Select your ideal features, finishes, and technology packages — then drive off in a BMW
+                                crafted just for you.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="text-center mt-8 flex flex-col sm:flex-row gap-4 items-center justify-center">
+                        <button
+                            class="bg-[#208177] text-white px-6 py-3 rounded-full font-semibold flex items-center gap-3 border-2 border-white hover:bg-black transition duration-300">
+                            Start Your Journey
+                            <span
+                                class="flex items-center justify-center w-8 h-8 rounded-full border-2 border-white bg-black hover:bg-[#208177] transition duration-300">
+                                <i class="fa-solid fa-arrow-right text-white text-lg"></i>
+                            </span>
+                        </button>
+                        <button
+                            class="bg-white text-[#208177] px-6 py-3 rounded-full font-semibold flex items-center gap-3 border-2 border-[#208177] hover:bg-gray-50 transition duration-300">
+                            Learn More
+                            <span
+                                class="flex items-center justify-center w-8 h-8 rounded-full border-2 border-[#208177] bg-white hover:bg-gray-50 transition duration-300">
+                                <i class="fa-solid fa-book text-[#208177] text-lg"></i>
+                            </span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <div class="container mx-auto px-4 py-8">
+                <div class="p-8 text-center">
+                    <h1 class="font-bold text-gray-800 mb-2 text-xl sm:text-2xl md:text-2xl lg:text-3xl">
+                        Why Choose BMW?
+                    </h1>
+                    <p class="text-sm sm:text-base md:text-lg text-gray-600">
+                        Elevate Your Drive with Precision Engineering and Unmatched Style
+                    </p>
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-8">
+
+                        <!-- Feature 1 -->
+                        <div
+                            class="bg-gray-50 p-6 rounded-lg flex flex-col items-center hover:shadow-md transition duration-300">
+                            <model-viewer src="./bmw-performance-icon.glb" alt="Performance icon"
+                                class="h-[60px] sm:h-[70px] md:h-[80px] w-[60px] sm:w-[70px] md:w-[80px] pb-2"
+                                camera-controls>
+                            </model-viewer>
+                            <h2 class="font-semibold text-gray-800 mb-2 text-base sm:text-lg md:text-xl">
+                                Unrivaled Performance
+                            </h2>
+                            <p class="text-gray-700 text-sm sm:text-base md:text-lg">
+                                Experience the thrill of twin-turbo engines and dynamic handling that defines the
+                                Ultimate Driving Machine™.
+                            </p>
+                        </div>
+
+                        <!-- Feature 2 -->
+                        <div
+                            class="bg-gray-50 p-6 rounded-lg flex flex-col items-center hover:shadow-md transition duration-300">
+                            <model-viewer src="./bmw-tech-icon.glb" alt="Technology icon"
+                                class="h-[60px] sm:h-[70px] md:h-[80px] w-[60px] sm:w-[70px] md:w-[80px] pb-2"
+                                camera-controls>
+                            </model-viewer>
+                            <h2 class="font-semibold text-gray-800 mb-2 text-base sm:text-lg md:text-xl">
+                                Cutting-Edge Technology
+                            </h2>
+                            <p class="text-gray-700 text-sm sm:text-base md:text-lg">
+                                Stay connected with BMW iDrive, intelligent voice control, and driver-assist systems
+                                that redefine convenience.
+                            </p>
+                        </div>
+
+                        <!-- Feature 3 -->
+                        <div
+                            class="bg-gray-50 p-6 rounded-lg flex flex-col items-center hover:shadow-md transition duration-300">
+                            <model-viewer src="./bmw-luxury-icon.glb" alt="Luxury icon"
+                                class="h-[60px] sm:h-[70px] md:h-[80px] w-[60px] sm:w-[70px] md:w-[80px] pb-2"
+                                camera-controls>
+                            </model-viewer>
+                            <h2 class="font-semibold text-gray-800 mb-2 text-base sm:text-lg md:text-xl">
+                                Iconic Luxury Design
+                            </h2>
+                            <p class="text-gray-700 text-sm sm:text-base md:text-lg">
+                                From the signature kidney grille to premium interiors — BMW fuses timeless aesthetics
+                                with modern luxury.
+                            </p>
+                        </div>
+
+                    </div>
+
+                    <div class="text-center mt-8 flex flex-col sm:flex-row gap-4 items-center justify-center">
+                        <button
+                            class="bg-[#208177] text-white px-6 py-3 rounded-full font-semibold flex items-center gap-3 border-2 border-white hover:bg-black transition duration-300">
+                            Build Your BMW
+                            <span
+                                class="flex items-center justify-center w-8 h-8 rounded-full border-2 border-white bg-black hover:bg-[#208177] transition duration-300">
+                                <i class="fa-solid fa-arrow-right text-white text-lg"></i>
+                            </span>
+                        </button>
+                        <button
+                            class="bg-white text-[#208177] px-6 py-3 rounded-full font-semibold flex items-center gap-3 border-2 border-[#208177] hover:bg-gray-50 transition duration-300">
+                            Compare Models
+                            <span
+                                class="flex items-center justify-center w-8 h-8 rounded-full border-2 border-[#208177] bg-white hover:bg-gray-50 transition duration-300">
+                                <i class="fa-solid fa-car-side text-[#208177] text-lg"></i>
+                            </span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+        <section class="flex justify-center items-center flex-col mt-20 pb-20 px-4 bg-gray-50">
+            <div class="text-center mb-10">
+                <h1 class="text-2xl md:text-3xl font-bold text-gray-800">
+                    Choose Your Ultimate Driving Machine
+                </h1>
+                <p class="text-sm sm:text-base md:text-lg text-gray-600 mt-2">
+                    Compare BMW models and find the perfect balance of performance, innovation, and luxury.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-7xl w-full">
+                <!-- BMW 3 Series -->
+                <div
+                    class="bg-white border border-gray-200 rounded-2xl p-6 shadow-sm hover:shadow-md transition duration-300 flex flex-col items-start relative">
+                    <span
+                        class="absolute top-4 left-4 bg-blue-700 text-white text-xs font-semibold px-3 py-1 rounded-full">
+                        BMW 3 Series
+                    </span>
+                    <h2 class="text-3xl font-bold text-black mt-14">$43,800<span class="text-base font-normal"> Starting
+                            MSRP</span></h2>
+                    <p class="text-sm text-gray-500 mt-2 mb-4 font-semibold">Sporty, agile, and efficient — perfect for
+                        everyday performance.</p>
+                    <ul class="text-sm text-gray-700 space-y-2 mb-6">
+                        <li>✔ 2.0L TwinPower Turbo Inline-4</li>
+                        <li>✔ iDrive 8.0 with 14.9" Curved Display</li>
+                        <li>✔ Apple CarPlay® & Android Auto™</li>
+                        <li>✔ Rear-Wheel Drive or xDrive AWD</li>
+                        <li class="text-gray-400">• Standard Sport Seats</li>
+                        <li class="text-gray-400">• Up to 34 MPG Highway</li>
+                    </ul>
+                    <button
+                        class="mt-auto w-full bg-black text-white py-2 rounded-full font-bold hover:bg-gray-800 transition">
+                        Book a Test Drive
+                    </button>
+                </div>
+
+                <!-- BMW 5 Series -->
+                <div
+                    class="bg-white border border-yellow-400 rounded-2xl p-6 shadow-lg hover:shadow-xl transition duration-300 flex flex-col items-start relative">
+                    <span
+                        class="absolute top-4 left-4 bg-blue-700 text-white text-xs font-semibold px-3 py-1 rounded-full">
+                        BMW 5 Series
+                    </span>
+                    <h2 class="text-3xl font-bold text-yellow-600 mt-14">$57,900<span class="text-base font-normal">
+                            Starting MSRP</span></h2>
+                    <p class="text-sm text-gray-600 mt-2 mb-4 font-semibold">A luxurious blend of performance,
+                        innovation, and comfort.</p>
+                    <ul class="text-sm text-gray-800 space-y-2 mb-6">
+                        <li>✔ 2.0L or 3.0L TwinPower Turbo Engine</li>
+                        <li>✔ BMW Curved Display + Voice Assistant</li>
+                        <li>✔ Active Driving Assistant Professional</li>
+                        <li>✔ Optional Plug-in Hybrid (530e)</li>
+                        <li class="text-gray-600">• Multi-zone Climate Control</li>
+                        <li class="text-gray-600">• Premium Leather Upholstery</li>
+                        <li class="text-gray-600">• Available M Sport Package</li>
+                    </ul>
+                    <button
+                        class="mt-auto w-full bg-yellow-500 text-black py-2 rounded-full font-bold hover:bg-yellow-400 transition">
+                        Explore the 5 Series
+                    </button>
+                </div>
+
+                <!-- BMW 7 Series -->
+                <div
+                    class="bg-white border border-gray-300 rounded-2xl p-6 shadow-sm hover:shadow-md transition duration-300 flex flex-col items-start relative">
+                    <span
+                        class="absolute top-4 left-4 bg-blue-700 text-white text-xs font-semibold px-3 py-1 rounded-full">
+                        BMW 7 Series
+                    </span>
+                    <h2 class="text-3xl font-bold text-black mt-14">$96,400<span class="text-base font-normal"> Starting
+                            MSRP</span></h2>
+                    <p class="text-sm text-gray-500 mt-2 mb-4 font-semibold">Flagship luxury sedan with cutting-edge
+                        tech and comfort.</p>
+                    <ul class="text-sm text-gray-700 space-y-2 mb-6">
+                        <li>✔ 3.0L Turbo or V8 TwinPower Hybrid</li>
+                        <li>✔ 31” Panoramic Theatre Screen (i7)</li>
+                        <li>✔ Executive Lounge Seating</li>
+                        <li>✔ BMW Iconic Glow Kidney Grille</li>
+                        <li class="text-gray-400">• Hands-Free Highway Driving</li>
+                        <li class="text-gray-400">• Bowers & Wilkins Sound System</li>
+                    </ul>
+                    <button
+                        class="mt-auto w-full bg-black text-white py-2 rounded-full font-bold hover:bg-gray-800 transition">
+                        Discover the 7 Series
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <section class="flex justify-center items-center mt-20 mb-20 pb-20 px-4">
+            <div class="container w-full">
+                <h2 class="text-xl sm:text-2xl md:text-3xl font-bold text-center">
+                    BMW Ownership FAQ
+                </h2>
+                <p class="text-gray-600 text-center mt-2 text-sm sm:text-sm md:text-base">
+                    Everything you need to know about purchasing, owning, and servicing your BMW.
+                </p>
+
+                <!-- Tabs -->
+                <div class="flex flex-wrap justify-center gap-3 mt-6">
+                    <button class="tab-btn px-4 py-2 bg-blue-700 text-white rounded-full text-sm md:text-base"
+                        data-tab="buying">Buying</button>
+                    <button class="tab-btn px-4 py-2 bg-blue-700 text-white rounded-full text-sm md:text-base"
+                        data-tab="finance">Finance & Leasing</button>
+                    <button class="tab-btn px-4 py-2 bg-blue-700 text-white rounded-full text-sm md:text-base"
+                        data-tab="maintenance">Service & Maintenance</button>
+                    <button class="tab-btn px-4 py-2 bg-blue-700 text-white rounded-full text-sm md:text-base"
+                        data-tab="warranty">Warranty</button>
+                    <button class="tab-btn px-4 py-2 bg-blue-700 text-white rounded-full text-sm md:text-base"
+                        data-tab="features">Technology & Features</button>
+                </div>
+
+                <!-- FAQ Content -->
+                <div id="faq-content" class="mt-6">
+                    <!-- Buying Tab -->
+                    <div class="faq-section" id="buying">
+                        <div class="border-t border-gray-300">
+                            <button
+                                class="faq-btn w-full text-left py-4 font-semibold flex justify-between items-center text-base md:text-xl">
+                                Can I schedule a test drive online?
+                                <span class="toggle-icon text-xl md:text-2xl">-</span>
+                            </button>
+                            <p class="text-gray-600 px-4 pb-4 hidden md:text-lg">
+                                Yes! Visit our test drive booking page, select your preferred model, date, and time —
+                                and we’ll have your BMW ready.
+                            </p>
+                        </div>
+                        <div class="border-t border-gray-300">
+                            <button
+                                class="faq-btn w-full text-left py-4 font-semibold flex justify-between items-center text-base md:text-xl">
+                                Are all BMW models available for immediate delivery?
+                                <span class="toggle-icon text-xl md:text-2xl">+</span>
+                            </button>
+                            <p class="text-gray-600 px-4 pb-4 hidden md:text-lg">
+                                Many of our most popular BMW models are in stock, but custom builds or specific trims
+                                may require a factory order.
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Finance Tab -->
+                    <div class="faq-section hidden" id="finance">
+                        <div class="border-t border-gray-300">
+                            <button
+                                class="faq-btn w-full text-left py-4 font-semibold flex justify-between items-center text-base md:text-xl">
+                                What financing options are available?
+                                <span class="toggle-icon text-xl md:text-2xl">-</span>
+                            </button>
+                            <p class="text-gray-600 px-4 pb-4 hidden md:text-lg">
+                                We offer traditional auto loans, BMW Select Financing, and flexible leasing plans with
+                                competitive APR rates.
+                            </p>
+                        </div>
+                        <div class="border-t border-gray-300">
+                            <button
+                                class="faq-btn w-full text-left py-4 font-semibold flex justify-between items-center text-base md:text-xl">
+                                Can I trade in my current vehicle?
+                                <span class="toggle-icon text-xl md:text-2xl">+</span>
+                            </button>
+                            <p class="text-gray-600 px-4 pb-4 hidden md:text-lg">
+                                Absolutely. We accept trade-ins and offer a free appraisal. The trade-in value can be
+                                applied toward your new BMW.
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Service Tab -->
+                    <div class="faq-section hidden" id="maintenance">
+                        <div class="border-t border-gray-300">
+                            <button
+                                class="faq-btn w-full text-left py-4 font-semibold flex justify-between items-center text-base md:text-xl">
+                                How often should I service my BMW?
+                                <span class="toggle-icon text-xl md:text-2xl">-</span>
+                            </button>
+                            <p class="text-gray-600 px-4 pb-4 hidden md:text-lg">
+                                BMW recommends servicing every 10,000 miles or once a year. Your vehicle will alert you
+                                when it's time.
+                            </p>
+                        </div>
+                        <div class="border-t border-gray-300">
+                            <button
+                                class="faq-btn w-full text-left py-4 font-semibold flex justify-between items-center text-base md:text-xl">
+                                Is service included in the purchase?
+                                <span class="toggle-icon text-xl md:text-2xl">+</span>
+                            </button>
+                            <p class="text-gray-600 px-4 pb-4 hidden md:text-lg">
+                                Every new BMW includes BMW Ultimate Care — covering scheduled maintenance for 3 years or
+                                36,000 miles.
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Warranty Tab -->
+                    <div class="faq-section hidden" id="warranty">
+                        <div class="border-t border-gray-300">
+                            <button
+                                class="faq-btn w-full text-left py-4 font-semibold flex justify-between items-center text-base md:text-xl">
+                                What’s included in the BMW warranty?
+                                <span class="toggle-icon text-xl md:text-2xl">-</span>
+                            </button>
+                            <p class="text-gray-600 px-4 pb-4 hidden md:text-lg">
+                                All new BMWs come with a 4-year/50,000-mile limited warranty and 12-year rust
+                                perforation coverage.
+                            </p>
+                        </div>
+                        <div class="border-t border-gray-300">
+                            <button
+                                class="faq-btn w-full text-left py-4 font-semibold flex justify-between items-center text-base md:text-xl">
+                                Are extended warranties available?
+                                <span class="toggle-icon text-xl md:text-2xl">+</span>
+                            </button>
+                            <p class="text-gray-600 px-4 pb-4 hidden md:text-lg">
+                                Yes, you can purchase extended warranty coverage and BMW Protection Plans for additional
+                                peace of mind.
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Tech Tab -->
+                    <div class="faq-section hidden" id="features">
+                        <div class="border-t border-gray-300">
+                            <button
+                                class="faq-btn w-full text-left py-4 font-semibold flex justify-between items-center text-base md:text-xl">
+                                What is BMW iDrive?
+                                <span class="toggle-icon text-xl md:text-2xl">-</span>
+                            </button>
+                            <p class="text-gray-600 px-4 pb-4 hidden md:text-lg">
+                                BMW iDrive is our intuitive infotainment system, combining navigation, vehicle settings,
+                                and entertainment in one display.
+                            </p>
+                        </div>
+                        <div class="border-t border-gray-300 border-b">
+                            <button
+                                class="faq-btn w-full text-left py-4 font-semibold flex justify-between items-center text-base md:text-xl">
+                                Does BMW support Apple CarPlay and Android Auto?
+                                <span class="toggle-icon text-xl md:text-2xl">+</span>
+                            </button>
+                            <p class="text-gray-600 px-4 pb-4 hidden md:text-lg">
+                                Yes. Wireless Apple CarPlay and Android Auto are standard in most current BMW models.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="my-20 px-4">
+            <div class="container mx-auto flex flex-col lg:flex-row items-center p-6 sm:p-10 gap-10">
+
+                <!-- Left Content -->
+                <div class="w-full lg:w-1/2 space-y-4">
+                    <h2 class="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold text-teal-700">
+                        Ready to Drive Your Dream BMW? <br class="hidden sm:block">Explore Our Latest Models
+                    </h2>
+                    <p class="text-gray-600 text-sm sm:text-sm md:text-base">
+                        Experience the luxury, performance, and innovation of BMW. Whether you're interested in the
+                        sleek BMW 3 Series or the powerful BMW X5, our models are built to exceed your expectations.
+                    </p>
+                    <div class="text-center mt-6 flex items-center">
+                        <button
+                            class="bg-[#208177] text-white pl-4 pr-2 py-1 rounded-full font-semibold flex items-center gap-3 sm:gap-4 md:gap-5 border-2 border-white hover:bg-black transition duration-300">
+                            Book a Test Drive
+                            <span
+                                class="flex items-center justify-center w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 rounded-full border-2 border-white bg-black hover:bg-[#208177] transition duration-300">
+                                <i class="fa-solid fa-car text-white text-lg"></i>
+                            </span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Right: 3D Model (BMW Car Model) -->
+                <div class="w-full max-w-md">
+                    <model-viewer src="./bmw.glb" alt="BMW Car Model" auto-rotate camera-controls ar
+                        shadow-intensity="1" style="width: 600px; height: 500px;">
+                    </model-viewer>
+                </div>
+
+            </div>
+        </section>
+
+
+    </main>
+    <footer class="bg-[#F2FBF9] py-10 px-6 md:px-12 lg:px-24">
+        <div
+            class="max-w-8xl mx-auto flex flex-col md:flex-row justify-between items-center md:items-start space-y-10 md:space-y-0">
+
+            <!-- Branding & Socials -->
+            <div class="text-center md:text-left w-full md:w-1/4">
+                <img src="./assets/bmw-logo.svg" alt="BMW Logo" class="h-8 sm:h-10 mx-auto md:mx-0">
+                <p class="text-gray-600 text-xs sm:text-sm mt-3">Driving Innovation and Luxury Worldwide.</p>
+                <div class="flex justify-center md:justify-start space-x-4 mt-5 text-sm sm:text-base md:text-lg">
+                    <a href="#"><i class="fa-brands fa-facebook-f"></i></a>
+                    <a href="#"><i class="fa-brands fa-instagram"></i></a>
+                    <a href="#"><i class="fa-brands fa-twitter"></i></a>
+                    <a href="#"><i class="fa-brands fa-linkedin"></i></a>
+                </div>
+            </div>
+
+            <!-- Support Links -->
+            <div class="w-full md:w-1/4">
+                <h3 class="text-base sm:text-lg md:text-xl font-semibold">Support</h3>
+                <ul class="text-gray-600 text-xs sm:text-sm md:text-base mt-3 space-y-2">
+                    <li><a href="#" class="hover:underline">Customer Support</a></li>
+                    <li><a href="#" class="hover:underline">BMW Owner's Manual</a></li>
+                    <li><a href="#" class="hover:underline">Service Centers</a></li>
+                    <li><a href="#" class="hover:underline">Warranty Information</a></li>
+                </ul>
+            </div>
+
+            <!-- Company Info -->
+            <div class="w-full md:w-1/4">
+                <h3 class="text-base sm:text-lg md:text-xl font-semibold">Company</h3>
+                <ul class="text-gray-600 text-xs sm:text-sm md:text-base mt-3 space-y-2">
+                    <li><a href="#" class="hover:underline">About BMW</a></li>
+                    <li><a href="#" class="hover:underline">Careers at BMW</a></li>
+                    <li><a href="#" class="hover:underline">Press</a></li>
+                    <li><a href="#" class="hover:underline">BMW Dealer Network</a></li>
+                </ul>
+            </div>
+
+            <!-- Contact Info -->
+            <div class="w-full md:w-1/4">
+                <h3 class="text-base sm:text-lg md:text-xl font-semibold">Contact</h3>
+                <p class="text-gray-600 text-xs sm:text-sm md:text-base mt-3 flex items-center">
+                    <i class="fa-solid fa-envelope mr-2"></i> support@bmw.com
+                </p>
+                <p class="text-gray-600 text-xs sm:text-sm md:text-base flex items-center mt-1">
+                    <i class="fa-solid fa-phone mr-2"></i> 1-800-555-0199
+                </p>
+                <p class="text-gray-600 text-xs sm:text-sm md:text-base mt-2">
+                    BMW of North America, LLC<br> 300 Chestnut Ridge Road, Woodcliff Lake, NJ 07677
+                </p>
+            </div>
+        </div>
+
+        <!-- Bottom Footer -->
+        <div
+            class="max-w-8xl mx-auto mt-10 border-t border-gray-300 pt-4 flex flex-col md:flex-row justify-between items-center text-gray-500 text-xs sm:text-sm md:text-base">
+            <div class="flex space-x-6">
+                <a href="#" class="hover:underline">Privacy Policy</a>
+                <a href="#" class="hover:underline">Terms of Service</a>
+                <a href="#" class="hover:underline">Cookie Settings</a>
+            </div>
+            <p class="mt-3 md:mt-0">© 2025 BMW, Inc. All rights reserved.</p>
+        </div>
+    </footer>
+
+
+    <script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
+
     <script>
-      // Wrap every letter in a span
-      var textWrapper = document.querySelector(".title");
-      textWrapper.innerHTML = textWrapper.textContent.replace(
-        /\S/g,
-        "<span class='letter'>$&</span>"
-      );
-
-      anime.timeline().add({
-        targets: ".title .letter",
-        translateY: [-200, 0],
-        easing: "easeOutExpo",
-        duration: 1400,
-        delay: (el, i) => 6500 + 30 * i,
-      });
-
-      TweenMax.staggerFrom(
-        ".container > .block",
-        2,
-        {
-          y: "110%",
-          ease: Expo.easeInOut,
-          delay: 1,
-        },
-        0.4
-      );
-      TweenMax.to(".overlay", 0.5, {
-        y: "100%",
-        ease: Expo.easeInOut,
-        delay: 5.2,
-      });
-
-      TweenMax.to(".container", 2, {
-        scale: "2",
-        y: "90%",
-        ease: Expo.easeInOut,
-        delay: 5.5,
-      });
-
-      TweenMax.staggerFrom(
-        ".navbar > div",
-        1.6,
-        {
-          opacity: 0,
-          y: -100,
-          ease: Expo.easeInOut,
-          delay: 6,
-        },
-        0.08
-      );
-      TweenMax.staggerFrom(
-        ".site-menu > div",
-        1,
-        {
-          opacity: 0,
-          y: -100,
-          ease: Power2.easeOut,
-          delay: 6.5,
-        },
-        0.1
-      );
+        document.addEventListener("DOMContentLoaded", function () {
+            // Mobile menu toggle
+            const menuToggle = document.getElementById('menu-toggle');
+            const mobileMenu = document.getElementById('mobile-menu');
+            
+            menuToggle.addEventListener('click', function() {
+                mobileMenu.classList.toggle('hidden');
+            });
+    
+            // FAQ accordion functionality
+            const faqBtns = document.querySelectorAll('.faq-btn');
+            faqBtns.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const answer = this.nextElementSibling;
+                    const icon = this.querySelector('.toggle-icon');
+                    
+                    // Toggle answer visibility
+                    answer.classList.toggle('hidden');
+                    
+                    // Toggle icon
+                    if (answer.classList.contains('hidden')) {
+                        icon.textContent = '+';
+                    } else {
+                        icon.textContent = '-';
+                    }
+                });
+            });
+    
+            // Tab switching functionality
+            const tabBtns = document.querySelectorAll('.tab-btn');
+            tabBtns.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const tabId = this.getAttribute('data-tab');
+                    
+                    // Hide all tab content
+                    document.querySelectorAll('.faq-section').forEach(section => {
+                        section.classList.add('hidden');
+                    });
+                    
+                    // Show selected tab content
+                    document.getElementById(tabId).classList.remove('hidden');
+                    
+                    // Update active tab styling
+                    tabBtns.forEach(tb => tb.classList.remove('bg-blue-700', 'text-white'));
+                    this.classList.add('bg-blue-700', 'text-white');
+                });
+            });
+    
+            // Navbar scroll effect
+            window.addEventListener('scroll', function() {
+                const navbar = document.getElementById('navbar');
+                if (window.scrollY > 50) {
+                    navbar.classList.add('shadow-md');
+                    navbar.classList.remove('shadow-lg');
+                } else {
+                    navbar.classList.remove('shadow-md');
+                    navbar.classList.add('shadow-lg');
+                }
+            });
+    
+            // Smooth scrolling for anchor links
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    
+                    const targetId = this.getAttribute('href');
+                    if (targetId === '#') return;
+                    
+                    const targetElement = document.querySelector(targetId);
+                    if (targetElement) {
+                        window.scrollTo({
+                            top: targetElement.offsetTop - 80,
+                            behavior: 'smooth'
+                        });
+                        
+                        // Close mobile menu if open
+                        mobileMenu.classList.add('hidden');
+                    }
+                });
+            });
+    
+            // 3D model interaction enhancements
+            const modelViewers = document.querySelectorAll('model-viewer');
+            modelViewers.forEach(viewer => {
+                viewer.addEventListener('load', () => {
+                    // Add loading animation
+                    viewer.classList.add('animate-pulse');
+                    setTimeout(() => {
+                        viewer.classList.remove('animate-pulse');
+                    }, 1000);
+                });
+                
+                // Add hover effect
+                viewer.addEventListener('mouseenter', () => {
+                    if (viewer.hasAttribute('auto-rotate')) {
+                        viewer.setAttribute('auto-rotate-delay', '1000');
+                    }
+                });
+                
+                viewer.addEventListener('mouseleave', () => {
+                    if (viewer.hasAttribute('auto-rotate')) {
+                        viewer.removeAttribute('auto-rotate-delay');
+                    }
+                });
+            });
+    
+            // Form submission handling (example)
+            const contactForms = document.querySelectorAll('form');
+            contactForms.forEach(form => {
+                form.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    
+                    // Get form data
+                    const formData = new FormData(this);
+                    
+                    // Simulate form submission
+                    console.log('Form submitted:', Object.fromEntries(formData));
+                    
+                    // Show success message
+                    alert('Thank you for your message! We will contact you soon.');
+                    this.reset();
+                });
+            });
+    
+            // Animation on scroll initialization
+            const animateOnScroll = function() {
+                const elements = document.querySelectorAll('.animate-on-scroll');
+                
+                elements.forEach(element => {
+                    const elementPosition = element.getBoundingClientRect().top;
+                    const windowHeight = window.innerHeight;
+                    
+                    if (elementPosition < windowHeight - 100) {
+                        element.classList.add('animate-fadeInUp');
+                    }
+                });
+            };
+            
+            // Run once on load
+            animateOnScroll();
+            
+            // Run on scroll
+            window.addEventListener('scroll', animateOnScroll);
+        });
+    
+        // Initialize Three.js if needed (for custom 3D model viewing)
+        if (document.getElementById('model-viewer-custom')) {
+            initThreeJS();
+        }
+    
+        function initThreeJS() {
+            // Three.js initialization code would go here
+            // This would be similar to your existing code but modularized
+            console.log('Three.js initialized');
+        }
     </script>
-  </body>
+</body>
+
 </html>
