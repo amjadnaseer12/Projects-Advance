@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+       <meta charset="UTF-8">
+       <meta name="viewport" content="width=device-width, initial-scale=1.0">
+       <title>Preloader Animation with Line Split</title>
+       <link rel="stylesheet" href="styles.css">
+</head>
+<style>
+       * {
+              margin: 0;
+              padding: 0;
+              box-sizing: border-box;
+              font-family: Arial, sans-serif;
+       }
+
+       body,
+       html {
+              width: 100%;
+              height: 100vh;
+              overflow: hidden;
+              background: #111;
+              color: #fff;
+       }
+
+       /* Preloader */
+       .preloader {
+              position: fixed;
+              width: 100%;
+              height: 100%;
+              background: #000;
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              z-index: 1000;
+       }
+
+       .loading-content {
+              text-align: center;
+       }
+
+       .loading-text {
+              font-size: 2.5rem;
+              font-weight: bold;
+              margin-bottom: 20px;
+       }
+
+       /* Expanding Line */
+       .line {
+              width: 0%;
+              height: 4px;
+              background: #fff;
+       }
+
+       /* Page Split Animation */
+       .page-split {
+              position: fixed;
+              top: 0;
+              left: 0;
+              width: 100%;
+              height: 100%;
+              display: flex;
+              z-index: 999;
+       }
+
+       .left,
+       .right {
+              width: 50%;
+              height: 100%;
+              background: #000;
+       }
+
+       /* Main Content */
+       .main-content {
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              height: 100vh;
+              opacity: 0;
+       }
+
+       .reveal-text {
+              font-size: 3rem;
+              font-weight: bold;
+       }
+</style>
+
+<body>
+
+       <!-- Preloader -->
+       <div class="preloader">
+              <div class="loading-content">
+                     <h1 class="loading-text"><span id="counter">0</span>%</h1>
+                     <div class="line"></div> <!-- Expanding Line -->
+              </div>
+       </div>
+
+       <!-- Page Split -->
+       <div class="page-split">
+              <div class="left"></div>
+              <div class="right"></div>
+       </div>
+
+       <!-- Main Content -->
+       <div class="main-content">
+              <h1 class="reveal-text">Welcome to the Page!</h1>
+       </div>
+
+       <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+       <script>
+              document.addEventListener("DOMContentLoaded", () => {
+                     let counter = { value: 0 }; // Counter object for GSAP animation
+
+                     let tl = gsap.timeline();
+
+                     // Counter Animation (0 to 100)
+                     gsap.to(counter, {
+                            value: 100,
+                            duration: 2,
+                            ease: "power2.out",
+                            onUpdate: function () {
+                                   document.getElementById("counter").textContent = Math.round(counter.value);
+                            }
+                     });
+
+                     // Expanding Line Animation
+                     tl.to(".line", { width: "100%", duration: 1.5, ease: "power2.out" });
+
+                     // Page Split & Reveal
+                     tl.to(".loading-text", { opacity: 0, y: -20, duration: 0.5 }, "-=1")
+                            .to(".preloader", { y: "-100%", duration: 1, ease: "power2.inOut" })
+                            .to(".left", { x: "-100%", duration: 1, ease: "power4.inOut" }, "-=0.5")
+                            .to(".right", { x: "100%", duration: 1, ease: "power4.inOut" }, "-=1")
+                            .to(".page-split", {
+                                   opacity: 0, duration: 0.5, onComplete: () => {
+                                          document.querySelector(".page-split").style.display = "none";
+                                   }
+                            })
+                            .fromTo(".main-content", { opacity: 0 }, { opacity: 1, duration: 1 });
+              });
+
+       </script>
+</body>
+
+</html>
