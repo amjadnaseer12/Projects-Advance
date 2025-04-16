@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfolio/Bexact</title>
+    <!-- External Libraries -->
+    <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Swiper/11.0.5/swiper-bundle.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.3/css/lightbox.min.css">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="./css/style.css">
+</head>
+
+<body>
+    <!-- Header Section -->
+    <div class="wrapper">
+        <header>
+            <div class="logo">
+                <img src="./assets/logo.svg" alt="Logo">
+            </div>
+            <div class="menu-open" onclick="menuOpen()">
+                <ion-icon name="menu-outline"></ion-icon>
+            </div>
+        </header>
+        <div class="menu-container">
+            <div class="menu-close" onclick="menuClose()">
+                <ion-icon name="close-outline"></ion-icon>
+            </div>
+            <div class="menu-items">
+                <div class="menu-items-container">
+                    <span>
+                        <div class="menu-item">
+                            <div class="menu-item-number">01</div>
+                            <div class="menu-item-name">Home</div>
+                            <div class="menu-item-sub">Briefly about the main things</div>
+                            <div class="menu-item-icon">
+                                <ion-icon name="arrow-up-outline"></ion-icon>
+                            </div>
+                        </div>
+                    </span>
+                    <div class="line"></div>
+                    <span>
+                        <div class="menu-item">
+                            <div class="menu-item-number">02</div>
+                            <div class="menu-item-name">Services</div>
+                            <div class="menu-item-sub">A story about people</div>
+                            <div class="menu-item-icon">
+                                <ion-icon name="arrow-up-outline"></ion-icon>
+                            </div>
+                        </div>
+                    </span>
+                    <div class="line"></div>
+                    <span>
+                        <div class="menu-item">
+                            <div class="menu-item-number">03</div>
+                            <div class="menu-item-name">Projects</div>
+                            <div class="menu-item-sub">Philosophy of work</div>
+                            <div class="menu-item-icon">
+                                <ion-icon name="arrow-up-outline"></ion-icon>
+                            </div>
+                        </div>
+                    </span>
+                    <div class="line"></div>
+                    <span>
+                        <div class="menu-item">
+                            <div class="menu-item-number">04</div>
+                            <div class="menu-item-name">Pricing</div>
+                            <div class="menu-item-sub">Our practical experiences</div>
+                            <div class="menu-item-icon">
+                                <ion-icon name="arrow-up-outline"></ion-icon>
+                            </div>
+                        </div>
+                    </span>
+                    <div class="line"></div>
+                    <span>
+                        <div class="menu-item">
+                            <div class="menu-item-number">05</div>
+                            <div class="menu-item-name">Contact</div>
+                            <div class="menu-item-sub">Stay in touch with us</div>
+                            <div class="menu-item-icon">
+                                <ion-icon name="arrow-up-outline"></ion-icon>
+                            </div>
+                        </div>
+                    </span>
+                    <div class="line"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="hero-bg">
+        <div class="hero-copy">
+            <h1>BEXACT</h1>
+        </div>
+        <div class="hero-text-body">
+            <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Tempore aperiam suscipit tempora ut saepe
+                quidem pariatur debitis ratione aliquid! Animi eligendi sed facere vel autem accusamus obcaecati
+                explicabo cumque dolor?</p>
+        </div>
+        <div class="overlay">
+            <div class="overlay-content">
+                <div class="images">
+                    <div class="img-holder">
+                        <div class="layers"></div>
+                        <div class="layers"></div>
+                        <div class="layers"></div>
+                        <div class="layers"></div>
+                        <div class="layers"></div>
+                        <div class="layers"></div>
+                        <div class="layers"></div>
+                        <div class="layers"></div>
+                        <div class="layers"></div>
+                        <div class="layers"></div>
+                    </div>
+                </div>
+                <div class="text">
+                    <div class="counter">
+                        <p>100%</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Portfolio Section -->
+    <section class="projects">
+        <div class="portfolio" id="portfolio">
+            <div class="container">
+                <div class="section-header">
+                    <h2>My All Projects</h2>
+                </div>
+                <ul id="portfolio-filter">
+                    <li data-filter="*" class="filter-active">All</li>
+                    <li data-filter=".filter-1">Web Design</li>
+                    <li data-filter=".filter-2">Mobile Apps</li>
+                    <li data-filter=".filter-3">Game Dev</li>
+                </ul>
+                <div class="portfolio-container">
+                    <div class="portfolio-item filter-1">
+                        <div class="portfolio-wrap">
+                            <div class="portfolio-img">
+                                <img src="./assets/portfolio-1.jpg" alt="eCommerce Website">
+                            </div>
+                            <div class="portfolio-text">
+                                <h3>eCommerce Website</h3>
+                                <a class="btn" href="./assets/portfolio-1.jpg" data-lightbox="portfolio">+</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="portfolio-item filter-2">
+                        <div class="portfolio-wrap">
+                            <div class="portfolio-img">
+                                <img src="./assets/portfolio-2.jpg" alt="Product Landing Page">
+                            </div>
+                            <div class="portfolio-text">
+                                <h3>Product Landing Page</h3>
+                                <a class="btn" href="./assets/portfolio-2.jpg" data-lightbox="portfolio">+</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="portfolio-item filter-3">
+                        <div class="portfolio-wrap">
+                            <div class="portfolio-img">
+                                <img src="./assets/portfolio-3.jpg" alt="JavaScript Quiz Game">
+                            </div>
+                            <div class="portfolio-text">
+                                <h3>JavaScript Quiz Game</h3>
+                                <a class="btn" href="./assets/portfolio-3.jpg" data-lightbox="portfolio">+</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pricing Section -->
+    <section class="new-one">
+        <div class="cards">
+            <!-- Pricing Plans -->
+            <div class="card card-1">
+                <h2>Pricing Plans</h2>
+                <div class="pricing-cards">
+                    <div class="pricing price1">
+                        <h2>Basic</h2>
+                        <ul>
+                            <li>Up to 5 pages</li>
+                            <li>Responsive Design</li>
+                            <li>Basic SEO Optimization</li>
+                            <li>1 Revision</li>
+                            <li>Support: Email Only</li>
+                        </ul>
+                        <p class="price">$499</p>
+                        <a href="#contact" class="btn">Get Started</a>
+                    </div>
+                    <div class="pricing price2">
+                        <h2>Medium</h2>
+                        <ul>
+                            <li>Up to 10 pages</li>
+                            <li>Custom UI/UX Design</li>
+                            <li>Advanced SEO Optimization</li>
+                            <li>3 Revisions</li>
+                            <li>Support: Email & Chat</li>
+                        </ul>
+                        <p class="price">$899</p>
+                        <a href="#contact" class="btn">Get Started</a>
+                    </div>
+                    <div class="pricing price3">
+                        <h2>Premium</h2>
+                        <ul>
+                            <li>Unlimited Pages</li>
+                            <li>Custom Animations</li>
+                            <li>E-commerce Integration</li>
+                            <li>Unlimited Revisions</li>
+                            <li>Support: 24/7 Priority</li>
+                        </ul>
+                        <p class="price">$1499</p>
+                        <a href="#contact" class="btn">Get Started</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Services -->
+            <div class="card card-2">
+                <h2>Our Services</h2>
+                <div class="pricing-cards">
+                    <div class="pricing price1">
+                        <h2>Web Development</h2>
+                        <ul>
+                            <li>Custom Website Design</li>
+                            <li>Frontend & Backend Development</li>
+                            <li>E-commerce Solutions</li>
+                            <li>API Integration</li>
+                            <li>Maintenance & Support</li>
+                        </ul>
+                        <a href="#contact" class="btn">Learn More</a>
+                    </div>
+                    <div class="pricing price2">
+                        <h2>UI/UX Design</h2>
+                        <ul>
+                            <li>Wireframing & Prototyping</li>
+                            <li>User Research & Testing</li>
+                            <li>Interactive Design</li>
+                            <li>Branding & Style Guides</li>
+                            <li>Figma & Adobe XD</li>
+                        </ul>
+                        <a href="#contact" class="btn">Learn More</a>
+                    </div>
+                    <div class="pricing price3">
+                        <h2>SEO & Marketing</h2>
+                        <ul>
+                            <li>Keyword Research</li>
+                            <li>On-Page & Off-Page SEO</li>
+                            <li>Content Strategy</li>
+                            <li>Google Analytics Setup</li>
+                            <li>Social Media Marketing</li>
+                        </ul>
+                        <a href="#contact" class="btn">Learn More</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Skills -->
+            <div class="card card-3">
+                <h2>Our Skills</h2>
+                <div class="pricing-cards">
+                    <div class="pricing price1">
+                        <h2>Web Design</h2>
+                        <ul>
+                            <li>HTML5, CSS3, JavaScript</li>
+                            <li>Responsive Design</li>
+                            <li>Cross-Browser Compatibility</li>
+                            <li>Accessibility Standards</li>
+                            <li>Performance Optimization</li>
+                        </ul>
+                        <a href="#contact" class="btn">Learn More</a>
+                    </div>
+                    <div class="pricing price2">
+                        <h2>Web Development</h2>
+                        <ul>
+                            <li>React, Angular, Vue.js</li>
+                            <li>Node.js, Express, Django</li>
+                            <li>Database Management</li>
+                            <li>RESTful APIs</li>
+                            <li>DevOps & Deployment</li>
+                        </ul>
+                        <a href="#contact" class="btn">Learn More</a>
+                    </div>
+                    <div class="pricing price3">
+                        <h2>Portfolio Design</h2>
+                        <ul>
+                            <li>Custom Portfolio Websites</li>
+                            <li>Showcase Projects & Case Studies</li>
+                            <li>Interactive Animations</li>
+                            <li>Client Testimonials</li>
+                            <li>SEO-Optimized Content</li>
+                        </ul>
+                        <a href="#contact" class="btn">Learn More</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Us Section -->
+    <section class="contact-section">
+        <div class="container">
+            <h2>Get in Touch</h2>
+            <p>We'd love to hear from you! Please fill out the form below to contact us.</p>
+            <div class="contact-wrapper">
+                <!-- Contact Form -->
+                <div class="contact-form">
+                    <form id="contactForm">
+                        <div class="form-group">
+                            <label for="name">Name</label>
+                            <input type="text" id="name" name="name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email</label>
+                            <input type="email" id="email" name="email" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="subject">Subject</label>
+                            <input type="text" id="subject" name="subject" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="message">Message</label>
+                            <textarea id="message" name="message" rows="5" required></textarea>
+                        </div>
+                        <button type="submit" class="submit-btn">Send Message</button>
+                    </form>
+                </div>
+
+                <!-- Map -->
+                <div class="contact-map">
+                    <iframe
+                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3153.835434509374!2d144.9537353153166!3d-37.816279742021665!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x6ad642af0f11fd81%3A0xf577d6a32f4c0bb!2sMelbourne%20VIC%2C%20Australia!5e0!3m2!1sen!2sus!4v1633033459393!5m2!1sen!2sus"
+                        width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy">
+                    </iframe>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- footer section -->
+    <section>
+        <div class="my-work">
+            <footer>
+                <div class="footer-content">
+                    <div class="main-footer-info">
+                        <!-- Footer Description -->
+                        <div class="footer-desc">
+                            <h1>AMJAD NASEER</h1>
+                            <p>
+                                Ready to enhance your online visibility? Get in touch with us today to explore your
+                                project and
+                                uncover how we can transform your ideas into reality.
+                            </p>
+                        </div>
+                        <!-- Footer Links -->
+                        <div class="footer-links">
+                            <ul>
+                                <li><a href="#">Home</a></li>
+                                <li><a href="#">Services</a></li>
+                                <li><a href="#">Projects</a></li>
+                                <li><a href="#">Pricing</a></li>
+                                <li><a href="#">Contact</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <!-- Footer Info -->
+                    <div class="footer-info">
+                        <p>Made with love, powered by @theui_studio</p>
+                    </div>
+                </div>
+            </footer>
+        </div>
+    </section>
+
+    <!-- Scripts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <script src="https://unpkg.com/gsap@3/dist/ScrollToPlugin.min.js"></script>
+    <script src="https://unpkg.com/lenis@1.1.14/dist/lenis.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script src="https://unpkg.com/isotope-layout@3/dist/isotope.pkgd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.5/js/lightbox.min.js"></script>
+    <script src="./js/main.js"></script>
+</body>
+
+</html>
