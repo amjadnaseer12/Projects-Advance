@@ -1,891 +1,716 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Doctor Care - Premium Healthcare Services</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>DoctorCare - 3D Experience</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Arial', sans-serif;
-        }
-
         body {
-            overflow-x: hidden;
-            color: #333;
-            line-height: 1.6;
-            background: #f9f9f9;
+            margin: 0;
+            font-family: 'Segoe UI', sans-serif;
+            scroll-behavior: smooth;
         }
 
-        /* Header Styles */
-        header {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            padding: 1.5rem 5%;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            z-index: 1000;
-            background: rgba(255, 255, 255, 0.95);
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        .navbar {
             transition: all 0.3s ease;
         }
 
-        header.scrolled {
-            padding: 1rem 5%;
-            background: rgba(255, 255, 255, 0.98);
-            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+        .navbar.scrolled {
+            background-color: rgba(255, 255, 255, 0.95) !important;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
         }
 
-        .logo {
-            font-size: 1.8rem;
-            font-weight: 700;
-            color: #0066cc;
-            text-decoration: none;
-        }
-
-        .logo span {
+        .navbar-brand span {
             color: #00aaff;
         }
 
-        .menu-toggle {
-            display: none;
-            cursor: pointer;
-            z-index: 1001;
-        }
-
-        .menu-toggle span {
-            display: block;
-            width: 25px;
-            height: 3px;
-            background: #0066cc;
-            margin: 5px 0;
-            transition: all 0.3s ease;
-        }
-
-        .nav-links {
-            display: flex;
-            list-style: none;
-        }
-
-        .nav-links li {
-            margin-left: 2.5rem;
-        }
-
-        .nav-links a {
-            color: #333;
-            text-decoration: none;
-            font-weight: 600;
-            font-size: 1rem;
-            transition: color 0.3s ease;
+        .hero {
             position: relative;
+            height: 100vh;
+            background: linear-gradient(135deg, #e6f2ff 0%, #cce6ff 100%);
+            overflow: hidden;
         }
 
-        .nav-links a:hover {
-            color: #0066cc;
-        }
-
-        .nav-links a::after {
-            content: '';
-            position: absolute;
-            width: 0;
-            height: 2px;
-            background: #0066cc;
-            bottom: -5px;
-            left: 0;
-            transition: width 0.3s ease;
-        }
-
-        .nav-links a:hover::after {
+        #three-container {
             width: 100%;
-        }
-
-        .cta-button {
-            background: #0066cc;
-            color: white;
-            padding: 0.7rem 1.5rem;
-            border-radius: 30px;
-            font-weight: 600;
-            transition: all 0.3s ease;
-            border: none;
-            cursor: pointer;
-            font-size: 1rem;
-        }
-
-        .cta-button:hover {
-            background: #0055aa;
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(0, 102, 204, 0.3);
-        }
-
-        /* Fullscreen Menu */
-        .fullscreen-menu {
-            position: fixed;
+            height: 100%;
+            position: absolute;
             top: 0;
             left: 0;
-            width: 100%;
-            height: 100vh;
-            background: #0066cc;
-            z-index: 999;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            opacity: 0;
-            visibility: hidden;
-            transition: all 0.5s ease;
-            clip-path: circle(0% at 100% 0);
-        }
-
-        .fullscreen-menu.active {
-            opacity: 1;
-            visibility: visible;
-            clip-path: circle(150% at 100% 0);
-        }
-
-        .fullscreen-menu ul {
-            list-style: none;
-            text-align: center;
-        }
-
-        .fullscreen-menu ul li {
-            margin: 2rem 0;
-        }
-
-        .fullscreen-menu ul li a {
-            color: white;
-            text-decoration: none;
-            font-size: 2.5rem;
-            font-weight: 700;
-            transition: all 0.3s ease;
-            position: relative;
-        }
-
-        .fullscreen-menu ul li a:hover {
-            color: #cce6ff;
-        }
-
-        .close-menu {
-            position: absolute;
-            top: 2rem;
-            right: 2rem;
-            color: white;
-            font-size: 2rem;
-            cursor: pointer;
-        }
-
-        /* Hero Section */
-        .hero {
-            height: 100vh;
-            display: flex;
-            align-items: center;
-            padding: 0 5%;
-            position: relative;
-            overflow: hidden;
-            background: linear-gradient(135deg, #e6f2ff 0%, #ffffff 100%);
-        }
-
-        .hero-content {
-            max-width: 600px;
-            z-index: 2;
-        }
-
-        .hero h1 {
-            font-size: 3.5rem;
-            margin-bottom: 1.5rem;
-            color: #003366;
-            line-height: 1.2;
-        }
-
-        .hero p {
-            font-size: 1.2rem;
-            margin-bottom: 2rem;
-            color: #555;
-        }
-
-        .hero-image {
-            position: absolute;
-            right: 5%;
-            width: 50%;
-            max-width: 700px;
-            height: auto;
             z-index: 1;
         }
 
-        /* Features Section */
-        .features {
-            padding: 8rem 5%;
-            background: white;
+        .overlay-content {
+            position: relative;
+            z-index: 2;
+            padding-top: 120px;
+            padding-left: 5%;
+            max-width: 600px;
+        }
+
+        .overlay-content h1 {
+            color: #003366;
+            font-size: 3rem;
+            margin-bottom: 1.5rem;
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
+        }
+
+        .overlay-content p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+        }
+
+        section {
+            padding: 100px 0;
         }
 
         .section-title {
-            text-align: center;
-            margin-bottom: 4rem;
-            color: #003366;
+            position: relative;
+            display: inline-block;
+            margin-bottom: 60px;
         }
 
-        .section-title h2 {
-            font-size: 2.5rem;
-            margin-bottom: 1rem;
-        }
-
-        .section-title p {
-            font-size: 1.1rem;
-            color: #666;
-            max-width: 700px;
-            margin: 0 auto;
-        }
-
-        .features-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
-        }
-
-        .feature-card {
-            background: #f9f9f9;
-            border-radius: 10px;
-            padding: 2rem;
-            transition: all 0.3s ease;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
-        }
-
-        .feature-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 15px 30px rgba(0, 102, 204, 0.1);
+        .section-title:after {
+            content: '';
+            position: absolute;
+            width: 50px;
+            height: 3px;
+            background: #00aaff;
+            bottom: -15px;
+            left: 50%;
+            transform: translateX(-50%);
         }
 
         .feature-icon {
             font-size: 2.5rem;
             color: #0066cc;
-            margin-bottom: 1.5rem;
-        }
-
-        .feature-card h3 {
-            font-size: 1.5rem;
             margin-bottom: 1rem;
-            color: #003366;
         }
 
-        /* About Section */
-        .about {
-            padding: 8rem 5%;
-            background: #f0f7ff;
-            display: flex;
-            align-items: center;
-        }
-
-        .about-content {
-            flex: 1;
-            padding-right: 3rem;
-        }
-
-        .about-image {
-            flex: 1;
+        .card {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border: none;
             border-radius: 10px;
-            overflow: hidden;
-            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
         }
 
-        .about-image img {
-            width: 100%;
-            height: auto;
-            display: block;
+        .card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1) !important;
         }
 
-        /* Testimonials */
-        .testimonials {
-            padding: 8rem 5%;
-            background: white;
-        }
-
-        .testimonial-slider {
-            max-width: 800px;
-            margin: 0 auto;
-            position: relative;
-        }
-
-        .testimonial {
-            background: #f9f9f9;
-            padding: 2rem;
-            border-radius: 10px;
-            margin: 1rem;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
-        }
-
-        .testimonial-content {
-            font-size: 1.1rem;
-            font-style: italic;
-            margin-bottom: 1.5rem;
-            color: #555;
-        }
-
-        .testimonial-author {
-            display: flex;
-            align-items: center;
-        }
-
-        .author-image {
-            width: 60px;
-            height: 60px;
-            border-radius: 50%;
-            overflow: hidden;
-            margin-right: 1rem;
-        }
-
-        .author-image img {
-            width: 100%;
-            height: 100%;
+        .doctor-img {
+            height: 250px;
             object-fit: cover;
+            border-top-left-radius: 10px;
+            border-top-right-radius: 10px;
         }
 
-        .author-info h4 {
-            color: #003366;
-            margin-bottom: 0.3rem;
-        }
-
-        .author-info p {
-            color: #666;
-            font-size: 0.9rem;
-        }
-
-        /* CTA Section */
-        .cta-section {
-            padding: 6rem 5%;
-            background: linear-gradient(135deg, #0066cc 0%, #00aaff 100%);
-            color: white;
-            text-align: center;
-        }
-
-        .cta-section h2 {
-            font-size: 2.5rem;
-            margin-bottom: 1.5rem;
-        }
-
-        .cta-section p {
-            font-size: 1.1rem;
-            max-width: 700px;
-            margin: 0 auto 2rem;
-        }
-
-        .cta-button.white {
-            background: white;
-            color: #0066cc;
-        }
-
-        .cta-button.white:hover {
-            background: #e6f2ff;
-        }
-
-        /* Footer */
         footer {
             background: #003366;
             color: white;
-            padding: 4rem 5% 2rem;
+            padding: 60px 0 20px;
         }
 
-        .footer-content {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 2rem;
-            margin-bottom: 3rem;
-        }
-
-        .footer-column h3 {
-            font-size: 1.3rem;
-            margin-bottom: 1.5rem;
-            position: relative;
-            padding-bottom: 0.5rem;
-        }
-
-        .footer-column h3::after {
-            content: '';
-            position: absolute;
-            left: 0;
-            bottom: 0;
-            width: 50px;
-            height: 2px;
-            background: #00aaff;
-        }
-
-        .footer-column ul {
-            list-style: none;
-        }
-
-        .footer-column ul li {
-            margin-bottom: 0.8rem;
-        }
-
-        .footer-column ul li a {
-            color: #cce6ff;
+        footer a {
+            color: #00aaff;
             text-decoration: none;
             transition: color 0.3s ease;
         }
 
-        .footer-column ul li a:hover {
+        footer a:hover {
+            color: #ffffff;
+            text-decoration: none;
+        }
+
+        .social-icons a {
             color: white;
+            font-size: 1.5rem;
+            margin: 0 10px;
+            transition: color 0.3s ease;
         }
 
-        .footer-bottom {
-            text-align: center;
-            padding-top: 2rem;
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        .social-icons a:hover {
+            color: #00aaff;
         }
 
-        /* Responsive Styles */
-        @media (max-width: 992px) {
-            .hero h1 {
-                font-size: 2.8rem;
-            }
+        .back-to-top {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 50px;
+            height: 50px;
+            background: #00aaff;
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 1.2rem;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+            z-index: 999;
+        }
 
-            .hero-image {
-                width: 45%;
-                opacity: 0.7;
-            }
+        .back-to-top.active {
+            opacity: 1;
+            visibility: visible;
+        }
 
-            .about {
-                flex-direction: column;
-            }
-
-            .about-content {
-                padding-right: 0;
-                margin-bottom: 3rem;
-            }
+        .back-to-top:hover {
+            background: #0066cc;
         }
 
         @media (max-width: 768px) {
-            .menu-toggle {
-                display: block;
-            }
-
-            .nav-links {
-                display: none;
-            }
-
-            .hero {
-                flex-direction: column;
+            .overlay-content {
+                padding-top: 100px;
+                padding-left: 20px;
+                padding-right: 20px;
                 text-align: center;
-                padding-top: 8rem;
-                padding-bottom: 4rem;
-                height: auto;
-                min-height: 100vh;
             }
 
-            .hero-content {
-                max-width: 100%;
-                margin-bottom: 3rem;
-            }
-
-            .hero-image {
-                position: relative;
-                right: auto;
-                width: 100%;
-                max-width: 500px;
-                margin: 0 auto;
-            }
-
-            .fullscreen-menu ul li a {
-                font-size: 2rem;
-            }
-        }
-
-        @media (max-width: 576px) {
-            .hero h1 {
+            .overlay-content h1 {
                 font-size: 2.2rem;
             }
 
-            .hero p {
-                font-size: 1rem;
-            }
-
-            .section-title h2 {
-                font-size: 2rem;
-            }
-
-            .fullscreen-menu ul li a {
-                font-size: 1.8rem;
+            section {
+                padding: 60px 0;
             }
         }
     </style>
 </head>
+
 <body>
-    <!-- Header -->
-    <header>
-        <a href="#" class="logo">Doctor<span>Care</span></a>
-        
-        <div class="menu-toggle">
-            <span></span>
-            <span></span>
-            <span></span>
-        </div>
-        
-        <ul class="nav-links">
-            <li><a href="#home">Home</a></li>
-            <li><a href="#services">Services</a></li>
-            <li><a href="#about">About</a></li>
-            <li><a href="#doctors">Doctors</a></li>
-            <li><a href="#testimonials">Testimonials</a></li>
-            <li><a href="#contact">Contact</a></li>
-        </ul>
-        
-        <button class="cta-button">Book Appointment</button>
-    </header>
 
-    <!-- Fullscreen Menu -->
-    <div class="fullscreen-menu">
-        <div class="close-menu">×</div>
-        <ul>
-            <li><a href="#home">Home</a></li>
-            <li><a href="#services">Services</a></li>
-            <li><a href="#about">About</a></li>
-            <li><a href="#doctors">Doctors</a></li>
-            <li><a href="#testimonials">Testimonials</a></li>
-            <li><a href="#contact">Contact</a></li>
-        </ul>
-    </div>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-white fixed-top py-3">
+        <div class="container">
+            <a class="navbar-brand fw-bold" href="#" style="color: #003366;">Doctor<span>Care</span></a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNavbar">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="mainNavbar">
+                <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                    <li class="nav-item"><a class="nav-link" href="#home">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#services">Services</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#about">About</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#doctors">Doctors</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#testimonials">Testimonials</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#contact">Contact</a></li>
+                </ul>
+                <a class="btn btn-primary ms-lg-3" href="#contact">Book Appointment</a>
+            </div>
+        </div>
+    </nav>
 
-    <!-- Hero Section -->
-    <section class="hero" id="home" data-scroll-section>
-        <div class="hero-content" data-scroll data-scroll-speed="1">
-            <h1>Premium Healthcare For You and Your Family</h1>
-            <p>Experience world-class medical care with our team of specialists. We provide compassionate and comprehensive healthcare services tailored to your needs.</p>
-            <button class="cta-button">Book an Appointment</button>
+    <!-- Hero with Three.js -->
+    <section class="hero" id="home">
+        <div class="overlay-content">
+            <h1 class="fw-bold">Next-Gen Healthcare With 3D Innovation</h1>
+            <p class="text-muted">Experience futuristic care with our interactive platform and specialist teams. Our cutting-edge 3D visualization helps you understand your health better.</p>
+            <div class="d-flex gap-3">
+                <a href="#contact" class="btn btn-primary btn-lg px-4">Book Appointment</a>
+                <a href="#services" class="btn btn-outline-primary btn-lg px-4">Our Services</a>
+            </div>
         </div>
-        <div class="hero-image" data-scroll data-scroll-speed="-1">
-            <img src="https://images.unsplash.com/photo-1576091160550-2173dba999ef?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Doctor with patient">
-        </div>
+        <div id="three-container"></div>
     </section>
 
-    <!-- Features/Services Section -->
-    <section class="features" id="services" data-scroll-section>
-        <div class="section-title" data-scroll data-scroll-speed="0.5">
-            <h2>Our Specialized Services</h2>
-            <p>We offer a wide range of medical services to meet all your healthcare needs. Our expert physicians provide personalized care using the latest medical technologies.</p>
-        </div>
-        
-        <div class="features-grid">
-            <div class="feature-card" data-scroll data-scroll-speed="0.3">
-                <div class="feature-icon">❤️</div>
-                <h3>Cardiology</h3>
-                <p>Comprehensive heart care including diagnostic tests, treatments, and preventive cardiology services.</p>
-            </div>
-            
-            <div class="feature-card" data-scroll data-scroll-speed="0.2">
-                <div class="feature-icon">🦴</div>
-                <h3>Orthopedics</h3>
-                <p>Specialized care for bones, joints, ligaments, tendons, muscles and nerves with advanced surgical options.</p>
-            </div>
-            
-            <div class="feature-card" data-scroll data-scroll-speed="0.1">
-                <div class="feature-icon">🧠</div>
-                <h3>Neurology</h3>
-                <p>Expert diagnosis and treatment for disorders of the nervous system, including brain and spinal cord.</p>
-            </div>
-            
-            <div class="feature-card" data-scroll data-scroll-speed="0.3">
-                <div class="feature-icon">👶</div>
-                <h3>Pediatrics</h3>
-                <p>Compassionate healthcare for infants, children and adolescents with child-friendly facilities.</p>
-            </div>
-            
-            <div class="feature-card" data-scroll data-scroll-speed="0.2">
-                <div class="feature-icon">👁️</div>
-                <h3>Ophthalmology</h3>
-                <p>Complete eye care services including vision correction, cataract surgery, and treatment for eye diseases.</p>
-            </div>
-            
-            <div class="feature-card" data-scroll data-scroll-speed="0.1">
-                <div class="feature-icon">🦷</div>
-                <h3>Dentistry</h3>
-                <p>Full range of dental services from routine cleanings to cosmetic dentistry and oral surgery.</p>
+    <!-- Services Section -->
+    <section class="bg-light" id="services">
+        <div class="container">
+            <h2 class="text-center fw-bold mb-5 section-title" style="color: #003366;">Our Services</h2>
+            <div class="row g-4">
+                <div class="col-md-4">
+                    <div class="card h-100 shadow-sm">
+                        <div class="card-body text-center p-4">
+                            <div class="feature-icon"><i class="fas fa-heartbeat"></i></div>
+                            <h5>Cardiology</h5>
+                            <p>Advanced heart care with modern diagnostics and treatment including 3D heart modeling for better patient understanding.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card h-100 shadow-sm">
+                        <div class="card-body text-center p-4">
+                            <div class="feature-icon"><i class="fas fa-bone"></i></div>
+                            <h5>Orthopedics</h5>
+                            <p>Expert treatment for bone and joint disorders with 3D printed models for surgical planning and patient education.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card h-100 shadow-sm">
+                        <div class="card-body text-center p-4">
+                            <div class="feature-icon"><i class="fas fa-brain"></i></div>
+                            <h5>Neurology</h5>
+                            <p>Specialized care for brain and nervous system issues with interactive 3D brain mapping technology.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card h-100 shadow-sm">
+                        <div class="card-body text-center p-4">
+                            <div class="feature-icon"><i class="fas fa-lungs"></i></div>
+                            <h5>Pulmonology</h5>
+                            <p>Comprehensive respiratory care with advanced 3D lung visualization for better diagnosis.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card h-100 shadow-sm">
+                        <div class="card-body text-center p-4">
+                            <div class="feature-icon"><i class="fas fa-eye"></i></div>
+                            <h5>Ophthalmology</h5>
+                            <p>Advanced eye care with 3D retinal imaging for precise diagnosis and treatment planning.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card h-100 shadow-sm">
+                        <div class="card-body text-center p-4">
+                            <div class="feature-icon"><i class="fas fa-tooth"></i></div>
+                            <h5>Dentistry</h5>
+                            <p>Modern dental care with 3D scanning for implants, crowns, and orthodontic treatments.</p>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
 
     <!-- About Section -->
-    <section class="about" id="about" data-scroll-section>
-        <div class="about-content" data-scroll data-scroll-speed="0.5">
-            <h2>About DoctorCare</h2>
-            <p>Founded in 2005, DoctorCare has grown to become one of the most trusted healthcare providers in the region. Our mission is to deliver exceptional medical care with compassion and respect for all patients.</p>
-            <p>We combine state-of-the-art technology with a patient-centered approach to ensure the best possible outcomes. Our team of board-certified physicians and healthcare professionals are dedicated to your wellbeing.</p>
-            <button class="cta-button">Learn More About Us</button>
-        </div>
-        
-        <div class="about-image" data-scroll data-scroll-speed="-0.5">
-            <img src="https://images.unsplash.com/photo-1550831107-1553da8c8464?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Medical team">
-        </div>
-    </section>
-
-    <!-- Testimonials Section -->
-    <section class="testimonials" id="testimonials" data-scroll-section>
-        <div class="section-title" data-scroll data-scroll-speed="0.5">
-            <h2>What Our Patients Say</h2>
-            <p>Don't just take our word for it. Here's what our patients have to say about their experiences at DoctorCare.</p>
-        </div>
-        
-        <div class="testimonial-slider">
-            <div class="testimonial" data-scroll data-scroll-speed="0.3">
-                <div class="testimonial-content">
-                    "The care I received at DoctorCare was exceptional. The doctors took time to listen to my concerns and explained everything clearly. I felt valued as a patient and the treatment was highly effective."
-                </div>
-                <div class="testimonial-author">
-                    <div class="author-image">
-                        <img src="https://randomuser.me/api/portraits/women/45.jpg" alt="Sarah Johnson">
+    <section id="about">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-6 mb-4 mb-lg-0">
+                    <h2 class="fw-bold mb-4 section-title" style="color: #003366;">About Us</h2>
+                    <p class="lead">DoctorCare is revolutionizing healthcare through innovative 3D visualization technology. Our mission is to bridge the gap between medical professionals and patients through immersive, understandable representations of health conditions.</p>
+                    <p>Founded in 2020, we've grown to become a leader in medical visualization, combining cutting-edge technology with compassionate care. Our team of specialists works with the latest 3D modeling tools to help patients understand their conditions and treatment options like never before.</p>
+                    <div class="d-flex gap-3 mt-4">
+                        <div class="text-center">
+                            <h3 class="text-primary">5,000+</h3>
+                            <p>Patients Served</p>
+                        </div>
+                        <div class="text-center">
+                            <h3 class="text-primary">50+</h3>
+                            <p>Specialist Doctors</p>
+                        </div>
+                        <div class="text-center">
+                            <h3 class="text-primary">24/7</h3>
+                            <p>Emergency Support</p>
+                        </div>
                     </div>
-                    <div class="author-info">
-                        <h4>Sarah Johnson</h4>
-                        <p>Cardiology Patient</p>
+                </div>
+                <div class="col-lg-6">
+                    <div class="ratio ratio-16x9">
+                        <iframe src="https://www.youtube.com/embed/7eJexJVCqJo?rel=0" title="About DoctorCare" allowfullscreen></iframe>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- CTA Section -->
-    <section class="cta-section" id="contact" data-scroll-section>
-        <h2 data-scroll data-scroll-speed="0.5">Ready to Take Control of Your Health?</h2>
-        <p data-scroll data-scroll-speed="0.3">Schedule an appointment with one of our specialists today and experience healthcare the way it should be.</p>
-        <button class="cta-button white" data-scroll data-scroll-speed="0.1">Contact Us Now</button>
+    <!-- Doctors Section -->
+    <section class="bg-light" id="doctors">
+        <div class="container">
+            <h2 class="text-center fw-bold mb-5 section-title" style="color: #003366;">Meet Our Doctors</h2>
+            <div class="row g-4">
+                <div class="col-md-4">
+                    <div class="card shadow-sm">
+                        <img src="https://randomuser.me/api/portraits/men/32.jpg" class="doctor-img" alt="Doctor">
+                        <div class="card-body text-center">
+                            <h5>Dr. John Smith</h5>
+                            <p class="text-primary mb-3">Cardiologist</p>
+                            <p class="text-muted">15 years experience in interventional cardiology and 3D heart modeling.</p>
+                            <div class="social-icons mt-3">
+                                <a href="#"><i class="fab fa-linkedin"></i></a>
+                                <a href="#"><i class="fab fa-twitter"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card shadow-sm">
+                        <img src="https://randomuser.me/api/portraits/women/44.jpg" class="doctor-img" alt="Doctor">
+                        <div class="card-body text-center">
+                            <h5>Dr. Emily Grace</h5>
+                            <p class="text-primary mb-3">Neurologist</p>
+                            <p class="text-muted">Specialist in brain mapping and neurodegenerative disorders.</p>
+                            <div class="social-icons mt-3">
+                                <a href="#"><i class="fab fa-linkedin"></i></a>
+                                <a href="#"><i class="fab fa-twitter"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card shadow-sm">
+                        <img src="https://randomuser.me/api/portraits/men/22.jpg" class="doctor-img" alt="Doctor">
+                        <div class="card-body text-center">
+                            <h5>Dr. Liam White</h5>
+                            <p class="text-primary mb-3">Orthopedic Surgeon</p>
+                            <p class="text-muted">Expert in 3D printed implants and minimally invasive procedures.</p>
+                            <div class="social-icons mt-3">
+                                <a href="#"><i class="fab fa-linkedin"></i></a>
+                                <a href="#"><i class="fab fa-twitter"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials -->
+    <section id="testimonials">
+        <div class="container">
+            <h2 class="text-center fw-bold mb-5 section-title" style="color: #003366;">What Our Patients Say</h2>
+            <div class="row justify-content-center">
+                <div class="col-lg-8">
+                    <div id="testimonialCarousel" class="carousel slide" data-bs-ride="carousel">
+                        <div class="carousel-inner">
+                            <div class="carousel-item active">
+                                <div class="testimonial-item text-center">
+                                    <img src="https://randomuser.me/api/portraits/women/32.jpg" class="rounded-circle mb-4" width="100" height="100" alt="Patient">
+                                    <p class="lead mb-4">"The 3D visualization of my heart condition helped me understand my treatment like never before. The doctors at DoctorCare are truly innovative and caring."</p>
+                                    <h5>Jane Doe</h5>
+                                    <p class="text-muted">Cardiology Patient</p>
+                                </div>
+                            </div>
+                            <div class="carousel-item">
+                                <div class="testimonial-item text-center">
+                                    <img src="https://randomuser.me/api/portraits/men/45.jpg" class="rounded-circle mb-4" width="100" height="100" alt="Patient">
+                                    <p class="lead mb-4">"Seeing my spine in 3D before surgery gave me so much confidence in the procedure. The team explained everything clearly and made me feel comfortable."</p>
+                                    <h5>Michael Johnson</h5>
+                                    <p class="text-muted">Orthopedics Patient</p>
+                                </div>
+                            </div>
+                            <div class="carousel-item">
+                                <div class="testimonial-item text-center">
+                                    <img src="https://randomuser.me/api/portraits/women/68.jpg" class="rounded-circle mb-4" width="100" height="100" alt="Patient">
+                                    <p class="lead mb-4">"The neurological team used amazing 3D brain mapping to show me exactly what was happening. Their expertise and technology are unmatched."</p>
+                                    <h5>Sarah Williams</h5>
+                                    <p class="text-muted">Neurology Patient</p>
+                                </div>
+                            </div>
+                        </div>
+                        <button class="carousel-control-prev" type="button" data-bs-target="#testimonialCarousel" data-bs-slide="prev">
+                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                            <span class="visually-hidden">Previous</span>
+                        </button>
+                        <button class="carousel-control-next" type="button" data-bs-target="#testimonialCarousel" data-bs-slide="next">
+                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                            <span class="visually-hidden">Next</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="bg-light" id="contact">
+        <div class="container">
+            <h2 class="text-center fw-bold mb-5 section-title" style="color: #003366;">Contact Us</h2>
+            <div class="row">
+                <div class="col-lg-6 mb-5 mb-lg-0">
+                    <div class="card shadow-sm h-100">
+                        <div class="card-body p-4">
+                            <h4 class="mb-4">Get in Touch</h4>
+                            <div class="mb-4">
+                                <h5><i class="fas fa-map-marker-alt text-primary me-2"></i> Address</h5>
+                                <p>123 Medical Drive, Health City, HC 12345</p>
+                            </div>
+                            <div class="mb-4">
+                                <h5><i class="fas fa-phone-alt text-primary me-2"></i> Phone</h5>
+                                <p>+1 (555) 123-4567</p>
+                            </div>
+                            <div class="mb-4">
+                                <h5><i class="fas fa-envelope text-primary me-2"></i> Email</h5>
+                                <p>info@doctorcare.com</p>
+                            </div>
+                            <div class="mb-4">
+                                <h5><i class="fas fa-clock text-primary me-2"></i> Hours</h5>
+                                <p>Monday - Friday: 8:00 AM - 8:00 PM<br>
+                                Saturday: 9:00 AM - 5:00 PM<br>
+                                Emergency: 24/7</p>
+                            </div>
+                            <div class="social-icons mt-4">
+                                <a href="#"><i class="fab fa-facebook-f"></i></a>
+                                <a href="#"><i class="fab fa-twitter"></i></a>
+                                <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                                <a href="#"><i class="fab fa-instagram"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="card shadow-sm h-100">
+                        <div class="card-body p-4">
+                            <h4 class="mb-4">Book an Appointment</h4>
+                            <form>
+                                <div class="row">
+                                    <div class="col-md-6 mb-3">
+                                        <label class="form-label">First Name</label>
+                                        <input type="text" class="form-control" required>
+                                    </div>
+                                    <div class="col-md-6 mb-3">
+                                        <label class="form-label">Last Name</label>
+                                        <input type="text" class="form-control" required>
+                                    </div>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">Email</label>
+                                    <input type="email" class="form-control" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">Phone</label>
+                                    <input type="tel" class="form-control" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">Department</label>
+                                    <select class="form-select" required>
+                                        <option value="" selected disabled>Select Department</option>
+                                        <option>Cardiology</option>
+                                        <option>Neurology</option>
+                                        <option>Orthopedics</option>
+                                        <option>Pulmonology</option>
+                                        <option>Ophthalmology</option>
+                                        <option>Dentistry</option>
+                                    </select>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">Preferred Date</label>
+                                    <input type="date" class="form-control" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">Message</label>
+                                    <textarea class="form-control" rows="4" required></textarea>
+                                </div>
+                                <button type="submit" class="btn btn-primary w-100">Book Appointment</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </section>
 
     <!-- Footer -->
-    <footer data-scroll-section>
-        <div class="footer-content">
-            <div class="footer-column">
-                <h3>DoctorCare</h3>
-                <p>Providing exceptional healthcare services since 2005. Our commitment is to your health and wellbeing.</p>
+    <footer>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4 mb-4 mb-lg-0">
+                    <h4 class="mb-4">Doctor<span style="color: #00aaff;">Care</span></h4>
+                    <p>Innovative healthcare through 3D visualization technology. Providing compassionate, personalized, and cutting-edge medical services.</p>
+                </div>
+                <div class="col-lg-2 col-md-6 mb-4 mb-md-0">
+                    <h5 class="mb-4">Quick Links</h5>
+                    <ul class="list-unstyled">
+                        <li class="mb-2"><a href="#home">Home</a></li>
+                        <li class="mb-2"><a href="#services">Services</a></li>
+                        <li class="mb-2"><a href="#about">About</a></li>
+                        <li class="mb-2"><a href="#doctors">Doctors</a></li>
+                        <li class="mb-2"><a href="#contact">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-2 col-md-6 mb-4 mb-md-0">
+                    <h5 class="mb-4">Services</h5>
+                    <ul class="list-unstyled">
+                        <li class="mb-2"><a href="#">Cardiology</a></li>
+                        <li class="mb-2"><a href="#">Neurology</a></li>
+                        <li class="mb-2"><a href="#">Orthopedics</a></li>
+                        <li class="mb-2"><a href="#">Pulmonology</a></li>
+                        <li class="mb-2"><a href="#">Dentistry</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-4">
+                    <h5 class="mb-4">Newsletter</h5>
+                    <p>Subscribe to our newsletter for the latest health tips and updates.</p>
+                    <form class="mt-3">
+                        <div class="input-group">
+                            <input type="email" class="form-control" placeholder="Your Email" required>
+                            <button class="btn btn-primary" type="submit">Subscribe</button>
+                        </div>
+                    </form>
+                </div>
             </div>
-            
-            <div class="footer-column">
-                <h3>Quick Links</h3>
-                <ul>
-                    <li><a href="#home">Home</a></li>
-                    <li><a href="#services">Services</a></li>
-                    <li><a href="#about">About Us</a></li>
-                    <li><a href="#doctors">Our Doctors</a></li>
-                </ul>
+            <hr class="mt-4 mb-4" style="border-color: rgba(255,255,255,0.1);">
+            <div class="row">
+                <div class="col-md-6 text-center text-md-start">
+                    <p class="mb-0">© 2025 DoctorCare. All Rights Reserved.</p>
+                </div>
+                <div class="col-md-6 text-center text-md-end">
+                    <p class="mb-0">Designed with <i class="fas fa-heart" style="color: #ff6b6b;"></i> for better healthcare</p>
+                </div>
             </div>
-            
-            <div class="footer-column">
-                <h3>Services</h3>
-                <ul>
-                    <li><a href="#">Cardiology</a></li>
-                    <li><a href="#">Orthopedics</a></li>
-                    <li><a href="#">Neurology</a></li>
-                    <li><a href="#">Pediatrics</a></li>
-                </ul>
-            </div>
-            
-            <div class="footer-column">
-                <h3>Contact</h3>
-                <ul>
-                    <li>123 Medical Drive</li>
-                    <li>Healthville, HV 12345</li>
-                    <li>Phone: (123) 456-7890</li>
-                    <li>Email: info@doctorcare.com</li>
-                </ul>
-            </div>
-        </div>
-        
-        <div class="footer-bottom">
-            <p>&copy; 2023 DoctorCare. All Rights Reserved.</p>
         </div>
     </footer>
 
-    <!-- JavaScript Libraries -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
-    <script src="https://unpkg.com/@studio-freight/lenis@1.0.42/dist/lenis.min.js"></script>
-    
+    <!-- Back to Top Button -->
+    <a href="#" class="back-to-top"><i class="fas fa-arrow-up"></i></a>
+
+    <!-- Three.js -->
+    <script src="https://cdn.jsdelivr.net/npm/three@0.156.1/build/three.min.js"></script>
+    <!-- Add GLTFLoader script -->
+    <script src="https://cdn.jsdelivr.net/npm/three@0.156.1/examples/js/loaders/GLTFLoader.js"></script>
+    <!-- Add OrbitControls script -->
+    <script src="https://cdn.jsdelivr.net/npm/three@0.156.1/examples/js/controls/OrbitControls.js"></script>
     <script>
-        // Initialize Lenis smooth scroll
-        const lenis = new Lenis({
-            lerp: 0.1,
-            smooth: true,
-            direction: 'vertical',
-        });
+        // Initialize Three.js scene
+        const scene = new THREE.Scene();
+        scene.background = null;
+        const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+        const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+        const container = document.getElementById('three-container');
+        
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        renderer.setPixelRatio(window.devicePixelRatio);
+        container.appendChild(renderer.domElement);
 
-        function raf(time) {
-            lenis.raf(time);
-            requestAnimationFrame(raf);
+        // Lighting
+        const ambientLight = new THREE.AmbientLight(0x404040, 0.8);
+        scene.add(ambientLight);
+        
+        const directionalLight = new THREE.DirectionalLight(0xffffff, 0.6);
+        directionalLight.position.set(1, 1, 1);
+        scene.add(directionalLight);
+        
+        const pointLight = new THREE.PointLight(0xffffff, 0.8);
+        pointLight.position.set(5, 5, 5);
+        scene.add(pointLight);
+
+        // Create a placeholder object if model fails to load
+        const createPlaceholder = () => {
+            const group = new THREE.Group();
+            
+            // Create a simple stethoscope shape
+            const tubeGeometry = new THREE.TubeGeometry(
+                new THREE.CatmullRomCurve3([
+                    new THREE.Vector3(0, 0, 0),
+                    new THREE.Vector3(0.5, 0.5, 0),
+                    new THREE.Vector3(1, 0, 0),
+                    new THREE.Vector3(1.5, -0.5, 0),
+                    new THREE.Vector3(2, 0, 0)
+                ]),
+                100,
+                0.02,
+                8,
+                false
+            );
+            const tubeMaterial = new THREE.MeshPhongMaterial({ color: 0x333333 });
+            const tube = new THREE.Mesh(tubeGeometry, tubeMaterial);
+            group.add(tube);
+            
+            // Ear pieces
+            const earGeometry = new THREE.SphereGeometry(0.05, 16, 16);
+            const leftEar = new THREE.Mesh(earGeometry, tubeMaterial);
+            leftEar.position.set(0, 0, 0);
+            group.add(leftEar);
+            
+            const rightEar = new THREE.Mesh(earGeometry, tubeMaterial);
+            rightEar.position.set(2, 0, 0);
+            group.add(rightEar);
+            
+            // Chest piece
+            const chestGeometry = new THREE.CylinderGeometry(0.1, 0.1, 0.02, 32);
+            const chestMaterial = new THREE.MeshPhongMaterial({ color: 0x999999 });
+            const chestPiece = new THREE.Mesh(chestGeometry, chestMaterial);
+            chestPiece.position.set(1, 0, 0);
+            chestPiece.rotation.x = Math.PI / 2;
+            group.add(chestPiece);
+            
+            return group;
+        };
+
+        let stethoscope = createPlaceholder();
+        scene.add(stethoscope);
+
+        // Try to load the stethoscope model
+        const loader = new THREE.GLTFLoader();
+        loader.load(
+            'https://cdn.jsdelivr.net/gh/mrdoob/three.js@r146/examples/models/gltf/Stork.glb',
+            (gltf) => {
+                // If model loads successfully, replace the placeholder
+                scene.remove(stethoscope);
+                stethoscope = gltf.scene;
+                stethoscope.scale.set(0.5, 0.5, 0.5);
+                stethoscope.rotation.y = Math.PI;
+                scene.add(stethoscope);
+            },
+            undefined,
+            (error) => {
+                console.error('Error loading model:', error);
+                // Keep the placeholder if model fails to load
+            }
+        );
+
+        camera.position.z = 3;
+        
+        // Add OrbitControls
+        const controls = new THREE.OrbitControls(camera, renderer.domElement);
+        controls.enableZoom = false;
+        controls.enablePan = false;
+        controls.autoRotate = true;
+        controls.autoRotateSpeed = 1.5;
+
+        // Animation loop
+        function animate() {
+            requestAnimationFrame(animate);
+            controls.update();
+            renderer.render(scene, camera);
         }
-        requestAnimationFrame(raf);
+        animate();
 
-        // Setup GSAP ScrollTrigger with Lenis
-        lenis.on('scroll', ScrollTrigger.update);
-        gsap.ticker.add((time) => lenis.raf(time * 1000));
-        gsap.ticker.lagSmoothing(0);
-
-        ScrollTrigger.scrollerProxy('[data-scroll-container]', {
-            scrollTop(value) {
-                return arguments.length ? lenis.scrollTo(value) : lenis.scroll;
-            },
-            getBoundingClientRect() {
-                return {
-                    top: 0,
-                    left: 0,
-                    width: window.innerWidth,
-                    height: window.innerHeight,
-                };
-            },
-            pinType: document.querySelector('[data-scroll-container]').style.transform ? "transform" : "fixed"
+        // Handle window resize
+        window.addEventListener('resize', () => {
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(window.innerWidth, window.innerHeight);
         });
 
-        ScrollTrigger.addEventListener('refresh', () => lenis.update());
-        ScrollTrigger.refresh();
-
-        // Header scroll effect
+        // Navbar scroll effect
         window.addEventListener('scroll', function() {
-            const header = document.querySelector('header');
+            const navbar = document.querySelector('.navbar');
             if (window.scrollY > 50) {
-                header.classList.add('scrolled');
+                navbar.classList.add('scrolled');
             } else {
-                header.classList.remove('scrolled');
+                navbar.classList.remove('scrolled');
             }
         });
 
-        // Fullscreen menu toggle
-        const menuToggle = document.querySelector('.menu-toggle');
-        const fullscreenMenu = document.querySelector('.fullscreen-menu');
-        const closeMenu = document.querySelector('.close-menu');
-
-        menuToggle.addEventListener('click', function() {
-            this.classList.toggle('active');
-            fullscreenMenu.classList.toggle('active');
-            
-            // Toggle menu icon animation
-            if (this.classList.contains('active')) {
-                gsap.to(this.querySelectorAll('span'), {
-                    backgroundColor: 'white',
-                    duration: 0.3
-                });
-                gsap.to(this.querySelector('span:nth-child(1)'), {
-                    y: 8,
-                    rotate: 45,
-                    duration: 0.3
-                });
-                gsap.to(this.querySelector('span:nth-child(2)'), {
-                    opacity: 0,
-                    duration: 0.3
-                });
-                gsap.to(this.querySelector('span:nth-child(3)'), {
-                    y: -8,
-                    rotate: -45,
-                    duration: 0.3
-                });
+        // Back to top button
+        const backToTopButton = document.querySelector('.back-to-top');
+        window.addEventListener('scroll', () => {
+            if (window.pageYOffset > 300) {
+                backToTopButton.classList.add('active');
             } else {
-                gsap.to(this.querySelectorAll('span'), {
-                    backgroundColor: '#0066cc',
-                    duration: 0.3
-                });
-                gsap.to(this.querySelectorAll('span'), {
-                    y: 0,
-                    rotate: 0,
-                    opacity: 1,
-                    duration: 0.3
-                });
+                backToTopButton.classList.remove('active');
             }
-        });
-
-        closeMenu.addEventListener('click', function() {
-            fullscreenMenu.classList.remove('active');
-            menuToggle.classList.remove('active');
-            
-            // Reset menu icon animation
-            gsap.to(menuToggle.querySelectorAll('span'), {
-                backgroundColor: '#0066cc',
-                y: 0,
-                rotate: 0,
-                opacity: 1,
-                duration: 0.3
-            });
-        });
-
-        // Close menu when clicking on a link
-        const menuLinks = document.querySelectorAll('.fullscreen-menu a');
-        menuLinks.forEach(link => {
-            link.addEventListener('click', function() {
-                fullscreenMenu.classList.remove('active');
-                menuToggle.classList.remove('active');
-                
-                // Reset menu icon animation
-                gsap.to(menuToggle.querySelectorAll('span'), {
-                    backgroundColor: '#0066cc',
-                    y: 0,
-                    rotate: 0,
-                    opacity: 1,
-                    duration: 0.3
-                });
-            });
         });
 
         // Smooth scrolling for all links
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function(e) {
                 e.preventDefault();
-                
-                const targetId = this.getAttribute('href');
-                if (targetId === '#') return;
-                
-                const targetElement = document.querySelector(targetId);
-                if (targetElement) {
-                    lenis.scrollTo(targetElement, {
-                        duration: 1.2,
-                        easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-                    });
-                }
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
             });
         });
 
-        // Animation for feature cards
-        gsap.utils.toArray('.feature-card').forEach((card, i) => {
-            gsap.from(card, {
-                scrollTrigger: {
-                    trigger: card,
-                    start: "top 80%",
-                    toggleActions: "play none none none"
-                },
-                y: 50,
-                opacity: 0,
-                duration: 0.8,
-                delay: i * 0.1
-            });
-        });
-
-        // Animation for about section
-        gsap.from('.about-content', {
-            scrollTrigger: {
-                trigger: '.about',
-                start: "top 70%",
-                toggleActions: "play none none none"
-            },
-            x: -50,
-            opacity: 0,
-            duration: 1
-        });
-
-        gsap.from('.about-image', {
-            scrollTrigger: {
-                trigger: '.about',
-                start: "top 70%",
-                toggleActions: "play none none none"
-            },
-            x: 50,
-            opacity: 0,
-            duration: 1
-        });
-
-        // Refresh on resize
-        let resizeTimer;
-        window.addEventListener('resize', () => {
-            clearTimeout(resizeTimer);
-            resizeTimer = setTimeout(() => {
-                ScrollTrigger.refresh();
-            }, 250);
+        // Initialize Bootstrap tooltips
+        const tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
+        tooltipTriggerList.map(function(tooltipTriggerEl) {
+            return new bootstrap.Tooltip(tooltipTriggerEl);
         });
     </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 </body>
+
 </html>
