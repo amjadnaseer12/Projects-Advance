@@ -1,0 +1,891 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Doctor Care - Premium Healthcare Services</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Arial', sans-serif;
+        }
+
+        body {
+            overflow-x: hidden;
+            color: #333;
+            line-height: 1.6;
+            background: #f9f9f9;
+        }
+
+        /* Header Styles */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            padding: 1.5rem 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+            background: rgba(255, 255, 255, 0.95);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        header.scrolled {
+            padding: 1rem 5%;
+            background: rgba(255, 255, 255, 0.98);
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #0066cc;
+            text-decoration: none;
+        }
+
+        .logo span {
+            color: #00aaff;
+        }
+
+        .menu-toggle {
+            display: none;
+            cursor: pointer;
+            z-index: 1001;
+        }
+
+        .menu-toggle span {
+            display: block;
+            width: 25px;
+            height: 3px;
+            background: #0066cc;
+            margin: 5px 0;
+            transition: all 0.3s ease;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+        }
+
+        .nav-links li {
+            margin-left: 2.5rem;
+        }
+
+        .nav-links a {
+            color: #333;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1rem;
+            transition: color 0.3s ease;
+            position: relative;
+        }
+
+        .nav-links a:hover {
+            color: #0066cc;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            background: #0066cc;
+            bottom: -5px;
+            left: 0;
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .cta-button {
+            background: #0066cc;
+            color: white;
+            padding: 0.7rem 1.5rem;
+            border-radius: 30px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+
+        .cta-button:hover {
+            background: #0055aa;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 102, 204, 0.3);
+        }
+
+        /* Fullscreen Menu */
+        .fullscreen-menu {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            background: #0066cc;
+            z-index: 999;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.5s ease;
+            clip-path: circle(0% at 100% 0);
+        }
+
+        .fullscreen-menu.active {
+            opacity: 1;
+            visibility: visible;
+            clip-path: circle(150% at 100% 0);
+        }
+
+        .fullscreen-menu ul {
+            list-style: none;
+            text-align: center;
+        }
+
+        .fullscreen-menu ul li {
+            margin: 2rem 0;
+        }
+
+        .fullscreen-menu ul li a {
+            color: white;
+            text-decoration: none;
+            font-size: 2.5rem;
+            font-weight: 700;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .fullscreen-menu ul li a:hover {
+            color: #cce6ff;
+        }
+
+        .close-menu {
+            position: absolute;
+            top: 2rem;
+            right: 2rem;
+            color: white;
+            font-size: 2rem;
+            cursor: pointer;
+        }
+
+        /* Hero Section */
+        .hero {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            padding: 0 5%;
+            position: relative;
+            overflow: hidden;
+            background: linear-gradient(135deg, #e6f2ff 0%, #ffffff 100%);
+        }
+
+        .hero-content {
+            max-width: 600px;
+            z-index: 2;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1.5rem;
+            color: #003366;
+            line-height: 1.2;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            color: #555;
+        }
+
+        .hero-image {
+            position: absolute;
+            right: 5%;
+            width: 50%;
+            max-width: 700px;
+            height: auto;
+            z-index: 1;
+        }
+
+        /* Features Section */
+        .features {
+            padding: 8rem 5%;
+            background: white;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 4rem;
+            color: #003366;
+        }
+
+        .section-title h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .section-title p {
+            font-size: 1.1rem;
+            color: #666;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .feature-card {
+            background: #f9f9f9;
+            border-radius: 10px;
+            padding: 2rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 102, 204, 0.1);
+        }
+
+        .feature-icon {
+            font-size: 2.5rem;
+            color: #0066cc;
+            margin-bottom: 1.5rem;
+        }
+
+        .feature-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: #003366;
+        }
+
+        /* About Section */
+        .about {
+            padding: 8rem 5%;
+            background: #f0f7ff;
+            display: flex;
+            align-items: center;
+        }
+
+        .about-content {
+            flex: 1;
+            padding-right: 3rem;
+        }
+
+        .about-image {
+            flex: 1;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .about-image img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        /* Testimonials */
+        .testimonials {
+            padding: 8rem 5%;
+            background: white;
+        }
+
+        .testimonial-slider {
+            max-width: 800px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        .testimonial {
+            background: #f9f9f9;
+            padding: 2rem;
+            border-radius: 10px;
+            margin: 1rem;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+
+        .testimonial-content {
+            font-size: 1.1rem;
+            font-style: italic;
+            margin-bottom: 1.5rem;
+            color: #555;
+        }
+
+        .testimonial-author {
+            display: flex;
+            align-items: center;
+        }
+
+        .author-image {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            overflow: hidden;
+            margin-right: 1rem;
+        }
+
+        .author-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .author-info h4 {
+            color: #003366;
+            margin-bottom: 0.3rem;
+        }
+
+        .author-info p {
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        /* CTA Section */
+        .cta-section {
+            padding: 6rem 5%;
+            background: linear-gradient(135deg, #0066cc 0%, #00aaff 100%);
+            color: white;
+            text-align: center;
+        }
+
+        .cta-section h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .cta-section p {
+            font-size: 1.1rem;
+            max-width: 700px;
+            margin: 0 auto 2rem;
+        }
+
+        .cta-button.white {
+            background: white;
+            color: #0066cc;
+        }
+
+        .cta-button.white:hover {
+            background: #e6f2ff;
+        }
+
+        /* Footer */
+        footer {
+            background: #003366;
+            color: white;
+            padding: 4rem 5% 2rem;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .footer-column h3 {
+            font-size: 1.3rem;
+            margin-bottom: 1.5rem;
+            position: relative;
+            padding-bottom: 0.5rem;
+        }
+
+        .footer-column h3::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 50px;
+            height: 2px;
+            background: #00aaff;
+        }
+
+        .footer-column ul {
+            list-style: none;
+        }
+
+        .footer-column ul li {
+            margin-bottom: 0.8rem;
+        }
+
+        .footer-column ul li a {
+            color: #cce6ff;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-column ul li a:hover {
+            color: white;
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        /* Responsive Styles */
+        @media (max-width: 992px) {
+            .hero h1 {
+                font-size: 2.8rem;
+            }
+
+            .hero-image {
+                width: 45%;
+                opacity: 0.7;
+            }
+
+            .about {
+                flex-direction: column;
+            }
+
+            .about-content {
+                padding-right: 0;
+                margin-bottom: 3rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .menu-toggle {
+                display: block;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .hero {
+                flex-direction: column;
+                text-align: center;
+                padding-top: 8rem;
+                padding-bottom: 4rem;
+                height: auto;
+                min-height: 100vh;
+            }
+
+            .hero-content {
+                max-width: 100%;
+                margin-bottom: 3rem;
+            }
+
+            .hero-image {
+                position: relative;
+                right: auto;
+                width: 100%;
+                max-width: 500px;
+                margin: 0 auto;
+            }
+
+            .fullscreen-menu ul li a {
+                font-size: 2rem;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .hero h1 {
+                font-size: 2.2rem;
+            }
+
+            .hero p {
+                font-size: 1rem;
+            }
+
+            .section-title h2 {
+                font-size: 2rem;
+            }
+
+            .fullscreen-menu ul li a {
+                font-size: 1.8rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <a href="#" class="logo">Doctor<span>Care</span></a>
+        
+        <div class="menu-toggle">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+        
+        <ul class="nav-links">
+            <li><a href="#home">Home</a></li>
+            <li><a href="#services">Services</a></li>
+            <li><a href="#about">About</a></li>
+            <li><a href="#doctors">Doctors</a></li>
+            <li><a href="#testimonials">Testimonials</a></li>
+            <li><a href="#contact">Contact</a></li>
+        </ul>
+        
+        <button class="cta-button">Book Appointment</button>
+    </header>
+
+    <!-- Fullscreen Menu -->
+    <div class="fullscreen-menu">
+        <div class="close-menu">×</div>
+        <ul>
+            <li><a href="#home">Home</a></li>
+            <li><a href="#services">Services</a></li>
+            <li><a href="#about">About</a></li>
+            <li><a href="#doctors">Doctors</a></li>
+            <li><a href="#testimonials">Testimonials</a></li>
+            <li><a href="#contact">Contact</a></li>
+        </ul>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home" data-scroll-section>
+        <div class="hero-content" data-scroll data-scroll-speed="1">
+            <h1>Premium Healthcare For You and Your Family</h1>
+            <p>Experience world-class medical care with our team of specialists. We provide compassionate and comprehensive healthcare services tailored to your needs.</p>
+            <button class="cta-button">Book an Appointment</button>
+        </div>
+        <div class="hero-image" data-scroll data-scroll-speed="-1">
+            <img src="https://images.unsplash.com/photo-1576091160550-2173dba999ef?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Doctor with patient">
+        </div>
+    </section>
+
+    <!-- Features/Services Section -->
+    <section class="features" id="services" data-scroll-section>
+        <div class="section-title" data-scroll data-scroll-speed="0.5">
+            <h2>Our Specialized Services</h2>
+            <p>We offer a wide range of medical services to meet all your healthcare needs. Our expert physicians provide personalized care using the latest medical technologies.</p>
+        </div>
+        
+        <div class="features-grid">
+            <div class="feature-card" data-scroll data-scroll-speed="0.3">
+                <div class="feature-icon">❤️</div>
+                <h3>Cardiology</h3>
+                <p>Comprehensive heart care including diagnostic tests, treatments, and preventive cardiology services.</p>
+            </div>
+            
+            <div class="feature-card" data-scroll data-scroll-speed="0.2">
+                <div class="feature-icon">🦴</div>
+                <h3>Orthopedics</h3>
+                <p>Specialized care for bones, joints, ligaments, tendons, muscles and nerves with advanced surgical options.</p>
+            </div>
+            
+            <div class="feature-card" data-scroll data-scroll-speed="0.1">
+                <div class="feature-icon">🧠</div>
+                <h3>Neurology</h3>
+                <p>Expert diagnosis and treatment for disorders of the nervous system, including brain and spinal cord.</p>
+            </div>
+            
+            <div class="feature-card" data-scroll data-scroll-speed="0.3">
+                <div class="feature-icon">👶</div>
+                <h3>Pediatrics</h3>
+                <p>Compassionate healthcare for infants, children and adolescents with child-friendly facilities.</p>
+            </div>
+            
+            <div class="feature-card" data-scroll data-scroll-speed="0.2">
+                <div class="feature-icon">👁️</div>
+                <h3>Ophthalmology</h3>
+                <p>Complete eye care services including vision correction, cataract surgery, and treatment for eye diseases.</p>
+            </div>
+            
+            <div class="feature-card" data-scroll data-scroll-speed="0.1">
+                <div class="feature-icon">🦷</div>
+                <h3>Dentistry</h3>
+                <p>Full range of dental services from routine cleanings to cosmetic dentistry and oral surgery.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section class="about" id="about" data-scroll-section>
+        <div class="about-content" data-scroll data-scroll-speed="0.5">
+            <h2>About DoctorCare</h2>
+            <p>Founded in 2005, DoctorCare has grown to become one of the most trusted healthcare providers in the region. Our mission is to deliver exceptional medical care with compassion and respect for all patients.</p>
+            <p>We combine state-of-the-art technology with a patient-centered approach to ensure the best possible outcomes. Our team of board-certified physicians and healthcare professionals are dedicated to your wellbeing.</p>
+            <button class="cta-button">Learn More About Us</button>
+        </div>
+        
+        <div class="about-image" data-scroll data-scroll-speed="-0.5">
+            <img src="https://images.unsplash.com/photo-1550831107-1553da8c8464?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Medical team">
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section class="testimonials" id="testimonials" data-scroll-section>
+        <div class="section-title" data-scroll data-scroll-speed="0.5">
+            <h2>What Our Patients Say</h2>
+            <p>Don't just take our word for it. Here's what our patients have to say about their experiences at DoctorCare.</p>
+        </div>
+        
+        <div class="testimonial-slider">
+            <div class="testimonial" data-scroll data-scroll-speed="0.3">
+                <div class="testimonial-content">
+                    "The care I received at DoctorCare was exceptional. The doctors took time to listen to my concerns and explained everything clearly. I felt valued as a patient and the treatment was highly effective."
+                </div>
+                <div class="testimonial-author">
+                    <div class="author-image">
+                        <img src="https://randomuser.me/api/portraits/women/45.jpg" alt="Sarah Johnson">
+                    </div>
+                    <div class="author-info">
+                        <h4>Sarah Johnson</h4>
+                        <p>Cardiology Patient</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta-section" id="contact" data-scroll-section>
+        <h2 data-scroll data-scroll-speed="0.5">Ready to Take Control of Your Health?</h2>
+        <p data-scroll data-scroll-speed="0.3">Schedule an appointment with one of our specialists today and experience healthcare the way it should be.</p>
+        <button class="cta-button white" data-scroll data-scroll-speed="0.1">Contact Us Now</button>
+    </section>
+
+    <!-- Footer -->
+    <footer data-scroll-section>
+        <div class="footer-content">
+            <div class="footer-column">
+                <h3>DoctorCare</h3>
+                <p>Providing exceptional healthcare services since 2005. Our commitment is to your health and wellbeing.</p>
+            </div>
+            
+            <div class="footer-column">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="#home">Home</a></li>
+                    <li><a href="#services">Services</a></li>
+                    <li><a href="#about">About Us</a></li>
+                    <li><a href="#doctors">Our Doctors</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-column">
+                <h3>Services</h3>
+                <ul>
+                    <li><a href="#">Cardiology</a></li>
+                    <li><a href="#">Orthopedics</a></li>
+                    <li><a href="#">Neurology</a></li>
+                    <li><a href="#">Pediatrics</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-column">
+                <h3>Contact</h3>
+                <ul>
+                    <li>123 Medical Drive</li>
+                    <li>Healthville, HV 12345</li>
+                    <li>Phone: (123) 456-7890</li>
+                    <li>Email: info@doctorcare.com</li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="footer-bottom">
+            <p>&copy; 2023 DoctorCare. All Rights Reserved.</p>
+        </div>
+    </footer>
+
+    <!-- JavaScript Libraries -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <script src="https://unpkg.com/@studio-freight/lenis@1.0.42/dist/lenis.min.js"></script>
+    
+    <script>
+        // Initialize Lenis smooth scroll
+        const lenis = new Lenis({
+            lerp: 0.1,
+            smooth: true,
+            direction: 'vertical',
+        });
+
+        function raf(time) {
+            lenis.raf(time);
+            requestAnimationFrame(raf);
+        }
+        requestAnimationFrame(raf);
+
+        // Setup GSAP ScrollTrigger with Lenis
+        lenis.on('scroll', ScrollTrigger.update);
+        gsap.ticker.add((time) => lenis.raf(time * 1000));
+        gsap.ticker.lagSmoothing(0);
+
+        ScrollTrigger.scrollerProxy('[data-scroll-container]', {
+            scrollTop(value) {
+                return arguments.length ? lenis.scrollTo(value) : lenis.scroll;
+            },
+            getBoundingClientRect() {
+                return {
+                    top: 0,
+                    left: 0,
+                    width: window.innerWidth,
+                    height: window.innerHeight,
+                };
+            },
+            pinType: document.querySelector('[data-scroll-container]').style.transform ? "transform" : "fixed"
+        });
+
+        ScrollTrigger.addEventListener('refresh', () => lenis.update());
+        ScrollTrigger.refresh();
+
+        // Header scroll effect
+        window.addEventListener('scroll', function() {
+            const header = document.querySelector('header');
+            if (window.scrollY > 50) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+        });
+
+        // Fullscreen menu toggle
+        const menuToggle = document.querySelector('.menu-toggle');
+        const fullscreenMenu = document.querySelector('.fullscreen-menu');
+        const closeMenu = document.querySelector('.close-menu');
+
+        menuToggle.addEventListener('click', function() {
+            this.classList.toggle('active');
+            fullscreenMenu.classList.toggle('active');
+            
+            // Toggle menu icon animation
+            if (this.classList.contains('active')) {
+                gsap.to(this.querySelectorAll('span'), {
+                    backgroundColor: 'white',
+                    duration: 0.3
+                });
+                gsap.to(this.querySelector('span:nth-child(1)'), {
+                    y: 8,
+                    rotate: 45,
+                    duration: 0.3
+                });
+                gsap.to(this.querySelector('span:nth-child(2)'), {
+                    opacity: 0,
+                    duration: 0.3
+                });
+                gsap.to(this.querySelector('span:nth-child(3)'), {
+                    y: -8,
+                    rotate: -45,
+                    duration: 0.3
+                });
+            } else {
+                gsap.to(this.querySelectorAll('span'), {
+                    backgroundColor: '#0066cc',
+                    duration: 0.3
+                });
+                gsap.to(this.querySelectorAll('span'), {
+                    y: 0,
+                    rotate: 0,
+                    opacity: 1,
+                    duration: 0.3
+                });
+            }
+        });
+
+        closeMenu.addEventListener('click', function() {
+            fullscreenMenu.classList.remove('active');
+            menuToggle.classList.remove('active');
+            
+            // Reset menu icon animation
+            gsap.to(menuToggle.querySelectorAll('span'), {
+                backgroundColor: '#0066cc',
+                y: 0,
+                rotate: 0,
+                opacity: 1,
+                duration: 0.3
+            });
+        });
+
+        // Close menu when clicking on a link
+        const menuLinks = document.querySelectorAll('.fullscreen-menu a');
+        menuLinks.forEach(link => {
+            link.addEventListener('click', function() {
+                fullscreenMenu.classList.remove('active');
+                menuToggle.classList.remove('active');
+                
+                // Reset menu icon animation
+                gsap.to(menuToggle.querySelectorAll('span'), {
+                    backgroundColor: '#0066cc',
+                    y: 0,
+                    rotate: 0,
+                    opacity: 1,
+                    duration: 0.3
+                });
+            });
+        });
+
+        // Smooth scrolling for all links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if (targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    lenis.scrollTo(targetElement, {
+                        duration: 1.2,
+                        easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+                    });
+                }
+            });
+        });
+
+        // Animation for feature cards
+        gsap.utils.toArray('.feature-card').forEach((card, i) => {
+            gsap.from(card, {
+                scrollTrigger: {
+                    trigger: card,
+                    start: "top 80%",
+                    toggleActions: "play none none none"
+                },
+                y: 50,
+                opacity: 0,
+                duration: 0.8,
+                delay: i * 0.1
+            });
+        });
+
+        // Animation for about section
+        gsap.from('.about-content', {
+            scrollTrigger: {
+                trigger: '.about',
+                start: "top 70%",
+                toggleActions: "play none none none"
+            },
+            x: -50,
+            opacity: 0,
+            duration: 1
+        });
+
+        gsap.from('.about-image', {
+            scrollTrigger: {
+                trigger: '.about',
+                start: "top 70%",
+                toggleActions: "play none none none"
+            },
+            x: 50,
+            opacity: 0,
+            duration: 1
+        });
+
+        // Refresh on resize
+        let resizeTimer;
+        window.addEventListener('resize', () => {
+            clearTimeout(resizeTimer);
+            resizeTimer = setTimeout(() => {
+                ScrollTrigger.refresh();
+            }, 250);
+        });
+    </script>
+</body>
+</html>
