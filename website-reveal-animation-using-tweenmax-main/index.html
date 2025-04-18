@@ -4,12 +4,65 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>BMW Official Site | Luxury Vehicles & SUVs</title>
+    <meta name="description"
+        content="Discover the full range of BMW luxury vehicles, SUVs, and electric cars. Build, price, and book a test drive for your perfect BMW.">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
     <script src="https://cdn.tailwindcss.com"></script>
     <link
         href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@200..800&family=Plus+Jakarta+Sans:wght@200..800&display=swap"
         rel="stylesheet">
+    <style>
+        /* Custom styles to enhance the design */
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            scroll-behavior: smooth;
+        }
+
+        .nav-link {
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .nav-link:after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -4px;
+            left: 0;
+            background-color: #208177;
+            transition: width 0.3s ease;
+        }
+
+        .nav-link:hover:after {
+            width: 100%;
+        }
+
+        .faq-btn {
+            transition: all 0.3s ease;
+        }
+
+        .faq-btn:hover {
+            color: #208177;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .animate-fadeInUp {
+            animation: fadeInUp 0.6s ease forwards;
+        }
+    </style>
 </head>
 
 <body>
@@ -17,20 +70,20 @@
     <nav id="navbar" class="bg-white shadow-lg fixed top-0 w-full z-50 transition duration-300">
         <div class="container mx-auto px-4">
             <div class="flex justify-between items-center py-4">
-
                 <!-- BMW Logo -->
                 <div class="logo flex items-center">
-                    <img src="./images/pngwing.com.png" alt="BMW Logo" class="h-10 w-auto sm:h-12">
+                    <img src="https://logos-world.net/wp-content/uploads/2020/04/BMW-Logo.png" alt="BMW Logo"
+                        class="h-10 w-auto sm:h-12">
                 </div>
 
                 <!-- Desktop Menu -->
                 <div class="hidden md:flex space-x-6 items-center">
                     <a href="#" class="nav-link text-black hover:text-[#208177] font-bold">Home</a>
-                    <a href="#" class="nav-link text-black hover:text-[#208177]">Models</a>
-                    <a href="#" class="nav-link text-black hover:text-[#208177]">Build & Price</a>
-                    <a href="#" class="nav-link text-black hover:text-[#208177]">Offers</a>
-                    <a href="#" class="nav-link text-black hover:text-[#208177]">Services</a>
-                    <a href="#" class="nav-link text-black hover:text-[#208177]">Contact</a>
+                    <a href="#models" class="nav-link text-black hover:text-[#208177]">Models</a>
+                    <a href="#build" class="nav-link text-black hover:text-[#208177]">Build & Price</a>
+                    <a href="#offers" class="nav-link text-black hover:text-[#208177]">Offers</a>
+                    <a href="#services" class="nav-link text-black hover:text-[#208177]">Services</a>
+                    <a href="#contact" class="nav-link text-black hover:text-[#208177]">Contact</a>
                 </div>
 
                 <!-- Action Buttons (Desktop) -->
@@ -65,11 +118,11 @@
             <div id="mobile-menu" class="hidden md:hidden mt-2 bg-white rounded shadow-md">
                 <div class="flex flex-col space-y-4 p-6">
                     <a href="#" class="nav-link text-black hover:text-[#208177] font-medium">Home</a>
-                    <a href="#" class="nav-link text-black hover:text-[#208177]">Models</a>
-                    <a href="#" class="nav-link text-black hover:text-[#208177]">Build & Price</a>
-                    <a href="#" class="nav-link text-black hover:text-[#208177]">Offers</a>
-                    <a href="#" class="nav-link text-black hover:text-[#208177]">Services</a>
-                    <a href="#" class="nav-link text-black hover:text-[#208177]">Contact</a>
+                    <a href="#models" class="nav-link text-black hover:text-[#208177]">Models</a>
+                    <a href="#build" class="nav-link text-black hover:text-[#208177]">Build & Price</a>
+                    <a href="#offers" class="nav-link text-black hover:text-[#208177]">Offers</a>
+                    <a href="#services" class="nav-link text-black hover:text-[#208177]">Services</a>
+                    <a href="#contact" class="nav-link text-black hover:text-[#208177]">Contact</a>
                     <button
                         class="bg-black text-white px-6 py-2 rounded-full hover:bg-gray-700 transition duration-300">
                         Book a Test Drive
@@ -80,10 +133,10 @@
     </nav>
 
     <main>
-        <section class="min-h-screen flex items-center bg-white py-12 sm:py-16">
+        <!-- Hero Section -->
+        <section id="home" class="min-h-screen flex items-center bg-white py-12 sm:py-16 animate-on-scroll">
             <div class="container mx-auto px-4 sm:px-6 md:px-8">
                 <div class="flex flex-col-reverse lg:flex-row items-center justify-between gap-10 lg:gap-16">
-
                     <!-- Left: Text Content -->
                     <div class="w-full lg:w-1/2 text-center lg:text-left">
                         <h1
@@ -123,24 +176,21 @@
                                 Global Dealer Network
                             </div>
                         </div>
-
                     </div>
 
                     <!-- Right: Hero Image -->
-                    <div class="w-full lg:w-1/2 flex justify-center">
-                        <img src="./images/pngwing.com (2).png" alt="BMW Hero"
+                    <div class="w-full lg:w-1/2 flex justify-center animate-on-scroll">
+                        <img src="./images/pngwing.com (3).png" alt="BMW Hero"
                             class="w-full max-w-xs sm:max-w-md md:max-w-lg lg:max-w-xl h-auto object-contain">
                     </div>
-
                 </div>
             </div>
         </section>
         <!-- BMW Categories Section -->
-        <section class="py-16 bg-gray-50">
+        <section id="models" class="py-16 bg-gray-50 animate-on-scroll">
             <div class="container mx-auto px-4 sm:px-6">
                 <h2 class="text-3xl md:text-4xl font-bold text-center mb-12">Explore by Series</h2>
                 <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
-
                     <!-- Sedans -->
                     <a href="#" class="group">
                         <div
@@ -188,16 +238,15 @@
                                 class="bg-gray-100 rounded-full w-24 h-24 mx-auto mb-4 flex items-center justify-center group-hover:bg-[#208177] group-hover:text-white transition duration-300">
                                 <i class="fa-solid fa-gauge-high text-3xl"></i>
                             </div>
-                            <h3 class="font-semibold text-lg group-hover:text-[#208177] transition duration-300">
-                                M Performance
-                            </h3>
+                            <h3 class="font-semibold text-lg group-hover:text-[#208177] transition duration-300">M
+                                Performance</h3>
                         </div>
                     </a>
-
                 </div>
             </div>
         </section>
-        <section>
+        <!-- Features Section -->
+        <section id="features" class="py-16 animate-on-scroll">
             <div class="container mx-auto px-4 py-8">
                 <div class="p-8">
                     <div class="text-center">
@@ -213,7 +262,6 @@
                     </div>
 
                     <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-
                         <!-- Performance -->
                         <div
                             class="bg-[#F2FBF9] p-4 sm:p-6 rounded-lg transition duration-400 hover:bg-white group hover:shadow-lg">
@@ -241,7 +289,7 @@
                                 Cutting-Edge <br><span>Technology</span>
                             </h2>
                             <p class="text-gray-600 text-sm sm:text-base md:text-base">
-                                Stay connected and in control with BMW’s intelligent driver systems and iDrive
+                                Stay connected and in control with BMW's intelligent driver systems and iDrive
                                 experience.
                             </p>
                         </div>
@@ -257,7 +305,7 @@
                                 Electric <br><span>Mobility</span>
                             </h2>
                             <p class="text-gray-600 text-sm sm:text-base md:text-base">
-                                Join the future with BMW’s electric and hybrid lineup — engineered for sustainability
+                                Join the future with BMW's electric and hybrid lineup — engineered for sustainability
                                 and power.
                             </p>
                         </div>
@@ -277,7 +325,6 @@
                                 assistance.
                             </p>
                         </div>
-
                     </div>
 
                     <div class="text-center mt-8 flex items-center justify-center">
@@ -293,17 +340,17 @@
                 </div>
             </div>
         </section>
-        <section>
+        <!-- Journey Section -->
+        <section id="journey" class="py-16 bg-gray-50 animate-on-scroll">
             <div class="container mx-auto py-8 px-4">
                 <div class="p-8 text-center">
                     <h1 class="font-bold text-gray-800 mb-4 text-xl sm:text-2xl md:text-2xl lg:text-3xl">
                         Your BMW Journey in 3 Simple Steps
                     </h1>
                     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-
                         <!-- Step 1: Explore Models -->
                         <div
-                            class="bg-gray-50 p-6 rounded-lg flex flex-col items-center hover:shadow-lg transition duration-300">
+                            class="bg-white p-6 rounded-lg flex flex-col items-center hover:shadow-lg transition duration-300">
                             <div
                                 class="h-[70px] w-[70px] sm:h-[80px] sm:w-[80px] md:h-[90px] md:w-[90px] mb-4 bg-white rounded-full flex items-center justify-center text-[#1D6861] text-2xl">
                                 <i class="fa-solid fa-car-side"></i>
@@ -319,7 +366,7 @@
 
                         <!-- Step 2: Book Test Drive -->
                         <div
-                            class="bg-gray-50 p-6 rounded-lg flex flex-col items-center hover:shadow-lg transition duration-300">
+                            class="bg-white p-6 rounded-lg flex flex-col items-center hover:shadow-lg transition duration-300">
                             <div
                                 class="h-[70px] w-[70px] sm:h-[80px] sm:w-[80px] md:h-[90px] md:w-[90px] mb-4 bg-white rounded-full flex items-center justify-center text-[#1D6861] text-2xl">
                                 <i class="fa-solid fa-road-circle-check"></i>
@@ -335,7 +382,7 @@
 
                         <!-- Step 3: Customize & Own -->
                         <div
-                            class="bg-gray-50 p-6 rounded-lg flex flex-col items-center hover:shadow-lg transition duration-300">
+                            class="bg-white p-6 rounded-lg flex flex-col items-center hover:shadow-lg transition duration-300">
                             <div
                                 class="h-[70px] w-[70px] sm:h-[80px] sm:w-[80px] md:h-[90px] md:w-[90px] mb-4 bg-white rounded-full flex items-center justify-center text-[#1D6861] text-2xl">
                                 <i class="fa-solid fa-screwdriver-wrench"></i>
@@ -371,85 +418,8 @@
                 </div>
             </div>
         </section>
-        <section>
-            <div class="container mx-auto py-8 px-4">
-                <div class="p-8 text-center">
-                    <h1 class="font-bold text-gray-800 mb-4 text-xl sm:text-2xl md:text-2xl lg:text-3xl">
-                        Experience BMW in 3 Simple Steps
-                    </h1>
-                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-
-                        <!-- Step 1: Explore BMW Models -->
-                        <div
-                            class="bg-gray-50 p-6 rounded-lg flex flex-col items-center hover:shadow-lg transition duration-300">
-                            <div
-                                class="h-[60px] sm:h-[70px] md:h-[80px] w-[60px] sm:w-[70px] md:w-[80px] mb-2 rounded-full flex items-center justify-center text-[#1D6861] text-3xl bg-white">
-                                <i class="fa-solid fa-car-side"></i>
-                            </div>
-                            <h2 class="text-base sm:text-lg md:text-xl font-semibold text-[#1D6861] mb-2">
-                                Explore the BMW Lineup
-                            </h2>
-                            <p class="text-gray-600 text-sm sm:text-base md:text-lg">
-                                From the iconic 3 Series to the all-electric iX, discover the full range of BMW vehicles
-                                tailored for performance and luxury.
-                            </p>
-                        </div>
-
-                        <!-- Step 2: Schedule a Test Drive -->
-                        <div
-                            class="bg-gray-50 p-6 rounded-lg flex flex-col items-center hover:shadow-lg transition duration-300">
-                            <div
-                                class="h-[60px] sm:h-[70px] md:h-[80px] w-[60px] sm:w-[70px] md:w-[80px] mb-2 rounded-full flex items-center justify-center text-[#1D6861] text-3xl bg-white">
-                                <i class="fa-solid fa-road-circle-check"></i>
-                            </div>
-                            <h2 class="text-base sm:text-lg md:text-xl font-semibold text-[#1D6861] mb-2">
-                                Book Your Test Drive
-                            </h2>
-                            <p class="text-gray-600 text-sm sm:text-base md:text-lg">
-                                Feel the thrill of BMW engineering firsthand by scheduling a test drive at your nearest
-                                BMW center.
-                            </p>
-                        </div>
-
-                        <!-- Step 3: Customize & Drive -->
-                        <div
-                            class="bg-gray-50 p-6 rounded-lg flex flex-col items-center hover:shadow-lg transition duration-300">
-                            <div
-                                class="h-[60px] sm:h-[70px] md:h-[80px] w-[60px] sm:w-[70px] md:w-[80px] mb-2 rounded-full flex items-center justify-center text-[#1D6861] text-3xl bg-white">
-                                <i class="fa-solid fa-screwdriver-wrench"></i>
-                            </div>
-                            <h2 class="text-base sm:text-lg md:text-xl font-semibold text-[#1D6861] mb-2">
-                                Customize & Drive Away
-                            </h2>
-                            <p class="text-gray-600 text-sm sm:text-base md:text-lg">
-                                Select your ideal features, finishes, and technology packages — then drive off in a BMW
-                                crafted just for you.
-                            </p>
-                        </div>
-                    </div>
-
-                    <div class="text-center mt-8 flex flex-col sm:flex-row gap-4 items-center justify-center">
-                        <button
-                            class="bg-[#208177] text-white px-6 py-3 rounded-full font-semibold flex items-center gap-3 border-2 border-white hover:bg-black transition duration-300">
-                            Start Your Journey
-                            <span
-                                class="flex items-center justify-center w-8 h-8 rounded-full border-2 border-white bg-black hover:bg-[#208177] transition duration-300">
-                                <i class="fa-solid fa-arrow-right text-white text-lg"></i>
-                            </span>
-                        </button>
-                        <button
-                            class="bg-white text-[#208177] px-6 py-3 rounded-full font-semibold flex items-center gap-3 border-2 border-[#208177] hover:bg-gray-50 transition duration-300">
-                            Learn More
-                            <span
-                                class="flex items-center justify-center w-8 h-8 rounded-full border-2 border-[#208177] bg-white hover:bg-gray-50 transition duration-300">
-                                <i class="fa-solid fa-book text-[#208177] text-lg"></i>
-                            </span>
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </section>
-        <section>
+        <!-- Why Choose BMW Section -->
+        <section id="why-bmw" class="py-16 animate-on-scroll">
             <div class="container mx-auto px-4 py-8">
                 <div class="p-8 text-center">
                     <h1 class="font-bold text-gray-800 mb-2 text-xl sm:text-2xl md:text-2xl lg:text-3xl">
@@ -460,10 +430,9 @@
                     </p>
 
                     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-8">
-
                         <!-- Feature 1: Performance -->
                         <div
-                            class="bg-gray-50 p-6 rounded-lg flex flex-col items-center hover:shadow-md transition duration-300">
+                            class="bg-white p-6 rounded-lg flex flex-col items-center hover:shadow-md transition duration-300">
                             <div
                                 class="h-[60px] sm:h-[70px] md:h-[80px] w-[60px] sm:w-[70px] md:w-[80px] mb-2 rounded-full flex items-center justify-center text-[#1D6861] text-3xl bg-white">
                                 <i class="fa-solid fa-gauge-high"></i>
@@ -479,7 +448,7 @@
 
                         <!-- Feature 2: Technology -->
                         <div
-                            class="bg-gray-50 p-6 rounded-lg flex flex-col items-center hover:shadow-md transition duration-300">
+                            class="bg-white p-6 rounded-lg flex flex-col items-center hover:shadow-md transition duration-300">
                             <div
                                 class="h-[60px] sm:h-[70px] md:h-[80px] w-[60px] sm:w-[70px] md:w-[80px] mb-2 rounded-full flex items-center justify-center text-[#1D6861] text-3xl bg-white">
                                 <i class="fa-solid fa-microchip"></i>
@@ -495,7 +464,7 @@
 
                         <!-- Feature 3: Luxury -->
                         <div
-                            class="bg-gray-50 p-6 rounded-lg flex flex-col items-center hover:shadow-md transition duration-300">
+                            class="bg-white p-6 rounded-lg flex flex-col items-center hover:shadow-md transition duration-300">
                             <div
                                 class="h-[60px] sm:h-[70px] md:h-[80px] w-[60px] sm:w-[70px] md:w-[80px] mb-2 rounded-full flex items-center justify-center text-[#1D6861] text-3xl bg-white">
                                 <i class="fa-solid fa-couch"></i>
@@ -508,7 +477,6 @@
                                 with modern luxury.
                             </p>
                         </div>
-
                     </div>
 
                     <div class="text-center mt-8 flex flex-col sm:flex-row gap-4 items-center justify-center">
@@ -532,6 +500,97 @@
                 </div>
             </div>
         </section>
+        <!-- Models Comparison Section -->
+        <section id="build"
+            class="flex justify-center items-center flex-col mt-20 pb-20 px-4 bg-gray-50 animate-on-scroll">
+            <div class="text-center mb-10">
+                <h1 class="text-2xl md:text-3xl font-bold text-gray-800">
+                    Choose Your Ultimate Driving Machine
+                </h1>
+                <p class="text-sm sm:text-base md:text-lg text-gray-600 mt-2">
+                    Compare BMW models and find the perfect balance of performance, innovation, and luxury.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-7xl w-full">
+                <!-- BMW 3 Series -->
+                <div
+                    class="bg-white border border-gray-200 rounded-2xl p-6 shadow-sm hover:shadow-md transition duration-300 flex flex-col items-start relative">
+                    <span
+                        class="absolute top-4 left-4 bg-blue-700 text-white text-xs font-semibold px-3 py-1 rounded-full">
+                        BMW 3 Series
+                    </span>
+                    <h2 class="text-3xl font-bold text-black mt-14">$43,800<span class="text-base font-normal"> Starting
+                            MSRP</span></h2>
+                    <p class="text-sm text-gray-500 mt-2 mb-4 font-semibold">Sporty, agile, and efficient — perfect for
+                        everyday performance.</p>
+                    <ul class="text-sm text-gray-700 space-y-2 mb-6">
+                        <li>✔ 2.0L TwinPower Turbo Inline-4</li>
+                        <li>✔ iDrive 8.0 with 14.9" Curved Display</li>
+                        <li>✔ Apple CarPlay® & Android Auto™</li>
+                        <li>✔ Rear-Wheel Drive or xDrive AWD</li>
+                        <li class="text-gray-400">• Standard Sport Seats</li>
+                        <li class="text-gray-400">• Up to 34 MPG Highway</li>
+                    </ul>
+                    <button
+                        class="mt-auto w-full bg-black text-white py-2 rounded-full font-bold hover:bg-gray-800 transition">
+                        Book a Test Drive
+                    </button>
+                </div>
+
+                <!-- BMW 5 Series -->
+                <div
+                    class="bg-white border border-yellow-400 rounded-2xl p-6 shadow-lg hover:shadow-xl transition duration-300 flex flex-col items-start relative">
+                    <span
+                        class="absolute top-4 left-4 bg-blue-700 text-white text-xs font-semibold px-3 py-1 rounded-full">
+                        BMW 5 Series
+                    </span>
+                    <h2 class="text-3xl font-bold text-yellow-600 mt-14">$57,900<span class="text-base font-normal">
+                            Starting MSRP</span></h2>
+                    <p class="text-sm text-gray-600 mt-2 mb-4 font-semibold">A luxurious blend of performance,
+                        innovation, and comfort.</p>
+                    <ul class="text-sm text-gray-800 space-y-2 mb-6">
+                        <li>✔ 2.0L or 3.0L TwinPower Turbo Engine</li>
+                        <li>✔ BMW Curved Display + Voice Assistant</li>
+                        <li>✔ Active Driving Assistant Professional</li>
+                        <li>✔ Optional Plug-in Hybrid (530e)</li>
+                        <li class="text-gray-600">• Multi-zone Climate Control</li>
+                        <li class="text-gray-600">• Premium Leather Upholstery</li>
+                        <li class="text-gray-600">• Available M Sport Package</li>
+                    </ul>
+                    <button
+                        class="mt-auto w-full bg-yellow-500 text-black py-2 rounded-full font-bold hover:bg-yellow-400 transition">
+                        Explore the 5 Series
+                    </button>
+                </div>
+
+                <!-- BMW 7 Series -->
+                <div
+                    class="bg-white border border-gray-300 rounded-2xl p-6 shadow-sm hover:shadow-md transition duration-300 flex flex-col items-start relative">
+                    <span
+                        class="absolute top-4 left-4 bg-blue-700 text-white text-xs font-semibold px-3 py-1 rounded-full">
+                        BMW 7 Series
+                    </span>
+                    <h2 class="text-3xl font-bold text-black mt-14">$96,400<span class="text-base font-normal"> Starting
+                            MSRP</span></h2>
+                    <p class="text-sm text-gray-500 mt-2 mb-4 font-semibold">Flagship luxury sedan with cutting-edge
+                        tech and comfort.</p>
+                    <ul class="text-sm text-gray-700 space-y-2 mb-6">
+                        <li>✔ 3.0L Turbo or V8 TwinPower Hybrid</li>
+                        <li>✔ 31" Panoramic Theatre Screen (i7)</li>
+                        <li>✔ Executive Lounge Seating</li>
+                        <li>✔ BMW Iconic Glow Kidney Grille</li>
+                        <li class="text-gray-400">• Hands-Free Highway Driving</li>
+                        <li class="text-gray-400">• Bowers & Wilkins Sound System</li>
+                    </ul>
+                    <button
+                        class="mt-auto w-full bg-black text-white py-2 rounded-full font-bold hover:bg-gray-800 transition">
+                        Discover the 7 Series
+                    </button>
+                </div>
+            </div>
+        </section>
+        <!-- FAQ Section -->
         <section class="flex justify-center items-center flex-col mt-20 pb-20 px-4 bg-gray-50">
             <div class="text-center mb-10">
                 <h1 class="text-2xl md:text-3xl font-bold text-gray-800">
